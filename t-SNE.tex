@@ -1,0 +1,59 @@
+\section{t-SNE}
+
+\begin{frame}{The Main Idea Behind t-SNE}
+    \begin{problem}
+        Given a set of high-dimensional points $\mathcal{X} = \{x_1, x_2, ..., x_n\} \subset \mathbb{R}^d$ find a "good" lower-dimensional representation $\mathcal{Y} = \{y_1, y_2, ... , y_n\} \subset \mathbb{R}^s$ of these points, where $s=2,3$. 
+    \end{problem}\pause
+    \vspace{5pt}
+    \textbf{An Informal Overview of t-SNE \cite[Van der Maaten, Hinton]{JMLR:v9:vandermaaten08a}}
+    \begin{itemize}
+        \item Create an initial set of points $\mathcal{Y}$ in $\mathbb{R}^s$ 
+        \item Turn $\mathcal{X}$ and $\mathcal{Y}$ into probability distributions reflecting pairwise similarities between datapoints 
+        \item Force these distributions to be as similar as possible by moving points in the lower dimension around 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Measuring Similarity of Data Points}
+    \textbf{How can we measure similarity between points in a high dimension?} \pause 
+    \begin{itemize}
+        \item Compute a joint probability distribution over points $x_i$ and $x_j$ ($i \neq j$) via \[ 
+        p_{i|j} = \frac{\exp(-||x_i-x_j||^2/2\sigma_i^2)}{\sum_{k\neq i} \exp (- ||x_i - x_k||^2/2\sigma_i^2)},\; p_{ij} = \frac{p_{i|j}+ p_{j|i}}{2n}
+        \]
+        where $\sigma_i$ denotes the bandwidth of the Gaussian kernel centered at $x_i$. \pause 
+    \end{itemize}
+    \textbf{Should we measure similarity in} $\mathbb{R}^2$ \textbf{in the same way?}  \pause 
+    \begin{itemize}
+        \item To avoid overcrowding, we define a similarity measure between points in the low dimensional embedding $y_i$ and $y_j$ ($i \neq j$) via \[ q_{ij} = \frac{(1+ ||y_i - y_j||^2)^{-1}}{\sum_{l} \sum_{k\neq l} (1+ ||y_k - y_l||^2)^{-1}} \]
+        using a Student's t-distribution with one degree of freedom (Cauchy distribution) which is heavy-tailed compared to a Gaussian. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Defining a Loss Function}
+    \begin{definition}[Kullback-Leibler divergence]
+        Let $P$ and $Q$ be discrete probability distributions defined on a sample space $\mathcal{X}$. 
+        The Kullback-Leibler divergence between $P$ and $Q$ is defined as 
+        \[ \text{KL}(P|| Q) = \sum_{x \in \mathcal{X}} P(x) \log \frac{P(x)}{Q(x)}.\] 
+    \end{definition} \pause
+    \begin{itemize}
+        
+        \item We want to find points $\{y_1, ..., y_n\}$ which minimize the Kullback-Leibler divergence between the distributions $P$ and $Q$ defined above. \pause
+        \item The loss function is given by \[ C(\mathcal{Y}) = KL(P||Q) = \sum_{i} \sum_{j \neq i}  p_{ij} \log \frac{p_{ij}}{q_{ij}}\] \pause
+        \item KL divergence is asymmetric, i.e. in general $\text{KL}(P || Q) \neq \text{KL}(Q || P)$. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Optimization via Gradient Descent}
+    \begin{itemize}
+        \item We can minimize $C(\mathcal{Y})$ using Gradient Descent, where 
+        \[ \frac{\partial C}{\partial y_i} = 4 \sum_{j \neq i} (p_{ij} - q_{ij}) q_{ij} Z (y_i - y_j)
+        \text{ with } Z = \sum_{l} \sum_{k\neq l} (1+ \lVert y_k - y_l \rVert^2)^{-1}.\] \\ \pause 
+        \item Standard optimization techniques for gradient descent can be employed, such as including a momentum term
+        \[ y_i^{(t+1)} = y_i^{(t)} - h \cdot \frac{\partial C}{\partial y_i^{(t)}} + \beta (y_i^{(t)} - y_i^{(t-1)}) \text{ with } 0 \leq \beta < 1, h>0. \] \pause
+        \item Rewriting the gradient yields interpretation via attractive and repulsive forces: 
+        \[ -\frac{1}{4} \frac{\partial C}{\partial y_i} = \underbrace{\sum_{j\neq i} p_{ij} q_{ij} Z (y_j - y_i)}_\text{attractive force} \underbrace{-\sum_{j \neq i} q_{ij}^2 Z (y_j - y_i)}_\text{repulsive force}
+        \] 
+        
+    \end{itemize}
+\end{frame}
+
+

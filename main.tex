@@ -1,0 +1,133 @@
+% Create a Table of Contents in Beamer
+\documentclass{beamer}[handout]
+\geometry{paperwidth=150mm,paperheight=112mm}
+
+\usetheme[subsection=false, headline=false]{INS}
+
+%\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{url}
+%\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}    % Algorithmen setzen.
+\newcommand{\SkipBeforeAndAfter}{\vspace{8mm}}
+%\SetAlgoSkip{SkipBeforeAndAfter}
+%\SetAlgoSkip{bigskip} 
+%\usepackage{algorithm}
+%\usepackage{algpseudocodex}
+%\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+%\algrenewcommand\algorithmicensure{\textbf{Output:}}
+%\algnewcommand{\LeftComment}[1]{\Statex \(\triangleright\) #1}
+\usepackage{amsmath,amssymb,amsthm,amsfonts,amsbsy,latexsym}    % "Notwendige" AMS-Math Pakete.
+\usepackage{array}                      % Bessere Tabellen.
+\renewcommand{\arraystretch}{1.15}      % Tabellen bekommen ein wenig mehr Platz.
+\usepackage{bbm}                        % Dicke 1.
+\usepackage[utf8]{inputenc}             % utf8 als Eingabeformat. should be loaded before biblatex
+%\usepackage[backend=biber, style=alphabetic]{biblatex}  % Gute Erweiterung zu bibtex, Wird für Referenzen benutzt.
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+%\setbeamertemplate{bibliography item}{\insertbiblabel}
+\bibliography{masterthesis_your_name_bibliography.bib}   % Die verwendeten Referenzen (.bib-Datei)
+\usepackage[hypcap]{caption}            % Damit Hyperrefs bei der figure-Umgebung auf die Figure zeigt statt auf die Caption.
+\captionsetup{font=footnotesize} 
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{diagbox}                    % Diagonale in Tabellen.
+\usepackage[T1]{fontenc}                % Bessere Schrift
+\usepackage{ifthen}                     % Zum checken ob Parameter leer sind.
+\usepackage{lmodern}                    % Bessere Schrift
+\usepackage{listings}                   % Code Listings.
+\usepackage{mathtools}                  % Subscript unter Summen behandeln. Der Befehl lautet \mathclap.
+\usepackage{makeidx}                    % Stichwortverzeichnis.
+\makeindex                              % Stichwortverzeichnis erstellen.
+\renewcommand{\indexname}{Index}        % Name des Index definieren.
+\usepackage{multirow}                   % In Tabellen mehrere Zeilen zu einer machen.
+%\usepackage[parfill]{parskip}
+\usepackage{rotating}                   % Um Figures zu drehen.
+\usepackage{scrhack}                    % Verbessert die Zusammenarbeit von KOMA mit anderen Paketen (z.B, listing).
+\usepackage{stackrel}                   % Symbole übereinander stapeln.
+\usepackage[dvipsnames]{xcolor}         % Gefärbter Text und so.
+\usepackage{media9}                     % für animations 
+\usepackage{multimedia}
+
+\input{masterthesis_your_name_macros}
+
+%\bibliographystyle{alpha}
+
+% Title page details: 
+\title[Supervisor: Prof. Dr. Jochen Garcke]{Data Visualization with t-SNE in Theory and Practice} 
+%\subtitle{a proposal}
+\author[Author, I.]{Solveig Tr\"ankner, Supervisor: Prof. Dr. Jochen Garcke}
+%\institute[U. Bonn - INS]{University of Bonn - Institute for Numerical Simulation}
+\date[Bachelor's thesis presentation]{19th December 2024}
+\titlegraphic{\includegraphics[width = 10cm]{tsne_title_image.png}}
+\logo{\includegraphics[height = .75cm]{INS-Logo_ohne}\quad\includegraphics[height = .75cm]{uni-logo_compact.eps}}
+
+
+\begin{document}
+% Title page frame
+\begin{frame} 
+    %\vspace*{\fill}
+    \titlepage
+    %\begin{beamercolorbox}[sep=0.2cm,left,wd=\paperwidth]{frametitle}
+        %{\usebeamerfont{title}t-Stochastic Neighbour Embeddings}
+
+        %{\usebeamerfont{author}Solveig Tr\"ankner}
+
+        %{\usebeamerfont{date}19th December 2024}
+    %\end{beamercolorbox}
+    %\vspace*{\fill}
+\end{frame}
+% Outline frame
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% Presentation structure
+\input{introduction}
+
+\input{t-SNE}
+
+\input{optimizing_tsne}
+
+\input{theoretical_results}
+
+\input{future_work}
+
+\iffalse
+\begin{frame}{Blocks}
+    \begin{theorem}[Sample Theorem]
+        This is a theorem!
+    \end{theorem} 
+    \begin{lemma}[Sample Lemma]
+        This is a lemma!
+    \end{lemma}
+    \begin{example}[Sample Example]
+        This is an example!
+    \end{example}
+    \begin{alertblock}{Sample Alert}
+        This is an alert!
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Itemize}
+    \begin{itemize}
+        \item Item 1
+        \begin{itemize}
+            \item Subitem 1
+            \begin{itemize}
+                \item Subsubitem 1
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}[allowframebreaks]{References}
+    %\nocite{*}
+    \printbibliography
+\end{frame}
+ 
+\end{document}

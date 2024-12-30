@@ -1,0 +1,82 @@
+\section{Motivation}
+    %\subsection{Subsections 1}
+
+%\begin{frame}{Frametitle}{Framesubtitle}   
+%\end{frame}
+\begin{frame}{Dimensionality Reduction}
+    \textbf{Goal}: Map high-dimensional data to a lower dimension $\mathbb{R}^d \to \mathbb{R}^s$, $s \ll d$ while perserving intrinsic structure.  \pause
+
+    \vspace{5pt}
+    \textbf{Applications}
+    \begin{itemize}
+        \item Compression 
+        \item Feature extraction 
+        \item Data visualization \pause
+    \end{itemize} 
+    \vspace{5pt}
+    \textbf{Methods}
+    \begin{itemize}
+        \item Linear methods: Principal Component Analysis (PCA), Multidimensional Scaling (MDS) 
+        \item Nonlinear methods: Isomap, t-Stochastic Neighbor Embedding (t-SNE)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Challenges of High Dimensions} 
+    \textbf{Curse of Dimensionality}
+    \begin{itemize}
+        \item Volume of a hypercube (with side length $2$) grows in $\mathcal{O}(2^d)$ 
+        \item Data points become sparse 
+    \end{itemize}\pause
+    \vspace{5pt}
+    \textbf{Distance Concentration}
+    \begin{itemize}
+        \item In high-dimensional spaces $\frac{\lVert x_i - x_j\rVert}{\lVert x_i - x_k\rVert} \approx 1$ for most $x_i, x_j, x_k$. 
+        \item Euclidean distance becomes less meaningful 
+    \end{itemize}\pause
+    \vspace{5pt}
+    \textbf{Crowding Problem}
+    \begin{itemize}
+        \item High-dimensional points cannot be faithfully embedded in two or three dimensions
+        \item Intrinsically distant points may cluster artificially due to limited space in the embedding 
+    \end{itemize}
+\end{frame}
+
+
+\iffalse
+\begin{frame}{Problems of sampling-based methods}
+    \begin{tikzpicture} [scale=0.4,baseline=0pt]
+        \draw[->] (0, 0) -- (8, 0) node[right] {$\bs{y}$};
+        \draw[->] (0, 0) -- (0, 8) node[above] {$\lambda^{(\bs{y})}$};
+        \draw[scale=1, domain=0:8, smooth, variable=\x, blue, dashed] plot ({\x}, {\x+3});
+        \draw[scale=1, domain=0:8, smooth, variable=\y, red]  plot ({\y}, {11-\y});
+
+        \foreach \Point in {(-2,1.5), (-1,1), (-2,3), (-1,2.5), (1,3)}{
+            \node at \Point {\textbullet};
+        }
+
+        \foreach \Point in {(2,-1.5), (1,-1), (2,-3), (1,-2.5), (1,-3)}{
+            \node[blue] at \Point {$\circ$};
+        }
+        \fill (a.base) circle[radius=.1pt];
+
+
+
+        \draw[->] (17, 0) -- (25, 0) node[right] {$\bs{y}_1$};
+        \draw[->] (17, 0) -- (14, -3) node[left] {$\bs{y}_2$};
+        \draw[->] (17, 0) -- (17, 8) node[above] {$\lambda^{(\bs{y})}$};
+
+        \draw[dashed, thick] (18,-1.5) arc (170:10:2.6cm and 0.6cm)coordinate[pos=0] (a);
+        \draw[thick] (18,-1.5) arc (-170:-10:2.6cm and 0.6cm)coordinate (b);
+        %\draw[densely dashed] ([yshift=4cm]$(a)!0.5!(b)$) -- node[right,font=\footnotesize] {$h$}coordinate[pos=0.95] (aa)($(a)!0.5!(b)$)
+        %                        -- node[above,font=\footnotesize] {$r$}coordinate[pos=0.1] (bb) (b);
+        %\draw (aa) -| (bb);
+        \draw[thick] (a) -- ([yshift=3cm]$(a)!0.5!(b)$) -- (b);
+        \draw[thick] (18,4.5) arc (170:10:2.6cm and 0.6cm)coordinate[pos=0] (a2);
+        \draw[thick] (18,4.5) arc (-170:-10:2.6cm and 0.6cm)coordinate (b2);
+        %\draw[densely dashed] ([yshift=4cm]$(a2)!0.5!(b2)$) -- node[right,font=\footnotesize] {$h$}coordinate[pos=0.95] (aa2)($(a2)!0.5!(b2)$)
+        %                        -- node[above,font=\footnotesize] {$r$}coordinate[pos=0.1] (bb2) (b2);
+        %\draw (aa2) -| (bb2);
+        \draw[thick] (a2) -- ([yshift=3cm]$(a)!0.5!(b)$) -- (b2);
+    \end{tikzpicture}
+\end{frame}
+\fi
