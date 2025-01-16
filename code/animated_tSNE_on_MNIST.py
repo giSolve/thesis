@@ -16,9 +16,10 @@ for i in range(x_train.shape[0]):
 X = pd.DataFrame(X)
 Y = pd.DataFrame(y_train)
 
-# Shuffle dataset and take random 20% for visualization with t-SNE
-X_sample = X.sample(frac=0.2, random_state=12).reset_index(drop=True)
-Y_sample = Y.sample(frac=0.2, random_state=12).reset_index(drop=True)
+# Shuffle dataset and take random 100% for visualization with t-SNE
+# have taken random state 12 before
+X_sample = X.sample(frac=0.05, random_state=10).reset_index(drop=True)
+Y_sample = Y.sample(frac=0.05, random_state=10).reset_index(drop=True)
 X_sample['label'] = Y_sample
 
 # Step 1: Define affinities
@@ -45,19 +46,19 @@ def callback(iteration, error, embedding):
 print("starting EE")
 # Step 4: Early Exaggeration with a callback
 EE_embedding = embedding.optimize(
-    n_iter=250,
+    n_iter=65,
     exaggeration=12,
     callbacks=callback,
-    callbacks_every_iters=2,
+    callbacks_every_iters=10,
     verbose=True
 )
 
 # Step 5: Embedding with callback 
 final_embedding = EE_embedding.optimize(
-    n_iter=500,
+    n_iter=15000,
     exaggeration=1,
     callbacks=callback,
-    callbacks_every_iters=2,
+    callbacks_every_iters=10,
     verbose=True
 )
 print("embedding done")
@@ -74,7 +75,7 @@ epsilon = max(abs(x_max - x_min), abs(y_max - y_min)) / 50
 # Create the animation figure and scatter plot
 fig, ax = plt.subplots(figsize=(8, 8))
 scatter = ax.scatter([], [], c=[], cmap='Paired', alpha=0.6)
-ax.set_title("Standard t-SNE on MNIST")
+ax.set_title("t-SNE on MNIST, 0.05 percent points, seed=10, EE=65, Embed=15000, callbacks=10")
 ax.set_xlim(x_min - epsilon, x_max + epsilon)
 ax.set_ylim(y_min - epsilon, y_max + epsilon)
 
@@ -96,7 +97,7 @@ ani = animation.FuncAnimation(
 )
 
 # Specify the filename and writer
-output_filename = "tsne_mnist_animation01_slower.mp4"
+output_filename = "tsne_mnist_animation06_15000_iters.mp4"
 writer = FFMpegWriter(fps=30, metadata=dict(artist='Me'), bitrate=1800)
 
 # Save the animation
