@@ -1,0 +1,74 @@
+\section{Multilevel Monte Carlo quadrature}
+For a more efficient calculation of the quantities of interest, it is also possible to use a multilevel quadrature method \cite{DOLZ2022114242,Giles_2015}.
+The main computational effort when considering a stochastic Dirichlet Laplacian eigenvalue problem lies in computing the approximation $\underline{V}(\kappa)$ of the single layer boundary integral operator.
+The idea of multilevel Monte Carlo is to perform most simulations with low accuracy at a corresponding low cost and rather few simulations at high accuracy and high cost.
+In our case, low accuracy corresponds with using a Galerkin approximation space on a coarser refinement level and accordingly, high accuracy is achieved when using an approximation space with a higher refinement.
+
+Using a multilevel quadrature approach, we obtain
+\begin{equation}
+    \label{eq:B-multilevel}
+    \bE[B] \approx \mathcal{Q}_L^{\text{ML}} [B] = \sum_{\ell=0}^L \mathcal{Q}_{L-\ell} [B^{(\ell)}-B^{(\ell-1)}],
+\end{equation}
+where $\mathcal{Q}_{\ell}$ is a quadrature rule on level $\ell$.
+The approximation $B^{(\ell)}$ is computed using the Galerkin approximation $\underline{V}^{(\ell)}(\kappa)$ of the single layer boundary integral operator of the Helmholtz equation on refinement level $\ell$, setting $B^{(-1)} = 0$. For the approximation error of the multilevel quadrature, it holds a sparse tensor product-like error estimate.
+\iffalse
+If $\varepsilon_{\ell} \to 0$ is a monotonically decreasing sequence with $\varepsilon_{\ell} \cdot \varepsilon_{L-\ell} = \varepsilon_L$ for every $L\in \bN$ and
+\[
+    \lVert \mathcal{B}_{L-\ell}-\bE[B]\rVert \leq c_1\varepsilon_{L-\ell} \quad \text{and}\quad \lVert B^{(\ell)}-B\rVert \leq c_2\varepsilon_{\ell}
+\]
+for some suitable norms and constants $c_1,c_2 > 0$, then
+\[
+    \lVert \mathcal{Q}_L^{\text{ML}}[B] - \bE[B] \rVert \leq C\varepsilon_L
+\]
+for a constant $C>0$, \comment{what conditions do we need?}. %given that $B$ is sufficiently regular \comment{revisar esto, tipo cuáles son las condiciones}.
+\fi
+
+%\comment{igual conviene otra letra que ml es también la mulitplicity}
+Since the size of $\underline{V}^{(\ell)}(\kappa) \in \bC^{m_{\ell} \times m_{\ell}}$ depends on the refinement level, we cannot choose the orthogonal matrices $V_0$ and $W_0$ independent of the level, but need matrices $W_0^{(\ell)}$ and $V_0^{(\ell)}$.
+%In particular, this means that the eigenspaces that we fix are not the same across all levels.
+If, on a single level, we choose $V_0$ and $W_0$ using the SVD of $A_{\mathbf{0},0} = V_0 \Sigma_0 W_0\hm$, $W_0$ and $V_0$ depend only on $\underline{V}^{(\ell)}(\kappa)$ and $\widehat{V}$.
+As we cannot control $\underline{V}(\kappa)$, we consider $\widehat{V}$ instead.
+
+For the contour integral method, the only property required of $\widehat{V}$ is that it has full rank.
+Furthermore, for the computation of $A_{\mathbf{0},0}$ and $A_{\mathbf{0},1}$, we are computing $\underline{V}(\kappa)\inv \widehat{V}$.
+Since $\underline{V}(\kappa)$ is the system matrix of a Galerkin method, we can interpret $\widehat{V}$ as a matrix of discretized linear forms.
+So, instead of choosing the columns of $\widehat{V}$ randomly, we can choose the linear forms randomly in a suitable sense such that $\widehat{V}$ has full rank independently of the ansatz space.
+Once we obtain $\widehat{V}^{(\ell)}$ in this fashion, we can compute $V_0^{(\ell)}$ and $W_0^{(\ell)}$ on each level as before.
+
+Regarding the choice of the linear forms, we propose the following.
+For each column of $\widehat{V}$, we take a suitable random function that we test against the corresponding ansatz space with the $L^2$-scalar product to get discretized linear forms for each level.
+A way of finding appropiate random functions is to choose functions $f(\bfx) = e^{-\frac{\norm{\bfx - \bfm}_2}{\sigma}}$, where $\bfm \in \bR^3, \sigma >0$ are random parameters.
+
+\Cref{alg:multilevel} shows an example of how a multilevel approach for our problem could be implemented.
+%\comment{ask about inputs/outputs, what exactly to say there, do I want to take $T$ there or $\underline{V_{\kappa}}$}
+
+Let $l' \geq k$.
+\begin{algorithm}
+    \DontPrintSemicolon
+
+    \SetKwInput{Input}{Input}
+    \SetKwInput{Output}{Output}
+    \SetKw{KwGoTo}{go to}
+
+    \Input{Aproximations $T_{\bs{y}}^{(\ell)} \in H(\Omega, \bC^{m \times m})$ of a family of parametrized functions for $\ell = 0,\ldots,L$ and a contour $\Gamma \subset \Omega$}
+    \Output{A multilevel approximation $\mathcal{Q}_L^{\text{ML}}[B]\approx \bE[B]$}%, where $B$... (retains eigenvalues and multiplicity o así)}
+    \BlankLine
+    Generate $l'$ random functions $f_j(\bfx) = e^{-\frac{\norm{\bfx - \bfm_j}_2}{\sigma_j}}, \space j=1,\ldots,l'$, where $m_j \sim \text{Unif}([0,1]^3),\space \sigma_j \sim \text{Unif}([0,1])$\;
+    \For{$\ell = 0,\ldots,L$}{
+        Compute $\widehat{V}^{(\ell)}$ with columns given by the discretization of the functions $f_j, \space j=1,\ldots,l'$ on the Ansatz space for refinement level $\ell$\;
+        Compute the SVD of the matrix $A_{\mathbf{0},0}^{(\ell)} = V_0^{(\ell)H} \Sigma_0^{(\ell)} W_0^{(\ell)}$\;
+        \For{$i=1,\ldots, M^{(\ell)}$}{
+            Draw a random sample $\bs{y}_i \sim \text{Unif}([-1,1]^N)$\;
+            Compute $B_{\bs{y}_i}^{(\ell)}$ and $B_{\bs{y}_i}^{(\ell-1)}$ using $V_0^{(\ell)}$ and $W_0^{(\ell)}$, and $V_0^{(\ell-1)}$ and $W_0^{(\ell-1)}$, respectively\;
+            Set $D_{\bs{y}_i}^{(\ell)} = B_{\bs{y}_i}^{(\ell)} - B_{\bs{y}_i}^{(\ell-1)}$\;
+            %Compute $A_{\bs{y}_i, 0}^{(\ell)}$ and $A_{\bs{y}_i, 1}^{(\ell)}$\;
+            %Set $\Sigma_{\bs{y}_i,0} = V_0 A_{\bs{y}_i,0} W_0\hm$\;
+            %Set $B_{\bs{y}_i} = V_0\hm A_{\bs{y}_i,1} W_0 \Sigma_{\bs{y}_i,0}\inv$
+        }
+        Set $D^{(\ell)} = \frac{1}{M^{(\ell)}} \sum_{i=1}^{M^{(\ell)}} D_{\bs{y}_i}^{(\ell)}$\;
+    }
+    \Return{$B^{\text{ML}} = \sum_{\ell=1}^L D^{(\ell)}$}
+    \caption{Multilevel Monte Carlo quadrature for the Dirichlet Laplacian eigenvalue problem}\label{alg:multilevel}
+\end{algorithm}
+
+%\comment{think if i want to include remarks}

@@ -1,0 +1,46 @@
+\section{Basic t-SNE Algorithm}
+\textcolor{red}{\textbf{TO DO}}: This section closely follows the Theoretical Foundations Paper by Cai \cite{JMLR:v23:21-0524}. 
+
+Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize. We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
+
+The t-SNE algorithm first computes a joint probability distribution over all pairs of data points $\{(x_i, x_j)\}_{1 \leq i \neq j \leq n}$ given by 
+\begin{equation}
+    p_{j|i} =  \frac{\exp(-\norm{x_i - x_j}_2^2 / 2\tau_i^2)}{\sum_{l \in \{1,2, \dots, n\} \backslash \{i\}} \exp({-\norm{x_i - x_l}_2^2 / 2 \tau_i^2})}
+\end{equation}
+which is then symmetrized via $p_{ij} = \frac{p_{i|j} + p_{j|i}}{2n}$. For $i=j$, we set $p_{ii}=0$. In matrix-form, we write $P = (p_{ij})_{1 \leq i, j \leq n}$. These propabilities can be thought of as reflecting the pairwise distances between the high-dimensional data points, a large $p_{ij}$ indicating that the points $x_i$ and $x_j$ closely resemble each other. 
+
+The parameters $\tau_i$ are the bandwidth of the Gaussian kernel used and can be adapted based on a fixed number called perplexity using binary search. 
+
+We then also compute a similarity measure for points in the low-dimensional embedding as follows: 
+\begin{equation}
+    q_{ij} = \frac{(1+ \norm{y_i - y_j}_2^2)^{-1}}{\sum_{l, s \in \{1,2, \dots, n \}, l \neq s } (1+\norm{y_l - y_s}_2^2)^{-1}}
+\end{equation}
+where we again define $q_{ii} = 0$ for all $1 \neq i \neq n$. We can collect all of the points in a symmetrical matrix $Q = (q_{ij})_{1 \leq i, j \leq n}$. 
+
+The goal of the algorithm is now to get the similarities $P$ and $Q$ to be as close to each other as possible. A common choice for measuring the distance between two distributions is the Kullback-Leibler divergence. 
+
+\begin{defi}[Kullback-Leibler Divergence]
+    The \emph{Kullback-Leibler divergence} between two probability distributions $P$ and $Q$ over the same probability space is defined as:
+    \[
+    D_{\text{KL}}(P \parallel Q) = \sum_{x \in \mathcal{X}} P(x) \log\frac{P(x)}{Q(x)}
+    \]
+    for discrete distributions, or
+    \[
+    D_{\text{KL}}(P \parallel Q) = \int_{\mathcal{X}} P(x) \log\frac{P(x)}{Q(x)} \, dx
+    \]
+    for continuous distributions, where \(\mathcal{X}\) is the domain of the distributions.
+\end{defi}
+
+\textcolor{red}{\textbf{TO DO}}: Say more about how KLD is not symmetrical, why does this make sense? 
+
+The t-SNE algorithm now aims to find a low-dimensional representation $(y_1, \dots, y_n)$ that minimizes the KL-divergence between the similarity matrices $P$ and $Q$. We have 
+\begin{equation}
+    (y_1, \dots y_n) = \argmin_{y_1, \dots y_n} D_{\text{KL}}(P \parallel Q) = \argmin_{y_1, \dots y_n} \sum_{i,j \in {1,\dots,n}, i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}.
+\end{equation}
+
+\textcolor{red}{\textbf{TO DO}}: maybe give this loss function a name? that would be nicer for the deriv 
+
+This can be achieved using a standard gradient-descent type algorithm, with an updating equation of 
+\begin{equation}
+    y_i^{(k+1)} = y_i^{(k)} 
+\end{equation}
