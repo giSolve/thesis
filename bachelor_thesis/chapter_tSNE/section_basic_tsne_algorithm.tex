@@ -1,5 +1,5 @@
 \section{Basic t-SNE Algorithm}
-\textcolor{red}{\textbf{TO DO}}: This section closely follows the Theoretical Foundations Paper by Cai \cite{JMLR:v23:21-0524}. 
+This section closely follows the Theoretical Foundations Paper by Cai \cite{JMLR:v23:21-0524} so far. 
 
 Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize. We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
 
@@ -42,5 +42,11 @@ The t-SNE algorithm now aims to find a low-dimensional representation $(y_1, \do
 
 This can be achieved using a standard gradient-descent type algorithm, with an updating equation of 
 \begin{equation}
-    y_i^{(k+1)} = y_i^{(k)} 
+    y_i^{(k+1)} = y_i^{(k)} + h D_i^{(k)} + m^{(k+1)}(y_i^{(k)} - y_i^{(k-1)}) 
 \end{equation}
+for $i=1,\dots,n$, where $h >0$ is a prespecified step size parameter, $m^{(k)} > 0$ is a momentum parameter and we denote the gradient of our loss function (with respect to $y_i$) as: 
+\begin{equation}
+    D_i^{(k)} = 4 \sum_{1 \leq j \leq n, j \neq i} (y_j^{(k)} - y_i^{(k)}) S_{ij}^{(k)} \in \mathbb{R}^2 \text{ with } S_{ij}^{(k)} = \frac{p_{ij} - q_{ij}^{(k)}}{1+ \norm{y_i^{(k)}-y_j^{(k)}}_2^2 } \in \mathbb{R}
+\end{equation}
+
+\textcolor{red}{\textbf{TO DO}}: rename this gradient, use an actual gradient symbol 
