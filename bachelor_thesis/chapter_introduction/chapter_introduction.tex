@@ -1,30 +1,6 @@
 \chapter{Introduction}
-We consider the Dirichlet Laplacian eigenvalue problem
-\begin{subequations}
-    \label{eq:og-prob}
-    \begin{align}
-        \Delta u^{(\bs{y})} + \lambda^{(\bs{y})} u^{(\bs{y})} = 0\quad&\text{in}\ D(\bs{y}),\\ \label{eq:og-prob-domain}
-        u^{(\bs{y})} = 0\quad&\text{on}\ \partial D(\bs{y}).
-    \end{align}
-\end{subequations}
-where $D(\bs{y}) \subset \bR^3$ is a randomly shaped domain modeled by a parameter $\bs{y} \in \bR^{\bN}$.
-
-Consequently, the eigenfunctions $u^{(\bs{y})}$ and eigenvalues $\lambda^{(\bs{y})}$ are random as well, so we want to investigate statistical moments, namely mean values, of these eigenpairs.
-When employing a sampling-based method such as Monte Carlo for the approximation of the expectations, the problem of tracking the trajectories of the eigenvalues arises, as crossings and bifurcations may occur and may not be detected by means of the discrete samples.
-In particular, it can be seen that for eigenvalues with higher multiplicities only the stochastic properties of the eigenspaces are meaningful, but not the ones of individual eigenpairs (cf. \cite{Doelz_Ebert_2024}).
-
-Our aim is to find a method that circumvents the matching problem of relating individually computed eigenpairs from different samples to each other, but still allows for a computation of the aforementioned expectations.
-To do this, we use the insight that the eigenspaces have more significant stochastic properties and are invariant under orthogonal transformations.
-The idea is to transform the eigenspaces that are computed on each sample onto a common coordinate system given by a fixed orthogonal matrix.
-Then, we compute the expectation of a matrix encoding these eigenspaces and finally derive expectations for the eigenpairs from the eigendecomposition of the resulting matrix.
-
-To this purpose, we proceed as follows.
-First, we need to solve the problem \eqref{eq:og-prob} for a given sample $\bs{y} \in \bR^{\bN}$.
-In \Cref{chapter:galerkin-nonlinear-ev-prob} a Galerkin boundary element method for the Dirichlet Laplacian eigenvalue problem is presented.
-This method yields a discrete matrix-valued approximation of the single layer boundary integral operator used for the representation of the solutions to \eqref{eq:og-prob}.
-\Cref{chapter:cim} is concerned with solving the arising nonlinear eigenvalue problem, for which we employ a contour integral method to find all eigenvalues inside a given contour as well as the corresponding eigenvectors.
-Then, in \Cref{chapter:multilevel-quadrature}, we introduce our sampling-based multilevel quadrature method.
-To compute expectations using the eigenspaces, we use a strategy that transforms them onto reference systems which are related to each other over the different levels.
-Finally, we present numerical results in \Cref{chapter:numerical-results} and discuss the method and findings briefly in \Cref{chapter:conclusions} to conclude our work.
-
+Notes from \cite{vdMaa08}: 
+\begin{itemize}
+    \item t-SNE is capable of capturing both local and global structure reasonably well 
+\end{itemize}
 %This insight is used to find a Monte Carlo sampling strategy that stays meaningful for multiple eigenvalues.
