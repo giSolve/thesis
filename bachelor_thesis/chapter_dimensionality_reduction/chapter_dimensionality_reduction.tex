@@ -1,4 +1,6 @@
 \chapter{Dimensionality Reduction}\label{chapter:dimensionality-reduction}
+
+\section{Linear and Nonlinear Methods}
 Notes from \cite{vdMaa08}: 
 \begin{itemize}
     \item aim of dimensionality reduction: preserve as much of the significant structure of the high-dimensional data as possible in the low-dimensional map 
@@ -7,7 +9,14 @@ Notes from \cite{vdMaa08}:
     \item often though, high-dimensional data does not lie on a linear space but instead on or near a non-linear (low-dimensional) manifold. here, it is usually more important to keep the low-dimensional representations of very similar datapoints close together. this is something that cannot be done with a linar mapping. 
 \end{itemize}
 
-
-- talk a bit about PCA here 
-- linear and nonlinear dimensionality reduction 
-- why do we need it? 
+\section{Problems of High-Dimensional Data}
+\subsection{The Crowding Problem}
+Again, notes from \cite{vdMaa08}: 
+\begin{itemize}
+    \item consider a manifold with intrinsic dimensionality $10$ which is embedded in a very high-dimensional space 
+    \item then obviously, pairwise distances in a two-dimensional map cannot ever faithfully model distances between points on the ten-dimensional manifold, e.g. in 10 dim manifold, we can have 11 points that are mutually equidistant but this cannot be done in 2 dimensions 
+    \item different distribution of pairwise distances: volume of a sphere scales as $r^m$ 
+    \item the \textit{crowding problem}: the area of a two-dimensional map that is available to accomodate moderately distant datapoints will not be nearly large enough compared with the area available to accomodate nearby datapoints. \\
+    Thus, if our main focus is on modelling small distances accurately, moderately distant points have to be placed much to far apart in the two-dimensional map. 
+    \item in the case of SNE, this results in a lot of points crowding at the center of the map 
+\end{itemize}
