@@ -1,4 +1,4 @@
 \section{Initialization}
-The t-SNE algorithm usually starts with an initization $y_i^{(0)} = y_i^{(-1)}$ for $i=\{1, 2, \dots, n\}$ which is drawn independently from a uniform distribution on $[-0.01, 0.01]^2$. It has also been suggested (\textcolor{red}{\textbf{TO DO}}: by whom) to draw the initial low-dimensional map from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$. 
+The t-SNE algorithm usually starts with an initization $y_i^{(0)} = y_i^{(-1)}$ for $i=\{1, 2, \dots, n\}$ which is drawn independently from a uniform distribution on $[-0.01, 0.01]^2$. It has also been suggested by \textcolor{red}{by whom??} to draw the initial low-dimensional map from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$. 
 
 However, recent work \cite{kobak21} has shown that PCA initialization (\textcolor{red}{TO DO}: explain more what this actually is) works better. In fact, most t-SNE libraries nowadays use PCA initialization by default. 

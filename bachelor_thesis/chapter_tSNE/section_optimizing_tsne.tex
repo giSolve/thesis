@@ -1,0 +1,39 @@
+\section{Optimizing t-SNE Parameters and Hyperparameters}
+
+\subsection{Perplexity}
+Let us come back to the variance $\sigma_i$ of the Gaussian centered at each datapoint $x_i$. What is a good value to choose? 
+If we fixed a single value $\sigma$ to be the same for every datapoint, this is likely not a good choice, because real-life data often does not have a constant density everywhere but instead has sparser and denser regions. 
+Given that we want to consider approximately the same number of nearest neighbors for each $x_i$, we opt to choose larger values of $\sigma_i$ for sparse regions and smaller bandwidths for dense regions. 
+
+\textcolor{red}{\textbf{TO DO}: find a better way to describe what perplexity actually does, the following is just taken directly from \cite{vdMaa08}}
+
+Any particular value of $\sigma_i$ induces a probability distribution $P_i$ over all other datapoints. 
+The entropy of this distribution increases as $\sigma_i$ increases. 
+The user can specify a specific so-called perplexity
+\begin{equation}
+    \kappa = \text{Perp}(P_i) = 2^{H(P_i)} 
+\end{equation}
+where $H(P_i) = -\sum_{j} p_{ij} \log_2 p_{ij}$ denotes the Shannon entropy of $P_i$. 
+
+\textcolor{red}{\textbf{TO DO}: do we use $p_{ij}$ or $p_{j|i}$ in the definition of perplexity?}
+
+Then, t-SNE performs a binary search for the value of $\sigma_i$ that produces the user-specified perplexity. 
+
+One can think of perplexity as a smooth measure of the effective \textcolor{red}{\textbf{TO DO}: what does this actually mean?} number of neighbors being considered in the calculation of the $p_{ij}$. As such, larger perplexity values are computationally more expensive. 
+
+An important question is: which values are good perplexity values. Several suggestions have been made \textcolor{red}{\textbf{TO DO}: compile research on suggestions here}. 
+
+
+\subsection{Initialization}
+The t-SNE algorithm usually starts with an initization $y_i^{(0)} = y_i^{(-1)}$ for $i=\{1, 2, \dots, n\}$ which is drawn independently from a uniform distribution on $[-0.01, 0.01]^2$. It has also been suggested by \textcolor{red}{by whom??} to draw the initial low-dimensional map from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$. 
+
+However, recent work \cite{kobak21} has shown that PCA initialization (\textcolor{red}{TO DO}: explain more what this actually is) works better. In fact, most t-SNE libraries nowadays use PCA initialization by default. 
+
+\subsection{Early Exaggeration}
+Early exaggeration was first proposed as a method of optimizing t-SNE in \cite{vdMaa08}. They proposed multiplying all the $p_{ij}$ by a value $\alpha > 0$ for the first few iterations of the algorithm. Since our loss function encourages the $q_{ij}$ to model the $p_{ij}$ as closely as possible, we achieve artificially large $q_{ij}$ values this way. This means that relatively tight clusters are being formed, which can then move around more easily in space, making it easier to find a good global organization of the clusters. 
+
+Open question: What should $\alpha$ be and for how many iterations should we keep EE on? 
+\begin{itemize}
+    \item \cite{vdMaa08} originally proposed $\alpha = 4$, for $50$ iterations out of $1000$ in total 
+\end{itemize}
+

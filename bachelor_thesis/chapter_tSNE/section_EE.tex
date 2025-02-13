@@ -1,0 +1,7 @@
+\section{Early Exaggeration}
+Early exaggeration was first proposed as a method of optimizing t-SNE in \cite{vdMaa08}. They proposed multiplying all the $p_{ij}$ by a value $\alpha > 0$ for the first few iterations of the algorithm. Since our loss function encourages the $q_{ij}$ to model the $p_{ij}$ as closely as possible, we achieve artificially large $q_{ij}$ values this way. This means that relatively tight clusters are being formed, which can then move around more easily in space, making it easier to find a good global organization of the clusters. 
+
+Open question: What should $\alpha$ be and for how many iterations should we keep EE on? 
+\begin{itemize}
+    \item \cite{vdMaa08} originally proposed $\alpha = 4$, for $50$ iterations out of $1000$ in total 
+\end{itemize}

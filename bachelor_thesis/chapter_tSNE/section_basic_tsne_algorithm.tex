@@ -1,7 +1,8 @@
 \section{Basic t-SNE Algorithm}
 This section closely follows the Theoretical Foundations Paper \cite{JMLR:v23:21-0524} and \cite{vdMaa08} so far. 
 
-Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize. We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
+Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize.
+We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
 
 \subsection{Measuring High-Dimensional Similarities}
 
@@ -16,18 +17,22 @@ Intuitively, one can think of $p_{j|i}$ as the probability that $x_i$ would choo
 
 The bandwidths $\sigma_i$ of the Gaussian kernel can be adapted based on a fixed number called perplexity using binary search. See more on this in the section on perplexity. 
 
-One might wonder why it is necessary to symmetrize the similarities. Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{ij}$ values for this datapoint end up being very small. As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$. 
+One might wonder why it is necessary to symmetrize the similarities. Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{ij}$ values for this datapoint end up being very small. 
+As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$. 
 
 \subsection{Measuring Low-Dimensional Similarities}
+In order to measure similarities between points in the low-dimensional embedding, a first approach would be to also use a Gaussian distribution to convert pairwise distances into probabilities, as above. This is the approach taken originally in SNE \cite{Hinton02}.
+
+However, to address the crowding problem, we instead use the more heavy-tailed Student t-distribution with one degree of freedom (also called a Cauchy distribution). That way, moderate distances in the high-dimensional space will be modeled by much larger distances in the low-dimensional map (since we try to minimize the difference between $p_{ij}$ and $q_{ij}$, see details below). 
+\textcolor{red}{\textbf{TO DO}: explain this better}
+
 
 We then also compute a similarity measure for points in the low-dimensional embedding as follows: 
 \begin{equation}
-    q_{ij} = \frac{(1+ \norm{y_i - y_j}_2^2)^{-1}}{\sum_{l, s \in \{1,2, \dots, n\}, l \neq s } (1+\norm{y_l - y_s}_2^2)^{-1}}
+    q_{ij} = \frac{(1+ \norm{y_i - y_j}_2^2)^{-1}}{\sum_{k, l \in \{1,2, \dots, n\}, k \neq l} (1+\norm{y_k - y_l}_2^2)^{-1}}
 \end{equation}
 where we again define $q_{ii} = 0$ for all $1 \leq i \leq n$. We can collect all of the points in a symmetrical matrix $Q = (q_{ij})_{1 \leq i, j \leq n}$. 
 
-The central contribution of t-SNE over SNE is using the more heavy-tailed Student t-distribution instead of a Gaussian. 
-This addresses the crowding problem, see \cite{vdMaa08}. 
 
 \begin{figure}[h]
     \begin{center}
@@ -47,7 +52,8 @@ A common choice for measuring the distance between two distributions is the Kull
     for discrete distributions where \(\mathcal{X}\) is the domain of the distributions.
 \end{defi}
 
-The t-SNE algorithm now aims to find a low-dimensional representation $\mathcal{Y} = (y_1, \dots, y_n)$ that minimizes the KL-divergence between the similarity matrices $P$ and $Q$. We thus define the following loss function: 
+The t-SNE algorithm now aims to find a low-dimensional representation $\mathcal{Y} = (y_1, \dots, y_n)$ that minimizes the KL-divergence between the similarity matrices $P$ and $Q$. 
+We thus define the following loss function: 
 \begin{equation}
     C(\mathcal{Y}) = D_{\text{KL}}(P \parallel Q) = \sum_{i,j \in \{1,\dots,n\}, i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}
 \end{equation}
@@ -69,6 +75,47 @@ Minimizing the cost function can be achieved using a standard gradient-descent t
     y_i^{(k+1)} = y_i^{(k)} + h \frac{\partial C}{\partial y_i}^{(k)} + m^{(k+1)}(y_i^{(k)} - y_i^{(k-1)}) 
 \end{equation}
 for $i=1,\dots,n$, where $h >0$ is a prespecified step size parameter, $m^{(k)} > 0$ is a momentum parameter and we denote the gradient of our loss function (with respect to $y_i$) as: 
+%\begin{equation}
+  %  \frac{\partial C}{\partial y_i}^{(k)} = 4 \sum_{1 \leq j \leq n, j \neq i} (y_j^{(k)} - y_i^{(k)}) S_{ij}^{(k)} \in \mathbb{R}^2 \text{ with } S_{ij}^{(k)} = \frac{p_{ij} - q_{ij}^{(k)}}{1+ \norm{y_i^{(k)}-y_j^{(k)}}_2^2 } \in \mathbb{R}
+%\end{equation}
 \begin{equation}
-    \frac{\partial C}{\partial y_i}^{(k)} = 4 \sum_{1 \leq j \leq n, j \neq i} (y_j^{(k)} - y_i^{(k)}) S_{ij}^{(k)} \in \mathbb{R}^2 \text{ with } S_{ij}^{(k)} = \frac{p_{ij} - q_{ij}^{(k)}}{1+ \norm{y_i^{(k)}-y_j^{(k)}}_2^2 } \in \mathbb{R}
+    \frac{\partial C}{\partial y_i}^{(k)} = 4 \sum_{1 \leq j \leq n, j \neq i} (p_{ij} - q_{ij}^{(k)}) q_{ij}^{(k)} Z^{(k)} (y_j^{(k)} - y_i^{(k)})
 \end{equation}
+where $Z$ is a global normalization constant: 
+\begin{equation}
+    Z^{(k)} = \sum_{m \neq l} (1 + \norm{y_m^{(k)} - y_l^{(k)}})^{-1}. 
+\end{equation}
+\textcolor{red}{\textbf{TO DO}: Check the gradient here, I'm pretty sure it should be $(y_i - y_j)$ and not the other way around}
+
+
+% algorithm pseudocode here
+\begin{algorithm}[H]
+    \caption{Basic version of t-Distributed Stochastic Neighbor Embedding}
+    \label{alg:tsne}
+    \KwIn{data set $\mathcal{X} = \{x_1, x_2, \dots, x_n\}$, perplexity $\text{Perp}$, number of iterations $T$, learning rate $\eta$, momentum $\alpha(t)$}
+    \KwOut{Low-dimensional representation $\mathcal{Y}^{(T)} = \{y_1, y_2, \dots, y_n\}$}
+
+
+    Compute $p_{ij}$ with perplexity $\text{Perp}$ \;
+    Sample initial solution $\mathcal{Y}^{(0)} = \{y_1, y_2, \dots, y_n\} \sim \mathcal{N}(0, 10^{-4} I)$\
+
+    \For{$t = 1$ \KwTo $T$}{
+        Compute low-dimensional affinities $q_{ij}$ \;
+        Compute gradient $\frac{\delta C}{\delta \mathcal{Y}}$ \;
+        Update solution:\;
+        \[
+        \mathcal{Y}^{(t)} = \mathcal{Y}^{(t-1)} + \eta \frac{\delta C}{\delta \mathcal{Y}} + \alpha(t) (\mathcal{Y}^{(t-1)} - \mathcal{Y}^{(t-2)})
+        \]
+    }
+
+    \Return $\mathcal{Y}^{(T)}$\
+\end{algorithm}
+\textcolor{red}{\textbf{TO DO}: make algorithm look nicer}
+
+To optimize the gradient descent prodcedure, \cite{vdMaa08} proposes the following: 
+\begin{itemize}
+    \item setting the momentum term to $\alpha^{(t)} = 0.5$ for $t<250$ and $\alpha^{(t)} = 0.8$ for $t \geq 250$
+    \item set intial learning rate to $\eta = 100$ and update after every iteration adaptively using the adaptive learning rate scheme described by Jacobs \cite{Jacobs1988}
+\end{itemize}
+
+

@@ -19,7 +19,126 @@
 
 \refsection{0}
   \datalist[entry]{anyt/global//global/global/global}
-    \entry{cite-key}{article}{}{}
+    \entry{Arora18}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=8e08b59145b9531815169c7ed0a0b055}{%
+           family={Arora},
+           familyi={A\bibinitperiod},
+           given={Sanjeev},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0b61e9661067d0a906cff8be51415c72}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+        {{hash=c4725f34be7d01b4e9bc6a7c43c340ef}{%
+           family={Kothari},
+           familyi={K\bibinitperiod},
+           given={Pravesh\bibnamedelima K.},
+           giveni={P\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=3d51ee91b7d20d2f26b221a8a3b8b72c}{%
+           family={Bubeck},
+           familyi={B\bibinitperiod},
+           given={Sébastien},
+           giveni={S\bibinitperiod}}}%
+        {{hash=649921f939c8512c864fc007b5459014}{%
+           family={Perchet},
+           familyi={P\bibinitperiod},
+           given={Vianney},
+           giveni={V\bibinitperiod}}}%
+        {{hash=0aada1e0dbe5dcee29325403816a4e60}{%
+           family={Rigollet},
+           familyi={R\bibinitperiod},
+           given={Philippe},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{fullhash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{fullhashraw}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{bibnamehash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{authorbibnamehash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{authornamehash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{authorfullhash}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{authorfullhashraw}{dd1c7b517ced897e86e550b3acc52c67}
+      \strng{editorbibnamehash}{7d6f11603d1478a0df86d1dcaaae0998}
+      \strng{editornamehash}{7d6f11603d1478a0df86d1dcaaae0998}
+      \strng{editorfullhash}{7d6f11603d1478a0df86d1dcaaae0998}
+      \strng{editorfullhashraw}{7d6f11603d1478a0df86d1dcaaae0998}
+      \field{labelalpha}{AHK18}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 31st Conference On Learning Theory}
+      \field{series}{Proceedings of Machine Learning Research}
+      \field{title}{An Analysis of the t-SNE Algorithm for Data Visualization}
+      \field{volume}{75}
+      \field{year}{2018}
+      \true{nocite}
+      \field{pages}{1455\bibrangedash 1462}
+      \range{pages}{8}
+      \verb{file}
+      \verb http://proceedings.mlr.press/v75/arora18a/arora18a.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v75/arora18a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v75/arora18a.html
+      \endverb
+    \endentry
+    \entry{BoehmBerens22}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=3f9bf92f244a2ddabe38621ccee3c0f7}{%
+           family={Böhm},
+           familyi={B\bibinitperiod},
+           given={Jan\bibnamedelima Niklas},
+           giveni={J\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=30f46bf5fd8b18adc9707a70cec598b6}{%
+           family={Berens},
+           familyi={B\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+        {{hash=85a42394eb715e476e39053e10dcf052}{%
+           family={Kobak},
+           familyi={K\bibinitperiod},
+           given={Dmitry},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{fullhash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{fullhashraw}{876d06830b522ecf449afcdd73e574ef}
+      \strng{bibnamehash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{authorbibnamehash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{authornamehash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{authorfullhash}{876d06830b522ecf449afcdd73e574ef}
+      \strng{authorfullhashraw}{876d06830b522ecf449afcdd73e574ef}
+      \field{labelalpha}{BBK22}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Machine Learning Research}
+      \field{number}{95}
+      \field{title}{Attraction-Repulsion Spectrum in Neighbor Embeddings}
+      \field{volume}{23}
+      \field{year}{2022}
+      \true{nocite}
+      \field{pages}{1\bibrangedash 32}
+      \range{pages}{32}
+      \verb{urlraw}
+      \verb http://jmlr.org/papers/v23/21-0055.html
+      \endverb
+      \verb{url}
+      \verb http://jmlr.org/papers/v23/21-0055.html
+      \endverb
+    \endentry
+    \entry{belkina19}{article}{}{}
       \name{author}{6}{}{%
         {{hash=d956bc2ec159caf32d1078bb0e1f7aca}{%
            family={Belkina},
@@ -65,14 +184,12 @@
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{Accurate and comprehensive extraction of information from high-dimensional single cell datasets necessitates faithful visualizations to assess biological populations. A state-of-the-art algorithm for non-linear dimension reduction, t-SNE, requires multiple heuristics and fails to produce clear representations of datasets when millions of cells are projected. We develop opt-SNE, an automated toolkit for t-SNE parameter selection that utilizes Kullback-Leibler divergence evaluation in real time to tailor the early exaggeration and overall number of gradient descent iterations in a dataset-specific manner. The precise calibration of early exaggeration together with opt-SNE adjustment of gradient descent learning rate dramatically improves computation time and enables high-quality visualization of large cytometry and transcriptomics datasets, overcoming limitations of analysis tools with hard-coded parameters that often produce poorly resolved or misleading maps of fluorescent and mass cytometry data. In summary, opt-SNE enables superior data resolution in t-SNE space and thereby more accurate data interpretation.}
       \field{isbn}{2041-1723}
       \field{journaltitle}{Nature Communications}
       \field{number}{1}
       \field{title}{Automated optimized parameters for T-distributed stochastic neighbor embedding improve visualization and analysis of large datasets}
       \field{volume}{10}
       \field{year}{2019}
-      \true{nocite}
       \field{pages}{5415}
       \range{pages}{1}
       \verb{doi}
@@ -84,7 +201,7 @@
       \verb{url}
       \verb https://doi.org/10.1038/s41467-019-13055-y
       \endverb
-      \warn{\item article entry 'cite-key' (masterthesis_your_name_bibliography.bib): Invalid format '2019/11/28' of date field 'date' - ignoring}
+      \warn{\item article entry 'belkina19' (masterthesis_your_name_bibliography.bib): Invalid format '2019/11/28' of date field 'date' - ignoring}
     \endentry
     \entry{JMLR:v23:21-0524}{article}{}{}
       \name{author}{2}{}{%
@@ -125,6 +242,188 @@
       \verb{url}
       \verb http://jmlr.org/papers/v23/21-0524.html
       \endverb
+    \endentry
+    \entry{DamrichBoehm23}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=22e6ae0d40442387bb42053768775ee2}{%
+           family={Damrich},
+           familyi={D\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0a7199f507fa0146da9b3c86ee28ed01}{%
+           family={Böhm},
+           familyi={B\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=7871c4e1ed2fbdab6da3b739b1a73478}{%
+           family={Hamprecht},
+           familyi={H\bibinitperiod},
+           given={Fred\bibnamedelima A},
+           giveni={F\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=85a42394eb715e476e39053e10dcf052}{%
+           family={Kobak},
+           familyi={K\bibinitperiod},
+           given={Dmitry},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{72935778700f42f8b1f45463261af0f7}
+      \strng{fullhash}{5255813cfc4f651af5afaf1368861e92}
+      \strng{fullhashraw}{5255813cfc4f651af5afaf1368861e92}
+      \strng{bibnamehash}{72935778700f42f8b1f45463261af0f7}
+      \strng{authorbibnamehash}{72935778700f42f8b1f45463261af0f7}
+      \strng{authornamehash}{72935778700f42f8b1f45463261af0f7}
+      \strng{authorfullhash}{5255813cfc4f651af5afaf1368861e92}
+      \strng{authorfullhashraw}{5255813cfc4f651af5afaf1368861e92}
+      \field{labelalpha}{Dam+23}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Eleventh International Conference on Learning Representations}
+      \field{title}{From t-{SNE} to {UMAP} with contrastive learning}
+      \field{year}{2023}
+      \true{nocite}
+      \verb{urlraw}
+      \verb https://openreview.net/forum?id=B8a1FcY0vi
+      \endverb
+      \verb{url}
+      \verb https://openreview.net/forum?id=B8a1FcY0vi
+      \endverb
+    \endentry
+    \entry{Hinton02}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=813bd95fe553e6079cd53a567b238287}{%
+           family={Hinton},
+           familyi={H\bibinitperiod},
+           given={Geoffrey\bibnamedelima E},
+           giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=709affbec617f6fb034be46e27fa4e34}{%
+           family={Roweis},
+           familyi={R\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=d5a620874f2d3c3e187b49c65b4d8185}{%
+           family={Becker},
+           familyi={B\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=9aae21f53f8024b5be43d6281ed55dce}{%
+           family={Thrun},
+           familyi={T\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=49b47530760ffc9c1956dd759f68ea4c}{%
+           family={Obermayer},
+           familyi={O\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{fullhash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{fullhashraw}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{bibnamehash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{authorbibnamehash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{authornamehash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{authorfullhash}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{authorfullhashraw}{fa4b0b4458513be18a9498a3f8e026f3}
+      \strng{editorbibnamehash}{fe0b639df20310d232cdddfdc98791bb}
+      \strng{editornamehash}{fe0b639df20310d232cdddfdc98791bb}
+      \strng{editorfullhash}{fe0b639df20310d232cdddfdc98791bb}
+      \strng{editorfullhashraw}{fe0b639df20310d232cdddfdc98791bb}
+      \field{labelalpha}{HR02}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{title}{Stochastic Neighbor Embedding}
+      \field{volume}{15}
+      \field{year}{2002}
+      \verb{urlraw}
+      \verb https://proceedings.neurips.cc/paper_files/paper/2002/file/6150ccc6069bea6b5716254057a194ef-Paper.pdf
+      \endverb
+      \verb{url}
+      \verb https://proceedings.neurips.cc/paper_files/paper/2002/file/6150ccc6069bea6b5716254057a194ef-Paper.pdf
+      \endverb
+    \endentry
+    \entry{Jacobs1988}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e5539055dd250cdec438f5877d88e37}{%
+           family={Jacobs},
+           familyi={J\bibinitperiod},
+           given={Robert\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{fullhash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{fullhashraw}{4e5539055dd250cdec438f5877d88e37}
+      \strng{bibnamehash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{authorbibnamehash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{authornamehash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{authorfullhash}{4e5539055dd250cdec438f5877d88e37}
+      \strng{authorfullhashraw}{4e5539055dd250cdec438f5877d88e37}
+      \field{labelalpha}{Jac88}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0893-6080}
+      \field{journaltitle}{Neural Networks}
+      \field{number}{4}
+      \field{title}{Increased rates of convergence through learning rate adaptation}
+      \field{volume}{1}
+      \field{year}{1988}
+      \field{pages}{295\bibrangedash 307}
+      \range{pages}{13}
+      \verb{doi}
+      \verb https://doi.org/10.1016/0893-6080(88)90003-2
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/0893608088900032
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/0893608088900032
+      \endverb
+    \endentry
+    \entry{KoBe19SingleCell}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=85a42394eb715e476e39053e10dcf052}{%
+           family={Kobak},
+           familyi={K\bibinitperiod},
+           given={Dmitry},
+           giveni={D\bibinitperiod}}}%
+        {{hash=30f46bf5fd8b18adc9707a70cec598b6}{%
+           family={Berens},
+           familyi={B\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{fullhash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{fullhashraw}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{bibnamehash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{authorbibnamehash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{authornamehash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{authorfullhash}{a809b1fdb52f81e8d84998c974a3bc39}
+      \strng{authorfullhashraw}{a809b1fdb52f81e8d84998c974a3bc39}
+      \field{labelalpha}{KB19}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Communications}
+      \field{number}{1}
+      \field{title}{The art of using t-SNE for single-cell transcriptomics}
+      \field{volume}{10}
+      \field{year}{2019}
+      \true{nocite}
+      \field{pages}{5416}
+      \range{pages}{1}
     \endentry
     \entry{kobak21}{article}{}{}
       \name{author}{2}{}{%
@@ -170,6 +469,252 @@
       \verb https://doi.org/10.1038/s41587-020-00809-z
       \endverb
       \warn{\item article entry 'kobak21' (masterthesis_your_name_bibliography.bib): Invalid format '2021/02/01' of date field 'date' - ignoring}
+    \endentry
+    \entry{LinStei22}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=6df3894624b8879801ce0be05b7bfabb}{%
+           family={Linderman},
+           familyi={L\bibinitperiod},
+           given={George\bibnamedelima C.},
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=1b24a53e9b8e90712e18740e9a3b599d}{%
+           family={Steinerberger},
+           familyi={S\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{35599261cccab31550e861951ca37977}
+      \strng{fullhash}{35599261cccab31550e861951ca37977}
+      \strng{fullhashraw}{35599261cccab31550e861951ca37977}
+      \strng{bibnamehash}{35599261cccab31550e861951ca37977}
+      \strng{authorbibnamehash}{35599261cccab31550e861951ca37977}
+      \strng{authornamehash}{35599261cccab31550e861951ca37977}
+      \strng{authorfullhash}{35599261cccab31550e861951ca37977}
+      \strng{authorfullhashraw}{35599261cccab31550e861951ca37977}
+      \field{labelalpha}{LS22}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{SIAM Review}
+      \field{number}{1}
+      \field{title}{Dimensionality Reduction via Dynamical Systems: The Case of t-SNE}
+      \field{volume}{64}
+      \field{year}{2022}
+      \field{pages}{153\bibrangedash 178}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.1137/21M1446769
+      \endverb
+      \verb{eprint}
+      \verb https://doi.org/10.1137/21M1446769
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1137/21M1446769
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1137/21M1446769
+      \endverb
+    \endentry
+    \entry{vdMaa14}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=47fbe2837893a84fb516e9e85ba7aa36}{%
+           family={Maaten},
+           familyi={M\bibinitperiod},
+           given={Laurens},
+           giveni={L\bibinitperiod},
+           prefix={van\bibnamedelima der},
+           prefixi={v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+      }
+      \strng{namehash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{fullhash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{fullhashraw}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{bibnamehash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{authorbibnamehash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{authornamehash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{authorfullhash}{47fbe2837893a84fb516e9e85ba7aa36}
+      \strng{authorfullhashraw}{47fbe2837893a84fb516e9e85ba7aa36}
+      \field{labelalpha}{Maa14}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Machine Learning Research}
+      \field{number}{93}
+      \field{title}{Accelerating t-SNE using Tree-Based Algorithms}
+      \field{volume}{15}
+      \field{year}{2014}
+      \true{nocite}
+      \field{pages}{3221\bibrangedash 3245}
+      \range{pages}{25}
+      \verb{urlraw}
+      \verb http://jmlr.org/papers/v15/vandermaaten14a.html
+      \endverb
+      \verb{url}
+      \verb http://jmlr.org/papers/v15/vandermaaten14a.html
+      \endverb
+    \endentry
+    \entry{vdMaa08}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=47fbe2837893a84fb516e9e85ba7aa36}{%
+           family={Maaten},
+           familyi={M\bibinitperiod},
+           given={Laurens},
+           giveni={L\bibinitperiod},
+           prefix={van\bibnamedelima der},
+           prefixi={v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+        {{hash=9a8750ccdb2a4cf14d2655face1ce016}{%
+           family={Hinton},
+           familyi={H\bibinitperiod},
+           given={Geoffrey},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{fullhash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{fullhashraw}{07df37c1f29fdfb7765c821206be824a}
+      \strng{bibnamehash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{authorbibnamehash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{authornamehash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{authorfullhash}{07df37c1f29fdfb7765c821206be824a}
+      \strng{authorfullhashraw}{07df37c1f29fdfb7765c821206be824a}
+      \field{labelalpha}{MH08}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Machine Learning Research}
+      \field{number}{86}
+      \field{title}{Visualizing Data using t-SNE}
+      \field{volume}{9}
+      \field{year}{2008}
+      \field{pages}{2579\bibrangedash 2605}
+      \range{pages}{27}
+      \verb{urlraw}
+      \verb http://jmlr.org/papers/v9/vandermaaten08a.html
+      \endverb
+      \verb{url}
+      \verb http://jmlr.org/papers/v9/vandermaaten08a.html
+      \endverb
+    \endentry
+    \entry{murray2024largedatalimitsscaling}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=d5f03b26497c0774630a3b874eb143cc}{%
+           family={Murray},
+           familyi={M\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4acad80ca45dd73d0217da684746f999}{%
+           family={Pickarski},
+           familyi={P\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{fullhash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{fullhashraw}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{bibnamehash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{authorbibnamehash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{authornamehash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{authorfullhash}{1f10e29d0b8227c93958c0f1823b2afb}
+      \strng{authorfullhashraw}{1f10e29d0b8227c93958c0f1823b2afb}
+      \field{labelalpha}{MP24}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.ST}
+      \field{eprinttype}{arXiv}
+      \field{title}{Large data limits and scaling laws for tSNE}
+      \field{year}{2024}
+      \true{nocite}
+      \verb{eprint}
+      \verb 2410.13063
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2410.13063
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2410.13063
+      \endverb
+    \endentry
+    \entry{SteiZhang22}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=1b24a53e9b8e90712e18740e9a3b599d}{%
+           family={Steinerberger},
+           familyi={S\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=669ffb1784650fa8275a0828bd70a828}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yulan},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{fullhash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{fullhashraw}{85a3bcc9594989a9cc2c335377915992}
+      \strng{bibnamehash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{authorbibnamehash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{authornamehash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{authorfullhash}{85a3bcc9594989a9cc2c335377915992}
+      \strng{authorfullhashraw}{85a3bcc9594989a9cc2c335377915992}
+      \field{labelalpha}{SZ22}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Research in the Mathematical Sciences}
+      \field{number}{3}
+      \field{title}{t-SNE, forceful colorings, and mean field limits}
+      \field{volume}{9}
+      \field{year}{2022}
+      \true{nocite}
+      \field{pages}{42}
+      \range{pages}{1}
+    \endentry
+    \entry{Wa16Distill}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=c66133f96104e3c0dcd2f73e11469ab0}{%
+           family={Wattenberg},
+           familyi={W\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7fd60cad5301e91d54be24e6d15594a8}{%
+           family={Viégas},
+           familyi={V\bibinitperiod},
+           given={Fernanda},
+           giveni={F\bibinitperiod}}}%
+        {{hash=7201a73ba867797477903e1eec2b65e4}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{fullhash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{fullhashraw}{a942578aacf8f8892971dc8e38947d67}
+      \strng{bibnamehash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{authorbibnamehash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{authornamehash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{authorfullhash}{a942578aacf8f8892971dc8e38947d67}
+      \strng{authorfullhashraw}{a942578aacf8f8892971dc8e38947d67}
+      \field{labelalpha}{WVJ16}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Distill}
+      \field{title}{How to Use t-SNE Effectively}
+      \field{year}{2016}
+      \verb{doi}
+      \verb 10.23915/distill.00002
+      \endverb
+      \verb{urlraw}
+      \verb http://distill.pub/2016/misread-tsne
+      \endverb
+      \verb{url}
+      \verb http://distill.pub/2016/misread-tsne
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

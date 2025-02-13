@@ -3,4 +3,20 @@ Notes from \cite{vdMaa08}:
 \begin{itemize}
     \item t-SNE is capable of capturing both local and global structure reasonably well 
 \end{itemize}
-%This insight is used to find a Monte Carlo sampling strategy that stays meaningful for multiple eigenvalues.
+A sentence I like from \cite{vdMaa14}: \enquote{Visual exploration is an essential component of data analysis, as it allows for the development of intuitions and hypotheses for the processes that generated the data.}
+
+
+Maybe it would be good to say something about the importance of visualization data in general here. 
+
+Notes from \cite{LinStei22}:
+\begin{itemize}
+    \item traditional approaches to data analysis and visualization often fail in the high-dimen\-sio\-nal setting or it is impossible to visualize more than two or three dimensions (think boxplots, traditional scatterplots etc.)
+    \item goal of t-SNE: simplify identification of clusters 
+    \item t-SNE is used in the standard analysis pipeline for single-cell RNA sequencing data nowadays
+\end{itemize}
+
+Notes from \cite{vdMaa14}:
+\begin{itemize}
+    \item In high-dimensional spaces, only small pairwise distances are reliable. This is why most visualization techniques for high-dimensional data only try to model these accurately. 
+    \item a high-level view of t-SNE: the algorithm minimizes a divergence betweeen a distribution that measures pairwise similarities of input objects and a distribution that measures pairwise similarities of the corresponding low-dimensional points in the embedding 
+\end{itemize}
