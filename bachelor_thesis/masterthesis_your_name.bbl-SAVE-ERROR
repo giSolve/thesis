@@ -421,7 +421,6 @@
       \field{title}{The art of using t-SNE for single-cell transcriptomics}
       \field{volume}{10}
       \field{year}{2019}
-      \true{nocite}
       \field{pages}{5416}
       \range{pages}{1}
     \endentry
@@ -469,6 +468,55 @@
       \verb https://doi.org/10.1038/s41587-020-00809-z
       \endverb
       \warn{\item article entry 'kobak21' (masterthesis_your_name_bibliography.bib): Invalid format '2021/02/01' of date field 'date' - ignoring}
+    \endentry
+    \entry{Lin19}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=6df3894624b8879801ce0be05b7bfabb}{%
+           family={Linderman},
+           familyi={L\bibinitperiod},
+           given={George\bibnamedelima C.},
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=83c1725e7dd03a898bb39ee2d2f860ef}{%
+           family={Rachh},
+           familyi={R\bibinitperiod},
+           given={Manas},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6d756f926d7c25784ccbed67a423d6b9}{%
+           family={Hoskins},
+           familyi={H\bibinitperiod},
+           given={Jeremy\bibnamedelima G.},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=1b24a53e9b8e90712e18740e9a3b599d}{%
+           family={Steinerberger},
+           familyi={S\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0a99efdd13e1c8b3d6c3079324de6b1f}{%
+           family={Kluger},
+           familyi={K\bibinitperiod},
+           given={Yuval},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{f2a5c616b0aef727117dfd190d66773b}
+      \strng{fullhash}{c537b48e320a3f6eb91f3a1c8c7cd6b9}
+      \strng{fullhashraw}{c537b48e320a3f6eb91f3a1c8c7cd6b9}
+      \strng{bibnamehash}{f2a5c616b0aef727117dfd190d66773b}
+      \strng{authorbibnamehash}{f2a5c616b0aef727117dfd190d66773b}
+      \strng{authornamehash}{f2a5c616b0aef727117dfd190d66773b}
+      \strng{authorfullhash}{c537b48e320a3f6eb91f3a1c8c7cd6b9}
+      \strng{authorfullhashraw}{c537b48e320a3f6eb91f3a1c8c7cd6b9}
+      \field{labelalpha}{Lin+19}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Methods}
+      \field{number}{3}
+      \field{title}{Fast interpolation-based t-SNE for improved visualization of single-cell RNA-seq data}
+      \field{volume}{16}
+      \field{year}{2019}
+      \field{pages}{243\bibrangedash 245}
+      \range{pages}{3}
     \endentry
     \entry{LinStei22}{article}{}{}
       \name{author}{2}{}{%
@@ -544,7 +592,6 @@
       \field{title}{Accelerating t-SNE using Tree-Based Algorithms}
       \field{volume}{15}
       \field{year}{2014}
-      \true{nocite}
       \field{pages}{3221\bibrangedash 3245}
       \range{pages}{25}
       \verb{urlraw}

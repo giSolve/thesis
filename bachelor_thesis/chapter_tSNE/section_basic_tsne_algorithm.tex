@@ -36,7 +36,7 @@ where we again define $q_{ii} = 0$ for all $1 \leq i \leq n$. We can collect all
 
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=0.9\linewidth]{Gaussian_Cauchy.png}
+        \includegraphics[width=0.9\linewidth]{figures/Gaussian_Cauchy.png}
     \end{center}
 \end{figure}
 
@@ -96,13 +96,17 @@ where $Z$ is a global normalization constant:
     \KwOut{Low-dimensional representation $\mathcal{Y}^{(T)} = \{y_1, y_2, \dots, y_n\}$}
 
 
-    Compute $p_{ij}$ with perplexity $\text{Perp}$ \;
+    Compute $p_{ij}$ with perplexity $\text{Perp}$ 
+    
     Sample initial solution $\mathcal{Y}^{(0)} = \{y_1, y_2, \dots, y_n\} \sim \mathcal{N}(0, 10^{-4} I)$\
 
     \For{$t = 1$ \KwTo $T$}{
-        Compute low-dimensional affinities $q_{ij}$ \;
-        Compute gradient $\frac{\delta C}{\delta \mathcal{Y}}$ \;
-        Update solution:\;
+        Compute low-dimensional affinities $q_{ij}$ 
+
+        Compute gradient $\frac{\delta C}{\delta \mathcal{Y}}$ 
+
+        Update solution:
+
         \[
         \mathcal{Y}^{(t)} = \mathcal{Y}^{(t-1)} + \eta \frac{\delta C}{\delta \mathcal{Y}} + \alpha(t) (\mathcal{Y}^{(t-1)} - \mathcal{Y}^{(t-2)})
         \]

@@ -49,7 +49,62 @@ We can find the nearest neighbor sets $\mathcal{N}_i$ in $\mathcal{O}(u n \log n
 
 \subsubsection{Approximating Repulsive Forces}
 Naively computing the repulsive forces is not a good idea. It would be in $\mathcal{O}(n^2)$. 
+Using the Barnes-Hut algorithm however, this can be sped up to $\mathcal{O}(n \log n)$. 
+The algorithm relies on the observation that the repulsive forces exerted between two small groups of points are very similar whenever these two groups are relatively far away from each other. 
+More precisely, if we consider points $y_i, y_j$ and $y_k$ with $\norm{y_i - y_j} \approx \norm{y_i - y_k} \gg \norm{y_j - y_k}$, then the contributions of $y_j$ and $y_k$ to $F_{\text{rep}, i}$ will be roughly equal. 
 
+To take advantage of this fact, the Barnes-Hut algorithm constructs a data structure known as a quadtree (or for three-dimensional embeddings an octtree). Once we have built a quadtree on the current embedding, we traverse it via depth-first search and decide at every node of the quadtree, whether the corresponding cell can be used as a summary for the contributions to $F_{\text{rep}}$ of all points in the cell or if we need to go deeper. 
 
+\textcolor{red}{Maybe insert a picture of a Quadtree here? But I am not sure how much to write about Barnes-Hut really...}
 
 \subsection{Fast Interpolation-Based t-SNE}
+As observed in \cite{KoBe19SingleCell}, the Barnes-Hut implementation of t-SNE, while faster than the originally proposed algorithm, still becomes provibitively slow for datasets with $n \gg 100,000$. 
+The FFT accelerated, fast interpolation-based version of t-SNE proposed by Linderman et. al. in 2019 \cite{Lin19} attempts to further speed up the computation of t-SNE embeddings with a special view towards applications in the analysis of single-cell RNA-seq data, which keeps growing and datasets often have north of 1 million datapoints. 
+
+% algorithm pseudocode here
+\begin{algorithm}[H]
+    \caption{FFT-accelerated Interpolation-based t-SNE (FIt-SNE)}
+    \label{alg:fit-sne}
+    \KwIn{embedding points $\{y_i\}_{i=1}^N$, interpolation coefficients $\{q_i\}_{i=1}^N$, number of intervals $N_{\text{int}}$, interpolation points per interval $p$}
+    \KwOut{$\varphi(y_i) = \sum_{i=1}^N K(y_i, y_j) q_j$ for $i=1, \dots, N$}
+
+
+    For every interval $I_l$, form $p$ equispaced nodes $\tilde{y}_{j, l} = 1/(2N_{\text{int}}p) + \frac{j-1 + (l-1)p}{N_{\text{int}}p}$ for $j=1,\dots,p$. 
+
+    \For{$I = 1$ \KwTo $N_{\text{int}}$}{
+        Compute the coefficients $w_{m,l}$ given by 
+
+        \[
+            w_{m,l} = \sum_{y_i \in I_l} L_{m, \tilde{y}^l}(y_i) q_i, \text{      } m=1,\dots,p
+        \]
+    }
+
+    Use FFT to compute values of $v_{m,n}$ given by 
+
+        \[
+            \begin{pmatrix}
+                v_{1,1} & v_{2,1} & \dots & v_{p, N_{\text{int}}}
+            \end{pmatrix}^T = \tilde{K} \begin{pmatrix}
+                w_{1,1} & w_{2,1} & \dots & w_{p, N_{\text{int}}}
+            \end{pmatrix}^T
+        \]
+    where $\tilde{K}$ is the Toeplitz matrix given by $\tilde{K}_{ij} = K(\tilde{y_i}, \tilde{y_j})$, $i, j = 1, \dots, N_{\text{int}}p$.
+    
+    \For{$I = 1$ \KwTo $N_{\text{int}}$}{
+        Compute $\varphi(y_i)$ at all points $y_i \in I_l$ via 
+
+        \[
+            \varphi(y_i) = \sum_{j=1}^p L_{j, \tilde{y}^l}(y_i) v_{j,l}
+        \]
+    }
+
+\end{algorithm}
+
+\subsection{Comparing Barnes-Hut and FIt-SNE}
+When comparing the two methods, we only see minor differences in the embedding. 
+However, the FIt-SNE version is many times faster than Barnes-Hut t-SNE, which is why we will be using FIt-SNE in all of our experiments going forward. 
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\linewidth]{figures/BH_vs_FFT.png}
+    \end{center}
+\end{figure}
