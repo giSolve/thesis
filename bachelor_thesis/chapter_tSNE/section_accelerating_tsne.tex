@@ -53,13 +53,28 @@ Using the Barnes-Hut algorithm however, this can be sped up to $\mathcal{O}(n \l
 The algorithm relies on the observation that the repulsive forces exerted between two small groups of points are very similar whenever these two groups are relatively far away from each other. 
 More precisely, if we consider points $y_i, y_j$ and $y_k$ with $\norm{y_i - y_j} \approx \norm{y_i - y_k} \gg \norm{y_j - y_k}$, then the contributions of $y_j$ and $y_k$ to $F_{\text{rep}, i}$ will be roughly equal. 
 
-To take advantage of this fact, the Barnes-Hut algorithm constructs a data structure known as a quadtree (or for three-dimensional embeddings an octtree). Once we have built a quadtree on the current embedding, we traverse it via depth-first search and decide at every node of the quadtree, whether the corresponding cell can be used as a summary for the contributions to $F_{\text{rep}}$ of all points in the cell or if we need to go deeper. 
+To take advantage of this fact, the Barnes-Hut algorithm constructs a data structure known as a quadtree (or for three-dimensional embeddings an octtree). 
+Once we have built a quadtree on the current embedding, we traverse it via depth-first search and decide at every node of the quadtree, whether the corresponding cell can be used as a summary for the contributions to $F_{\text{rep}}$ of all points in the cell or if we need to go deeper. 
 
 \textcolor{red}{Maybe insert a picture of a Quadtree here? But I am not sure how much to write about Barnes-Hut really...}
 
 \subsection{Fast Interpolation-Based t-SNE}
 As observed in \cite{KoBe19SingleCell}, the Barnes-Hut implementation of t-SNE, while faster than the originally proposed algorithm, still becomes provibitively slow for datasets with $n \gg 100,000$. 
 The FFT accelerated, fast interpolation-based version of t-SNE proposed by Linderman et. al. in 2019 \cite{Lin19} attempts to further speed up the computation of t-SNE embeddings with a special view towards applications in the analysis of single-cell RNA-seq data, which keeps growing and datasets often have north of 1 million datapoints. 
+
+Rough notes: 
+\begin{itemize}
+    \item the repulsive force acting on each point can be expressed via sums of the form \begin{equation}
+        \phi(y_i) = \sum_{j=1}^N K(y_i, y_j) q_j 
+    \end{equation}
+    with either $K_1(y,z) = \frac{1}{1+\norm{y-z}^2}$ or $K_2(y,z) = \frac{1}{(1+\norm{y-z}^2)^2}$ (both of these are smooth and translation-invariant kernels). 
+    \item key idea: instead of computing all these sums (this would be in $\mathcal{O}(N^2)$), we instead use polynomial interpolation to approximate the kernels $K$ 
+    \item interpolation strategy: subdivide the embedding space into a number of intervals (in the 1D case) or squares (in the 2D case)
+    \item in each interval, choose a small, fixed number $p$ of equispaced interpolation nodes 
+    \item approximate the kernel $K$ by its low-order polynomial interpolant $K_p$ over these nodes 
+    \item This replaces the direct kernel evaluation between every pair with an evaluation on a much coarser grid.
+\end{itemize}
+
 
 % algorithm pseudocode here
 \begin{algorithm}[H]
