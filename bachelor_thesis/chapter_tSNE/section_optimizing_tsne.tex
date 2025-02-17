@@ -25,9 +25,21 @@ An important question is: which values are good perplexity values. Several sugge
 
 
 \subsection{Initialization}
-The t-SNE algorithm usually starts with an initization $y_i^{(0)} = y_i^{(-1)}$ for $i=\{1, 2, \dots, n\}$ which is drawn independently from a uniform distribution on $[-0.01, 0.01]^2$. It has also been suggested by \textcolor{red}{by whom??} to draw the initial low-dimensional map from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$. 
+The standard t-SNE algorithm starts with an initization $y_i^{(0)}$ for $i=\{1, 2, \dots, n\}$ which are drawn independently from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$, see \cite{vdMaa08} and \cite{vdMaa14}. 
 
-However, recent work \cite{kobak21} has shown that PCA initialization (\textcolor{red}{TO DO}: explain more what this actually is) works better. In fact, most t-SNE libraries nowadays use PCA initialization by default. 
+However, recent work \cite{kobak21} has shown that informative initialization leads to embeddings that better preserve large-scale structures within the data. 
+They argue that using informative intialization should be the default option for t-SN
+E.
+Indeed, modern implementations of t-SNE in libraries like openTSNE \cite{openTSNE} or Scikit-learn now all use PCA initialization by default. 
+This means that we perform a principal component analysis on the input data $x_1, \dots, x_n$ and use the output $y_1, \dots, y_n$ as the initial points for the low-dimensional embedding. 
+
+\begin{figure}[h]
+    \centering 
+    \includegraphics[width=\linewidth]{figures/pca_vs_random_init.png}
+    \caption{PCA versus random initialization}
+    \label{fig:PCA_vs_random}
+\end{figure}
+In our experiments, we do not necessarily see a visual improvement of the PCA initialized embedding over the random initialization one, but \textcolor{red}{one should look at other metrics to see how well the global structure is preserved e.g. Pearson correlation or Spearman correlation}. 
 
 \subsection{Early Exaggeration}
 Early exaggeration was first proposed as a method of optimizing t-SNE in \cite{vdMaa08}. They proposed multiplying all the $p_{ij}$ by a value $\alpha > 0$ for the first few iterations of the algorithm. Since our loss function encourages the $q_{ij}$ to model the $p_{ij}$ as closely as possible, we achieve artificially large $q_{ij}$ values this way. This means that relatively tight clusters are being formed, which can then move around more easily in space, making it easier to find a good global organization of the clusters. 
@@ -36,4 +48,26 @@ Open question: What should $\alpha$ be and for how many iterations should we kee
 \begin{itemize}
     \item \cite{vdMaa08} originally proposed $\alpha = 4$, for $50$ iterations out of $1000$ in total 
 \end{itemize}
+
+We can also understand early exaggeration from a dynamical systems viewpoint. 
+We start by recalling the gradient of the t-SNE cost function: 
+\begin{equation}
+    \frac{\partial C}{\partial y_i} = 4 \sum_{j \neq i} (p_{ij} - q_{ij}) q_{ij} Z (y_i - y_j)
+\end{equation}
+with normalization term $Z = \sum_{k \neq l} (1+ \norm{y_k - y_l}^2 )^{-1}$. Notice that we can split the gradient into two parts 
+\begin{equation}
+    \frac{\partial C}{\partial y_i} = 4 (F_{\text{attr}} + F_{\text{rep}}) = 4 \left( \sum_{j \neq i } p_{ij} q_{ij} Z (y_i - y_j) - \sum_{j \neq i} q_{ij}^2 Z (y_i - y_j) \right) 
+\end{equation}
+where $F_{\text{attr}}$ denotes the sum of all attractive forces and $F_{\text{rep}}$ the sum of all repulsive forces. 
+
+This next explanation is taken from \cite{LinStei22}.
+
+Why does it make sense to call these attractive and repulsive forces? Since we want to minimize the cost function, we perform gradient descent and step in the direction of the negative gradient, so we consider the term
+\begin{equation}
+   - \frac{1}{4} \frac{\partial C}{\partial y_i} = \sum_{j \neq i } p_{ij} q_{ij} Z (y_j - y_i) - \sum_{j \neq i} q_{ij}^2 Z (y_j - y_i).  
+\end{equation}
+The first term is considered the attractive term, since it moves the point $y_i$ towards a weighted average of the other $y_i$. 
+The weights $p_{ij} q_{ij} Z$ are bigger if the two points are close to each other (both in the low- and high-dimensional space). 
+The second term has the opposite sign and thus pushes $y_i$ away from a weighted average of the other points. This time, however, the weights only depend on the closeness of points in the low-dimensional space. 
+Put together, this means that the attractive term attracts points that are actually meant to be with each other (based on their similarity in the high-dimensional space) and the repulsive term pushes points apart that get too close in the embedding space, regardless of their real similarity. 
 
