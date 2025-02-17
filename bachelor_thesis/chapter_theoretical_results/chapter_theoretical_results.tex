@@ -1,7 +1,65 @@
 \chapter{Theoretical Results}\label{chapter:theoretical_results}
-we will look at results from \cite{murray2024largedatalimitsscaling} and \cite{LinStei22} and maybe \cite{Cai22}. 
+\textcolor{red}{TODO: maybe say something about the importance of theoretical work - can lead to better understanding and new directions for improving the algorithm}
+
+t-SNE has been used a lot in practice and there is comparatively less theoretical material available. 
+In this chapter, we will first give an overview of the theoretical work on t-SNE that has been done in the last couple of years and then look at a couple of results of interest in more detail. 
+
+\section{Literature Review}
+This section is inspired by \cite{murray2024largedatalimitsscaling}. 
+
+Early theoretical work has been focused on establishing clustering guarantees for t-SNE. 
+\textcolor{red}{To the best of my knowledge}, Shaham and Steinerberger started this line of investigation with their 2017 paper \enquote{Stochastic Neighbor Embedding Separates Well-Separated Clusters} \cite{shaham17}. 
+They proved a clustering result for the precursor algorithm SNE, but their result has been criticised since it is only nontrivial when the number of clusters is significantly larger than the number of points per clusters, which is an unrealistic assumption for most datasets t-SNE is commonly used on, see \cite{Arora18}.  
+Linderman and Steinerberger \cite{LinStei22} use a dynamical systems approach for understanding t-SNE. 
+They understand the embedding points as particles experiencing attractive and replusive forces and formulate a shrinkage result for the diameter of embedded clusters based on the EE exaggeration factor and gradient descent step size. \\
+Building on the preprint of \cite{LinStei22}, \cite{Arora18} point out that Linderman's result does not rule out the possibility of multiple clusters merging into one. 
+\cite{Arora18} gives a first formal framework for the problem of data visualization and formulates an improved clustering guarantee for some definition of spherical and well-separated clusterable data. 
+However, both the clustering guarantees in \cite{Arora18} and \cite{LinStei22} have been criticised for making assumptions that do not hold in practice, see \cite{yang2021tsneoptimizedrevealclusters}. 
 
 
-t-SNE has been used a lot in practice and there is comparatively less theoretical material available. In this chapter, we will first give an overview of the theoretical work on t-SNE that has been done in the last couple of years and then look at a couple of results of interest in more detail. 
+Studying t-SNE in terms of attraction-repulsion dynamics has proven to be one of the most fruitful directions for obtaining theoretical results on t-SNE. 
+Steinerberger and Zhang explore coloring of t-SNE plots by the direction of forces acting on each point as a means of obtaining additional information on the embedding \cite{SteiZhang22}. \textcolor{red}{Does this belong here actually?}
+
+In \cite{Cai22}, an asymptotic equivalence of the EE phase with power iterations in spectral embeddings is established. 
+This means that for strongly clustered data, one can replace the EE phase with a spectral embedding, thereby speeding up the process. 
+They also investigate the embedding phase and characterize it into an amplification and a stabilization phase. 
+Practical implications of their work include: 
+\begin{itemize}
+    \item stopping EE early for noisy data to avoid overshooting (they suggest $K_0 = \lfloor (\log n)^2 \rfloor$ iterations)
+    \item the observation that t-SNE is reliable in terms of cluster membership but not relative position of clusters 
+    \item the observation that false clustering may occur - one should thus run t-SNE multiple times if possible
+\end{itemize}
+More recently, the focus of theoretical research on t-SNE has shifted to the question of equilibrium distributions and convergence in the large data limit ($n \to \infty$). 
+\cite{murray2024largedatalimitsscaling} shows that standard t-SNE embeddings do not have a consistent limit as $n \to \infty$ and proposes a rescaled model with a consistent limit which mitigates the asymptotic decay of the attractive forces. 
 
 \section{Clustering Guarantees}
+In this section, we will present the result in \cite{LinStei22} and \textcolor{red}{TODO: maybe investigate whether the assumptions hold for real datasets}. 
+
+The following assumptions are made: 
+\begin{enumerate}
+    \item $\mathcal{X}$ is clusted. We assume that there exists a number of clusters $k \in \mathbb{N}$ and a map $\pi: \{1,\dots,n\} \to \{1,\dots,k\}$ which maps each point to a cluster, such that the following holds: if $\pi(x_i) = \pi(x_j)$, then \begin{equation}
+        p_{ij} \geq \frac{1}{10 n |\Omega(i)|}
+    \end{equation}
+    where $\Omega(i)$ is the size of the cluster in which $x_i$ and $x_j$ lie. 
+    \item Parameter choice. Step-size $h$ and exaggeration parameter $\alpha$ are chosen such that for some $1\leq i \leq n$, 
+    \begin{equation}
+        \frac{1}{100} \leq \alpha h \sum_{j \neq i, \pi(i) = \pi(j)} p_{ij} \leq \frac{9}{10}
+    \end{equation}
+    \item Localized initialization. The initialization of the low-dimensional embedding satisfied $\mathcal{Y} \in [-0.01, 0.01]^2$. 
+\end{enumerate}
+The main result is applicable to a single cluster. 
+
+\begin{thm}[\cite{LinStei22}]
+    Under assumptions (i)-(iii), the diameter of the embedded cluster $\{y_j: 1 \leq j \leq n \land \pi(i) = \pi(j)\}$ decays exponentially (at universal rate) until its diameter satisfies, for some constant $c > 0$,
+    \begin{equation}
+        \text{diam} \{y_j: 1 \leq j \leq n \land \pi(i) = \pi(j)\} \leq c \cdot h \left(\alpha \sum_{j \neq i \pi(i) = \pi(j)} p_{ij} + \frac{1}{n} \right). 
+    \end{equation}
+\end{thm}
+\textcolor{red}{Should I include a proof?}
+
+There are several problems with this result however. 
+\begin{itemize}
+    \item the assumptions on $h$ and $\alpha$ do not really make sense with what has been established empirically. In this paper, they suggest $h=1$, whereas later research has suggested values like $h=200$ or higher for large datasets. 
+    \item There is this paper which says that condition (i) does not hold for datasets in practice even if they are clusterable. Steinerman says it's only a loose condition, but this doesn't seem to actually be the case. 
+\end{itemize}
+\section{Large Data Limits}
