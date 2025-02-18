@@ -55,11 +55,61 @@ The main result is applicable to a single cluster.
         \text{diam} \{y_j: 1 \leq j \leq n \land \pi(i) = \pi(j)\} \leq c \cdot h \left(\alpha \sum_{j \neq i \pi(i) = \pi(j)} p_{ij} + \frac{1}{n} \right). 
     \end{equation}
 \end{thm}
-\textcolor{red}{Should I include a proof?}
+\textcolor{red}{Should I include a proof? Or at least its idea?}
 
 There are several problems with this result however. 
 \begin{itemize}
     \item the assumptions on $h$ and $\alpha$ do not really make sense with what has been established empirically. In this paper, they suggest $h=1$, whereas later research has suggested values like $h=200$ or higher for large datasets. 
     \item There is this paper which says that condition (i) does not hold for datasets in practice even if they are clusterable. Steinerman says it's only a loose condition, but this doesn't seem to actually be the case. 
 \end{itemize}
+
 \section{Large Data Limits}
+For this section, instead of assuming a given dataset, we have a probability distribution $\mu \in \mathcal{P}(\Omega)$ on $\mathbb{R}^d$ with support on $\Omega$, a bounded and $C^2$ domain. 
+We further assume that $\mu$ has a bounded density function $\rho(x)$ with respect to the Lebesgue measure. 
+Our points $X_1, \dots, X_n$ are then drawn independently from $\mu$ and the $p_{ij}$ and $q_{ij}$ values are calculated as always. 
+If $n$ datapoints are drawn, we define the matrices $P_n = (p_{ij})_{i,j=1}^n$ and $Q_n = (q_{ij})_{i,j=1}^n$. 
+
+Since we want to study large data limits, we do not consider the KL-divergence between $P_n$ and $Q_n$ directly, but instead define a closely related functional 
+\begin{equation}
+    \text{KL}_n (T) = \sum_{i,j} p_{ij} \log \frac{q_{ij}}{q_{ij}(T)}
+\end{equation}
+where 
+\begin{equation}
+    q_{ij}(T) \coloneq \frac{(1+ |T(X_i) - T(X_j)|^2)^{-1}}{\sum_{k \neq l} (1+ |T(X_k) - T(X_l)|^2)^{-1}}
+\end{equation}
+and $T: \mathbb{R}^d \to \mathbb{R}^m$. This is now technically not a KL-divergence anymore. 
+
+Building on the view of t-SNE in terms of attraction-repulsion dynamics, \cite{murray2024largedatalimitsscaling} splits up the t-SNE objective function into an attractive term $A_n[T]$, a repulsive term $R_n[T]$ and a purely data-dependent term  $D_n$ (which plays no role during gradient descent). Defining 
+\begin{equation}
+    A_n[T] \coloneq \frac{1}{n} \sum_{i=1}^n \frac{\sum_{j=1}^n \exp(-|X_i - X_j|^2/(2\sigma_i^2)) \log(1+ |T(X_i) - T(X_j)|^2)}{\sum_{j=1}^n \exp(-|X_i - X_j)^2 / (2\sigma_i^2)}
+\end{equation}
+and 
+\begin{equation}
+    R_n[T] \coloneq \log \left( \frac{1}{n^2} \sum_{i=1}^n \sum_{j=1}^n \frac{1}{1+ |T(X_i) - T(X_j)|^2} \right), 
+\end{equation}
+we can write $\text{KL}_n (T) = A_n[T] + R_n[T] + D_n$. 
+
+This means, we have the following optimization problem
+\begin{equation}
+    {\arg \min}_{T: \mathbb{R}^d \to \mathbb{R}^m} \text{KL}_n (T) = {\arg \min}_{T: \mathbb{R}^d \to \mathbb{R}^m} A_n[T] + R_n[T].
+\end{equation}
+
+Again, we observe that there is a competition between minimizing the attractive term and minimizing the repulsive term. 
+
+On Perplexity: They allow perplexity to grow slowly with the number of samples $n$. 
+
+We now define an averaged version of the energies, where we replace the stochastic $\sigma_i$ with the deterministic $h_n \sigma_\kappa(x)$: 
+\begin{equation}
+    \tilde{A}_n[T] \coloneq  \int_{\Omega} \frac{\int_{\Omega} \exp(-|x - x'|^2/(2 h^2 \sigma_\kappa^2(x))) \log(1+ |T(x) - T(x')|^2) \rho(x')dx'}{\int_{\Omega} \exp(-|x - x'|^2/(2 h^2 \sigma_\kappa^2(x))) \rho(x')dx'} \rho(x)dx  
+\end{equation}
+and 
+\begin{equation}
+    \tilde{R}_n[T] \coloneq \log \left( \int \int_{\Omega \times \Omega} \frac{1}{1+ |T(x) - T(x')|^2} \rho(x) \rho(x')dx dx' \right), 
+\end{equation}
+
+\textcolor{red}{TODO: make the equations look nicer}
+
+This first result states that the averaged t-SNE energy does not have a limiting solution. 
+\begin{thm}[\cite{murray2024largedatalimitsscaling}]
+    Let $T_n$ be a sequence of minimizers of the energies $\tilde{A}_{h_n}[T] + \tilde{R}[T]$. Then $T_n$ does not converge pointwise to any $T^* \in L^\infty(\Omega, \mathbb{R}^m)$. 
+\end{thm}
