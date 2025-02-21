@@ -1,0 +1,4 @@
+first: b=0.15 
+second: b=0.05
+
+density1: b=0.15 
