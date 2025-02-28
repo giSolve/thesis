@@ -99,6 +99,9 @@ TLDR: Low-order polynomial interpolation mediates interactions through a fixed n
 \subsection{Comparing Barnes-Hut and FIt-SNE}
 When comparing the two methods, we only see minor differences in the embedding. 
 However, the FIt-SNE version is many times faster than Barnes-Hut t-SNE, which is why we will be using FIt-SNE in all of our experiments going forward. 
+
+As pointed out in \cite{openTSNE}, FIt-SNE scales linearly with the number of smaples, but it introduces additional computational overhead for each embedding.
+This is often unneccessary for smaller datasets, which is why openTSNE uses Barnes-Hut t-SNE for data sets with fewer than $10,000$ samples and FIt-SNE for data sets with at least $10,000$ datapoints. 
 %\begin{figure}[h]
   %  \centering 
   %  \includegraphics[width=\linewidth]{figures/BH_vs_FFT.png}
