@@ -1,10 +1,10 @@
-\section{Basic t-SNE Algorithm}
+%\section{Basic t-SNE Algorithm}
 This section closely follows \cite{Cai22} and \cite{vdMaa08} so far. 
 
 Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize.
 We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
 
-\subsection{Measuring High-Dimensional Similarities}
+\section{Measuring High-Dimensional Similarities}
 
 Instead of using the raw Euclidean distances between the high-dimensional data points, t-SNE measures pairwise similarities via probabilities. 
 We define a joint probability distribution over all pairs of data points $\{(x_i, x_j)\}_{1 \leq i \neq j \leq n}$ via  
@@ -20,7 +20,30 @@ The bandwidths $\sigma_i$ of the Gaussian kernel can be adapted based on a fixed
 One might wonder why it is necessary to symmetrize the similarities. Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{ij}$ values for this datapoint end up being very small. 
 As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$. 
 
-\subsection{Measuring Low-Dimensional Similarities}
+\section{Perplexity}
+Let us come back to the variance $\sigma_i$ of the Gaussian centered at each datapoint $x_i$. What is a good value to choose? 
+If we fixed a single value $\sigma$ to be the same for every datapoint, this is likely not a good choice, because real-life data often does not have a constant density everywhere but instead has sparser and denser regions. 
+Given that we want to consider approximately the same number of nearest neighbors for each $x_i$, we opt to choose larger values of $\sigma_i$ for sparse regions and smaller bandwidths for dense regions. 
+
+\textcolor{red}{\textbf{TO DO}: find a better way to describe what perplexity actually does, the following is just taken directly from \cite{vdMaa08}}
+
+Any particular value of $\sigma_i$ induces a probability distribution $P_i$ over all other datapoints. 
+The entropy of this distribution increases as $\sigma_i$ increases. 
+The user can specify a specific so-called perplexity
+\begin{equation}
+    \kappa = \text{Perp}(P_i) = 2^{H(P_i)} 
+\end{equation}
+where $H(P_i) = -\sum_{j} p_{ij} \log_2 p_{ij}$ denotes the Shannon entropy of $P_i$. 
+
+\textcolor{red}{\textbf{TO DO}: do we use $p_{ij}$ or $p_{j|i}$ in the definition of perplexity?}
+
+Then, t-SNE performs a binary search for the value of $\sigma_i$ that produces the user-specified perplexity. 
+
+One can think of perplexity as a smooth measure of the effective \textcolor{red}{\textbf{TO DO}: what does this actually mean?} number of neighbors being considered in the calculation of the $p_{ij}$. As such, larger perplexity values are computationally more expensive. 
+
+An important question is: which values are good perplexity values. Several suggestions have been made \textcolor{red}{\textbf{TO DO}: compile research on suggestions here}. 
+
+\section{Measuring Low-Dimensional Similarities}
 In order to measure similarities between points in the low-dimensional embedding, a first approach would be to also use a Gaussian distribution to convert pairwise distances into probabilities, as above. This is the approach taken originally in SNE \cite{Hinton02}.
 
 However, to address the crowding problem, we instead use the more heavy-tailed Student t-distribution with one degree of freedom (also called a Cauchy distribution). That way, moderate distances in the high-dimensional space will be modeled by much larger distances in the low-dimensional map (since we try to minimize the difference between $p_{ij}$ and $q_{ij}$, see details below). 
@@ -40,7 +63,7 @@ where we again define $q_{ii} = 0$ for all $1 \leq i \leq n$. We can collect all
     \end{center}
 \end{figure}
 
-\subsection{The Loss Function}
+\section{The Loss Function}
 The goal of the algorithm is now to get the similarities $P$ and $Q$ to be as close to each other as possible. 
 A common choice for measuring the distance between two distributions is the Kullback-Leibler divergence. 
 
@@ -69,7 +92,7 @@ This means that our loss function places a large cost on using far-apart points 
 On the other hand, there is only a small cost to model points that are actually far apart as nearby in the embedding. 
 This shows that we can expect a bigger focus on the preservation of local structure and is important to keep in mind when interpreting t-SNE embeddings, see \cite{Wa16Distill}. 
 
-\subsection{Gradient Descent to Minimize Loss}
+\section{Gradient Descent to Minimize Loss}
 Minimizing the cost function can be achieved using a standard gradient-descent type algorithm, with an updating equation of 
 \begin{equation}
     y_i^{(k+1)} = y_i^{(k)} + h \frac{\partial C}{\partial y_i}^{(k)} + m^{(k+1)}(y_i^{(k)} - y_i^{(k-1)}) 

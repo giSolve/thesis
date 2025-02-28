@@ -14,7 +14,7 @@ Linderman and Steinerberger \cite{LinStei22} use a dynamical systems approach fo
 They understand the embedding points as particles experiencing attractive and replusive forces and formulate a shrinkage result for the diameter of embedded clusters based on the EE exaggeration factor and gradient descent step size. \\
 Building on the preprint of \cite{LinStei22}, \cite{Arora18} point out that Linderman's result does not rule out the possibility of multiple clusters merging into one. 
 \cite{Arora18} gives a first formal framework for the problem of data visualization and formulates an improved clustering guarantee for some definition of spherical and well-separated clusterable data. 
-However, both the clustering guarantees in \cite{Arora18} and \cite{LinStei22} have been criticised for making assumptions that do not hold in practice, see \cite{yang2021tsneoptimizedrevealclusters}. 
+However, both the clustering guarantees in \cite{Arora18} and \cite{LinStei22} have been criticised for making assumptions that do not hold in practice, see \cite{yang2021tsneoptimizedrevealclusters}. In our experiments section, we will therefore also investigate these assumptions ourselves. 
 
 
 Studying t-SNE in terms of attraction-repulsion dynamics has proven to be one of the most fruitful directions for obtaining theoretical results on t-SNE. 
@@ -45,7 +45,7 @@ The following assumptions are made:
     \begin{equation}
         \frac{1}{100} \leq \alpha h \sum_{j \neq i, \pi(i) = \pi(j)} p_{ij} \leq \frac{9}{10}
     \end{equation}
-    \item Localized initialization. The initialization of the low-dimensional embedding satisfied $\mathcal{Y} \in [-0.01, 0.01]^2$. 
+    \item Localized initialization. The initialization of the low-dimensional embedding satisfies $\mathcal{Y} \in [-0.01, 0.01]^2$. 
 \end{enumerate}
 The main result is applicable to a single cluster. 
 
@@ -63,7 +63,12 @@ There are several problems with this result however.
     \item There is this paper which says that condition (i) does not hold for datasets in practice even if they are clusterable. Steinerman says it's only a loose condition, but this doesn't seem to actually be the case. 
 \end{itemize}
 
+\textcolor{red}{TODO: quickly mention \cite{Arora18} which has improved on this result a bit}
+
 \section{Large Data Limits}
+Theoretical Literature on t-SNE has naturally not focused on what happens when we let the number of data points go to infinity. After all, real-world datasets have a finite number of points. It is however an interesting questions, that allows us to get deeper insight into the inner workings of t-SNE and is explored in \cite{murray2024largedatalimitsscaling}. 
+
+\subsection{Setup}
 For this section, instead of assuming a given dataset, we have a probability distribution $\mu \in \mathcal{P}(\Omega)$ on $\mathbb{R}^d$ with support on $\Omega$, a bounded and $C^2$ domain. 
 We further assume that $\mu$ has a bounded density function $\rho(x)$ with respect to the Lebesgue measure. 
 Our points $X_1, \dots, X_n$ are then drawn independently from $\mu$ and the $p_{ij}$ and $q_{ij}$ values are calculated as always. 
@@ -96,7 +101,17 @@ This means, we have the following optimization problem
 
 Again, we observe that there is a competition between minimizing the attractive term and minimizing the repulsive term. 
 
-On Perplexity: They allow perplexity to grow slowly with the number of samples $n$. 
+\subsection{Motivation from Adaptive Kernel Density Estimation}
+
+We can think of perplexity as ensuring an adaptive bandwidth. 
+The autors of \cite{murray2024largedatalimitsscaling} point out that this is similar to a standard approach used in adaptive kernel density estimation. 
+For a kernel $K: \mathbb{R}^d \to \mathbb{R}$, the quantity $\frac{1}{n h_n^d}\sum_{i=1}^n K(\frac{x-X_i}{h_n})$ is a pointwise consistent estimator of the density $\rho(x)$ as long as $\frac{h h_n^d}{\log(n)} \to \infty$. 
+
+There is one problem however: they point out that in order to maintain a constant perplexity, we have to let $\sigma_{i,n} = \mathcal{O}(n^{-1/d})$ with a high probability. 
+But, as is known in the world of kernel density estimation, this scaling does not lead to consistency of the estimator defined above. 
+So instead, they allow perplexity to grow slowly with the number of samples $n$, at any rate $n^\alpha, \alpha > 0$. 
+
+\subsection{Results}
 
 We now define an averaged version of the energies, where we replace the stochastic $\sigma_i$ with the deterministic $h_n \sigma_\kappa(x)$: 
 \begin{equation}
@@ -113,3 +128,31 @@ This first result states that the averaged t-SNE energy does not have a limiting
 \begin{thm}[\cite{murray2024largedatalimitsscaling}]
     Let $T_n$ be a sequence of minimizers of the energies $\tilde{A}_{h_n}[T] + \tilde{R}[T]$. Then $T_n$ does not converge pointwise to any $T^* \in L^\infty(\Omega, \mathbb{R}^m)$. 
 \end{thm}
+
+For details of the proof, we refer to \cite{murray2024largedatalimitsscaling}. However, the main idea again is to consider how attraction repulsion dynamics change as the number of samples grow. 
+They prove that the attractive term will shrink to zero as $n \to \infty$, which means that for large sample sizes, the repulsive force dominates. This will then result in unbounded embeddings. 
+
+Note that this also shows that early exaggeration \enquote{is not merely heuristic but is, in fact, asymptotically consistent with the underlying behavior of the algorithm}.
+
+Taking the above theorem as motivation, \cite{murray2024largedatalimitsscaling} propose a new, rescaled version of t-SNE, where we do not only apply exaggeration in the early iterations of the algorithm, but instead multiply the entire attractive force by a sequence $1/h_n^2$, where we  require that $h_n \to 0$ and $\frac{n /h_n^d}{\log(n)} \to \infty$ as $n \to \infty$. 
+The rescaled model for $n$ samples thus minimizes the loss function 
+\begin{equation}
+    \hat{\text{KL}}_n(T) = \frac{A_n [T]}{h_n^2} + R_n[T].
+\end{equation}
+
+This energy will the converge (for a fixed $T$) towards the limiting energy 
+\begin{equation}
+    \mathcal{K}\mathcal{L} (T) \coloneq \frac{\kappa^{2/d}}{2 \pi e} \int_\Omega \sum_{i=1}^m |\nabla T_i(x)|^2 \rho^{1-2/d} (x) d x + \log\left( \iint_{\Omega \times \Omega} \frac{\rho(x)\rho(x')}{1+ |T(x)-T(x')|^2}  d x d x' \right), 
+\end{equation}
+
+which behaves consistently as shown by the following theorem. 
+
+\begin{thm}[\cite{murray2024largedatalimitsscaling}]
+    Let $\mu$ be a distribution supported on a compact, $C^1$ domain $\Omega \subset \mathbb{R}^d$ with Lebesgue density bounded above and below on $\Omega$. 
+    Then, for every $T \in C^2(\Omega; \mathbb{R}^m)$ we have $\lim_{n \to \infty} \hat{\text{KL}}_n(T) \to \mathcal{K}\mathcal{L} (T)$
+    and there exists $T^* \in H^1(\Omega, \rho)$ for which $\mathcal{K}\mathcal{L} (T^*) = \inf_{T: \Omega \to \mathbb{R}^m} \mathcal{K}\mathcal{L} (T)$.  
+\end{thm}
+
+\textcolor{red}{TODO: check whether assumptions really hold that way and also what is it with the limit should it be equal to or tend to the limit?, also mention that the results are for the deterministic, not stochastic form}
+
+They say in this paper that this new approach provides a more stable and consistent framework. 

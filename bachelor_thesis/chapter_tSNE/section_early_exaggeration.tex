@@ -1,0 +1,31 @@
+\section{Early Exaggeration}
+Early exaggeration was first proposed as a method of optimizing t-SNE in \cite{vdMaa08}. They proposed multiplying all the $p_{ij}$ by a value $\alpha > 0$ for the first few iterations of the algorithm. Since our loss function encourages the $q_{ij}$ to model the $p_{ij}$ as closely as possible, we achieve artificially large $q_{ij}$ values this way. This means that relatively tight clusters are being formed, which can then move around more easily in space, making it easier to find a good global organization of the clusters. 
+
+Open question: What should $\alpha$ be and for how many iterations should we keep EE on? 
+\begin{itemize}
+    \item \cite{vdMaa08} originally proposed $\alpha = 4$, for $50$ iterations out of $1000$ in total 
+\end{itemize}
+
+We can also understand early exaggeration from a dynamical systems viewpoint. 
+We start by recalling the gradient of the t-SNE cost function: 
+\begin{equation}
+    \frac{\partial C}{\partial y_i} = 4 \sum_{j \neq i} (p_{ij} - q_{ij}) q_{ij} Z (y_i - y_j)
+\end{equation}
+with normalization term $Z = \sum_{k \neq l} (1+ \norm{y_k - y_l}^2 )^{-1}$. Notice that we can split the gradient into two parts 
+\begin{equation}
+    \frac{\partial C}{\partial y_i} = 4 (F_{\text{attr}} + F_{\text{rep}}) = 4 \left( \sum_{j \neq i } p_{ij} q_{ij} Z (y_i - y_j) - \sum_{j \neq i} q_{ij}^2 Z (y_i - y_j) \right) 
+\end{equation}
+where $F_{\text{attr}}$ denotes the sum of all attractive forces and $F_{\text{rep}}$ the sum of all repulsive forces. 
+
+This next explanation is taken from \cite{LinStei22}.
+
+Why does it make sense to call these attractive and repulsive forces? Since we want to minimize the cost function, we perform gradient descent and step in the direction of the negative gradient, so we consider the term
+\begin{equation}
+   - \frac{1}{4} \frac{\partial C}{\partial y_i} = \sum_{j \neq i } p_{ij} q_{ij} Z (y_j - y_i) - \sum_{j \neq i} q_{ij}^2 Z (y_j - y_i).  
+\end{equation}
+The first term is considered the attractive term, since it moves the point $y_i$ towards a weighted average of the other $y_i$. 
+The weights $p_{ij} q_{ij} Z$ are bigger if the two points are close to each other (both in the low- and high-dimensional space). 
+The second term has the opposite sign and thus pushes $y_i$ away from a weighted average of the other points. This time, however, the weights only depend on the closeness of points in the low-dimensional space. 
+Put together, this means that the attractive term attracts points that are actually meant to be with each other (based on their similarity in the high-dimensional space) and the repulsive term pushes points apart that get too close in the embedding space, regardless of their real similarity. 
+
+Early exaggeration has also been studied in detail empirically. \cite{BoehmBerens22} showed that stronger attractive forces (through high $\alpha$ values for EE) results in a better representation of continuous manifold structures while stronger repulsive forces (smaller $\alpha$ or no exaggeration) lead to a better recovery of discrete cluster structure. 
