@@ -27,49 +27,75 @@ The standard t-SNE algorithm starts with an initization $y_i^{(0)}$ for $i=\{1, 
 
 However, recent work \cite{kobak21} has shown that informative initialization leads to embeddings that better preserve large-scale structures within the data. 
 They argue that using informative intialization should be the default option for t-SNE.
+In \cite{KoBe19SingleCell}, they also argue that PCA initialization makes t-SNE more reproducible, since it removes at least part of the randomness by having a deterministic initialization for the low-dimensional embedding. 
+They also argue that initialization is especially important for preserving global structure. 
+In their experiments, they observe that k-nearest neighbor accuracy, a local embedding quality measure, does not improve when using PCA initialization. 
+However, other quality measures like k-nearest class means preserved or Spearman correlation, which measure mesoscopic and macroscopic structure, do improve. 
+
 Indeed, modern implementations of t-SNE in libraries like openTSNE \cite{openTSNE} or Scikit-learn now all use PCA initialization by default. 
 This means that we perform a principal component analysis on the input data $x_1, \dots, x_n$ and use the output $y_1, \dots, y_n$ as the initial points for the low-dimensional embedding. 
 
-In our experiments, we do not necessarily see a visual improvement of the PCA initialized embedding over the random initialization one, but \textcolor{red}{one should look at other metrics to see how well the global structure is preserved e.g. Pearson correlation or Spearman correlation}. 
+One may wonder about bias resulting from injecting artificial structure into the embedding by using a t-SNE initialization, when our algorithm cares about preserving local neighorhoods. But in fact, random initialization is even more artificial and induces more variance across different runs, as pointed out by \cite{KoBe19SingleCell}. 
+
+\cite{KoBe19SingleCell} also point out that this attempt to perserve global geometry of data can fail if the macroscopic structure is not adequately captured in the first two principal components. 
+One could for example imagine a small isolated cluster that might not appear isolated in the first two principal components, because it simply doesn't have enough cells to contribute much to the explained variance. 
+
 
 \subsection{Current State of Literature of Parameter Choices}
 Here, I want to collect guidelines for choosing t-SNE parameters. It could be interesting to look at this from the perspective of a practitioner, using t-SNE libraries like openTSNE or the scikit-learn implementation and investigate if the default choices lead to good results. 
 
 
 
-\title{Perplexity}
+\textbf{Perplexity}
 \begin{itemize}
-  \item \cite{vdMaa08} suggests using perplexity $40$ 
-  \item \cite{vdMaa14} uses perplexity $50$ 
+  \item scikit-learn default: perp=30, openTSNE default: perp=30
+  \item \cite{vdMaa08} suggests using perplexity $40$, later \cite{vdMaa14} uses perplexity $50$ 
   \item \cite{belkina19} suggest used 30 to 50 and find that the exact value does not impact the embedding too much 
+  \item \cite{KoBe19SingleCell} suggest combining different perplexities (see below for explanation of why), using $N/100$ a large perplexity and combining it with the standard perplexity of $30$. They then average the two whenever $N/100 \gg 30$. In practice, this means that they focus on larger perplexity values (apparently useful for RNA-sequencing data) and do point out that combining perplexity 30 with the other one is only really feasible for smaller datasets. 
+  \item \cite{KoBe19SingleCell} however also points out some difficulties of increasing perplexity too much: if we consider a small isolated cluster of points, choosing a perplexity that is too large means that this small cluster can get sucked into a larger one quite quickly because the points will be attracted to other ones too 
 \end{itemize}
 
-\title{Early Exaggeration}
+\textbf{Early Exaggeration}
 \begin{itemize}
   \item \cite{vdMaa08} initially suggests $\alpha = 4$ for the first $50$ iterations 
+  \item \cite{vdMaa14} mentions that EE is increasingly important for increasing dataset sizes and uses $\alpha = 12$
+  \item \cite{LinStei22} suggest $\alpha$ around $N/10$ (this seems very large in comparison to what others suggest)
   \item \cite{belkina19} suggest using 4 to 12 and find that the exact value does not impact the embedding too much 
 \end{itemize}
 
-\title{Number of Iterations}
+\textbf{(Late) Exaggeration}
+\begin{itemize}
+  \item \cite{KoBe19SingleCell} point out that exaggeration after EE can be set to about 4 for larger data sets, but is not needed for smaller ones 
+  \item late exaggeration is suggested in \cite{Lin19}, but most subsequent papers do not consider the in-between phase of no exaggeration necessary 
+\end{itemize}
+
+\textbf{Number of Iterations}
 \begin{itemize}
   \item \cite{vdMaa08} suggests $T=1000$ total iterations 
 \end{itemize}
 
-\title{Learning Rate}
+\textbf{Learning Rate}
 \begin{itemize}
-  \item \cite{vdMaa08} suggests $\eta =100$ and using an adaptive learning rate scheme 
-  \item \cite{vdMaa14} suggests initial learning rate $\eta=200$ 
+  \item scikit-learn default: 800 (due to a difference in how they define the learning rate), openTSNE default \textcolor{red}{max(200, N/12), check this, does it have the max?}
+  \item \cite{vdMaa08} suggests $\eta =100$ and using an adaptive learning rate scheme
+  \item \cite{vdMaa14} suggests initial learning rate $\eta=200$ and an additional momentum term with weight $0.5$ during the first $250$ iterations and afterword with weight $0.8$ 
+  \item \cite{LinStei22} suggest $h=1$ which is suspiciously small in comparison to what others suggest
   \item \cite{belkina19} suggest $\eta = N/\rho$ where $\rho$ is the EE factor, this is used by default in openTSNE. 
+  \item \cite{KoBe19SingleCell} suggest $\eta = \max(N/12, 200)$, especially important for large datasets 
 \end{itemize}
 
-\title{Data Preprocessing}
+\textbf{Data Preprocessing}
 \begin{itemize}
-  \item \cite{vdMaa08} suggests preprocessing datasets such that their dimensionality is only $30$ 
+  \item \cite{vdMaa08} suggests preprocessing datasets such that their dimensionality is only $30$, \cite{vdMaa14} reduces dimensionality to 50 with PCA
 \end{itemize}
 
-\title{other notes}
+\textbf{Other Notes}
 \begin{itemize}
-  \item from \cite{openTSNE}: one easy way to improve the global consistency of t-SNE embeddings is to increase the sizes of the neighborhoods considered for constructing the embedding, i.e. to \textbf{increase perplexity}. But unfortunately, this often leads to a loss in local structure and tends to obsure small clusters. \cite{KoBe19SingleCell} instead propose to use a \textbf{mixture of Gaussians} to better preserve short-range as well as long-range distances and get a better balance 
+  \item from \cite{openTSNE}: one easy way to improve the global consistency of t-SNE embeddings is to increase the sizes of the neighborhoods considered for constructing the embedding, i.e. to \textbf{increase perplexity}. But unfortunately, this often leads to a loss in local structure and tends to obsure small clusters. \cite{KoBe19SingleCell} instead propose to use a \textbf{mixture of Gaussians} to better preserve short-range as well as long-range distances and get a better balance: instead of using the standard Gaussian kernel $\exp(-d^2/1\sigma_i^2)$, they use a multi-scale kernel 
+  \begin{equation}
+    \frac{1}{\sigma_i} \exp(-\frac{d^2}{2\sigma_i^2}) + \frac{1}{\tau_i} \exp(-\frac{d^2}{2 \tau_i})
+  \end{equation}
+  where we choose the variance of the first kernel $\sigma_i$ such that it perplexity of this component is 30, and $\tau_i$ such that the perplexity of the second component is $N/100$
   \item a feature of t-SNE is that is tries to use all available space. this means that clusters are often only separated by thin boundaries, which can become a problem for large datasets. \cite{BoehmBerens22} showed that exaggeration even after EE (\textbf{late exaggeration}) can lead to embeddings that are similar to UMAP and create more white space between clusters 
   \item if we want to look at different levels of resolution, \cite{Ko20HeavyTails} suggests that we can vary the \textbf{degrees of freedom} in the $t$-distribution used. Even heavier-tailed distributions than the Cauchy distribution can bring out smaller clusters. 
 \end{itemize}

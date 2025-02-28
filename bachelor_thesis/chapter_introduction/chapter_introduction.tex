@@ -20,3 +20,7 @@ Notes from \cite{vdMaa14}:
     \item In high-dimensional spaces, only small pairwise distances are reliable. This is why most visualization techniques for high-dimensional data only try to model these accurately. 
     \item a high-level view of t-SNE: the algorithm minimizes a divergence betweeen a distribution that measures pairwise similarities of input objects and a distribution that measures pairwise similarities of the corresponding low-dimensional points in the embedding 
 \end{itemize}
+
+Not sure if this fits into the introduction, but I quite like this explanation of t-SNE by \cite{KoBe19SingleCell}: t-SNE essentially lets points interact like physical particles governed by the two following laws: all points repell each other and each point is attracted to its nearest neighbor.
+
+Another interesting note from \cite{KoBe19SingleCell}: t-SNE is often perceived as having only one free parameter to tune, namely perplexity. But under the hood there are so many other optimization parameters (learning rate, number of iterations, EE factor etc.) which can have a large impact on the quality of the embedding! 
