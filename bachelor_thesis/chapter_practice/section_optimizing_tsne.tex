@@ -35,12 +35,42 @@ In our experiments, we do not necessarily see a visual improvement of the PCA in
 \subsection{Current State of Literature of Parameter Choices}
 Here, I want to collect guidelines for choosing t-SNE parameters. It could be interesting to look at this from the perspective of a practitioner, using t-SNE libraries like openTSNE or the scikit-learn implementation and investigate if the default choices lead to good results. 
 
+
+
+\title{Perplexity}
+\begin{itemize}
+  \item \cite{vdMaa08} suggests using perplexity $40$ 
+  \item \cite{vdMaa14} uses perplexity $50$ 
+  \item \cite{belkina19} suggest used 30 to 50 and find that the exact value does not impact the embedding too much 
+\end{itemize}
+
+\title{Early Exaggeration}
+\begin{itemize}
+  \item \cite{vdMaa08} initially suggests $\alpha = 4$ for the first $50$ iterations 
+  \item \cite{belkina19} suggest using 4 to 12 and find that the exact value does not impact the embedding too much 
+\end{itemize}
+
+\title{Number of Iterations}
+\begin{itemize}
+  \item \cite{vdMaa08} suggests $T=1000$ total iterations 
+\end{itemize}
+
+\title{Learning Rate}
+\begin{itemize}
+  \item \cite{vdMaa08} suggests $\eta =100$ and using an adaptive learning rate scheme 
+  \item \cite{vdMaa14} suggests initial learning rate $\eta=200$ 
+  \item \cite{belkina19} suggest $\eta = N/\rho$ where $\rho$ is the EE factor, this is used by default in openTSNE. 
+\end{itemize}
+
+\title{Data Preprocessing}
+\begin{itemize}
+  \item \cite{vdMaa08} suggests preprocessing datasets such that their dimensionality is only $30$ 
+\end{itemize}
+
+\title{other notes}
 \begin{itemize}
   \item from \cite{openTSNE}: one easy way to improve the global consistency of t-SNE embeddings is to increase the sizes of the neighborhoods considered for constructing the embedding, i.e. to \textbf{increase perplexity}. But unfortunately, this often leads to a loss in local structure and tends to obsure small clusters. \cite{KoBe19SingleCell} instead propose to use a \textbf{mixture of Gaussians} to better preserve short-range as well as long-range distances and get a better balance 
-  \item on \textbf{perplexity}: \cite{belkina19} suggest used 30 to 50 and find that the exact value does not impact the embedding too much
-  \item on \textbf{early exaggeration}: \cite{belkina19} suggest using 4 to 12 and find that the exact value does not impact the embedding too much 
   \item a feature of t-SNE is that is tries to use all available space. this means that clusters are often only separated by thin boundaries, which can become a problem for large datasets. \cite{BoehmBerens22} showed that exaggeration even after EE (\textbf{late exaggeration}) can lead to embeddings that are similar to UMAP and create more white space between clusters 
   \item if we want to look at different levels of resolution, \cite{Ko20HeavyTails} suggests that we can vary the \textbf{degrees of freedom} in the $t$-distribution used. Even heavier-tailed distributions than the Cauchy distribution can bring out smaller clusters. 
-  \item \textbf{learning rate}: \cite{belkina19} suggest $\eta = N/\rho$ where $\rho$ is the EE factor, this is used by default in openTSNE. 
 \end{itemize}
 

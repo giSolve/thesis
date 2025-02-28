@@ -1,6 +1,6 @@
 \section{Accelerating t-SNE}
 
-The original t-SNE algorithm is not very fast. Its runtime is $\mathcal{O}(n^2)$, which quickly becomes infeasible for datasets with $100,000$ or more points \textcolor{red}{check the exact number}. In this section, we will give an overview of the two most popular methods proposed to speed up the algorithm. 
+The original t-SNE algorithm is not very fast. Its runtime is $\mathcal{O}(N^2)$, which quickly becomes infeasible for datasets with $100,000$ or more points \textcolor{red}{check the exact number}. In this section, we will give an overview of the two most popular methods proposed to speed up the algorithm. 
 
 \subsection{Barnes-Hut t-SNE}
 This method uses tree-bases algorithms to speed up t-SNE and was proposed by van der Maaten in 2014 \cite{vdMaa14}. 
@@ -12,7 +12,7 @@ This method uses tree-bases algorithms to speed up t-SNE and was proposed by van
 \title{Approximating Attractive Forces}
 Computing the attractive force is not too expensive computationally, if we approximate input similarities and use vantage-point trees. Recall that input similarities $p_{ij}$ are computed based on a Gaussian kernel. 
 Thus, $p_{ij}$ values corresponding to dissimilar input objects $x_i$ and $x_j$ are very small. 
-So, it makes sense to develop a sparse approximation for the $p_{ij}$. Instead of computing $n^2$ pairwise similarities, we focus on the $\lfloor 3 \kappa \rfloor$ nearest neighbors of each of the $n$ input objects only, where $\kappa$ denotes the perplexity. We denote the nearest neighbor set of $x_i$ by $\mathcal{N}_i$. 
+So, it makes sense to develop a sparse approximation for the $p_{ij}$. Instead of computing $N^2$ pairwise similarities, we focus on the $\lfloor 3 \kappa \rfloor$ nearest neighbors of each of the $n$ input objects only, where $\kappa$ denotes the perplexity. We denote the nearest neighbor set of $x_i$ by $\mathcal{N}_i$. 
 
 The similarities are thus given by 
 \begin{equation}

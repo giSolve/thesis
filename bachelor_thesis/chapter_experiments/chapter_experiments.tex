@@ -1,5 +1,31 @@
 \chapter{Experiments}\label{chapter:experiments}
-in which we try to replicate results from \cite{belkina19}. 
+
+\section{Datasets}
+We use the following datasets for our experiments (as well as synthetic data). 
+\begin{itemize}
+    \item Iris dataset \cite{iris_dataset}
+    \item MNIST \cite{mnist_dataset}
+    \item EMNIST letters \cite{emnist_dataset}
+    \item flow cytometry \cite{flow_dataset}
+    \item Macasko mouse retina \cite{Macosko_dataset} 
+\end{itemize}
+
+\section{Dataset Cluster Assumptions}
+Here we investigate if assumptions made for clustering results in \cite{LinStei22} hold in practice, by looking at the simple Iris dataset. 
+
+\section{Initialization}
+Here we reproduce results from \cite{kobak21} on synthetic data and show that t-SNE with PCA initialization can reconstruct geometric shapes up to some extent. 
+
+We also investigate the effects of PCA initialization on real-world datasets. 
+
+\section{An Implementation of Rescaled t-SNE for Large Data Limits}
+something here 
 
 \section{Effect of Varying Perplexity Values}
 there were some figures here before I removed them. 
+
+\section{Early Exaggeration}
+what effect does it have? 
+
+\section{opt-SNE Implementation}
+and comparison to default settings 
