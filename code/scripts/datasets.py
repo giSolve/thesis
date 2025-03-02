@@ -11,11 +11,15 @@ def load_percentage_of_dataset(percentage, X, y, seed=42):
     y_sample = y.sample(frac=percentage, random_state=seed).reset_index(drop=True) 
     return X_sample, y_sample
 
+def load_n_samples(n_samples, X, y, seed=42):
+    X_sample = X.sample(n_samples, random_state=seed).reset_index(drop=True)
+    y_sample = y.sample(n_samples, random_state=seed).reset_index(drop=True) 
+    return X_sample, y_sample
+
 def pca(data, dim=50): 
     """reduce dimensionality of data to dim=50 (default) using PCA"""
     pca = PCA(n_components=dim)
     return pca.fit_transform(data)
-
 
 def load_mnist(): 
     # use both test and train data 
@@ -27,7 +31,7 @@ def load_mnist():
     X = X.reshape(X.shape[0], -1) / 255.0 
     
     # preprocess data using PCA 
-    return pca(X), y
+    return pd.DataFrame(pca(X)), pd.DataFrame(y) 
 
 def load_flow18(): 
     # specify path to data 
