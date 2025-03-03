@@ -3,12 +3,15 @@
 \section{Datasets}
 We use the following datasets for our experiments (as well as synthetic data). 
 \begin{itemize}
-    \item Iris dataset \cite{iris_dataset}
-    \item MNIST \cite{mnist_dataset}
-    \item EMNIST letters \cite{emnist_dataset}
-    \item flow cytometry \cite{flow_dataset}
-    \item Macasko mouse retina \cite{Macosko_dataset} 
+    \item Iris dataset \cite{iris_dataset}: small dataset of a total of 150 points in three classes of 50 points each.
+    \item MNIST \cite{mnist_dataset}: this classic computer vision dataset contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). Each image has dimensionality $D=28 \times 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA. 
+    \item EMNIST letters \cite{emnist_dataset} not sure if I do want to use this 
+    \item flow cytometry \cite{flow_dataset} really large!
+    \item Macasko mouse retina \cite{Macosko_dataset} a common benchmark dataset for single-cell data
 \end{itemize}
+
+\section{Experimentatal Setup}
+Unless otherwise specified, we always use the default openTSNE settings. 
 
 \section{Dataset Cluster Assumptions}
 Here we investigate if assumptions made for clustering results in \cite{LinStei22} hold in practice, by looking at the simple Iris dataset. 
@@ -49,9 +52,35 @@ This makes it virtually impossible to consider as a cluster, not matter how far 
 One might argue that indeed clusters 2 and 3 belong together, but also then we observe some points having $0$ similarity to each other. 
 
 \section{Initialization}
-Here we reproduce results from \cite{kobak21} on synthetic data and show that t-SNE with PCA initialization can reconstruct geometric shapes up to some extent. 
+As mentioned above, the benefits of PCA initialization are well-studied (\textcolor{red}{include references here}). 
+For example, \cite{kobak21} showed that t-SNE is better able to recover a synthetic 2D circle when initialized with PCA. 
 
-We also investigate the effects of PCA initialization on real-world datasets. 
+Building on this work \textcolor{red}{and using their code (maybe I should cite the github here)}, we show that t-SNE also recovers other geometric structures like triangles (\ref{fig:triangle}) and squares (\ref{fig:square}) better when initialized with PCA. 
+
+Implementation details: we sampled $n=7000$ points and added some Gaussian noise. We closely followed \cite{kobak21}, only changing the circle to a triangle and square. 
+
+We also use two different seeds for each of the embeddings with random and PCA initialization. 
+As expected, we see much more variance in the embedding when we use random initialization. While using PCA initialization eliminates some of this variance between embeddings, we can still observe small differences between the embeddings (especially of the triangle). 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/t_sne_on_triangle.png}
+        \caption{t-SNE on an equilateral triangle in 2D space. Using PCA initialization improves recovery of the structure better than when using random initialization.}
+    \label{fig:triangle}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/t_sne_on_square.png}
+        \caption{t-SNE performed on a square (with some Gaussian noise added) \textcolor{red}{the seeds of the first two embeddings here are switched up, it should be seed 42 first}}
+    \label{fig:square}
+\end{figure}
+
+We thought it was interesting to see how PCA initialization helps with preserving geometric structures and to see that PCA-initialized t-SNE embeddings with different seeds still lead to slightly different results. 
+But ultimately, it is well-established in the research that PCA should be used to initilize the low-dimensional embedding. 
+We will therefore not conduct any other experiments regarding initialization. 
+
+\textcolor{red}{TODO: think about if I want to say something about spectral initialization}
 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
 something here 
