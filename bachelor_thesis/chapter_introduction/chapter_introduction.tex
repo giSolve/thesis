@@ -1,4 +1,24 @@
 \chapter{Introduction}
+
+\section*{Objective of This Work}
+The goal of this thesis is to provide both a theoretical and a practical analysis of t-SNE. 
+We aim to investigate the theoretical properties of t-SNE and study how well they carry over to applications of t-SNE in real-world data. 
+We also study methods to accelerate the algorithm including automated stopping.
+
+As pointed out by \cite{KoBe19SingleCell}, t-SNE is sometimes perceived as having only one parameter to tune, the so-called perplexity. 
+But under the hood there are many other optimization parameters, such as the learning rate, the total number of iteration and the exaggeration factor and length, which can all have a large impact on the quality of the embedding. 
+We thus aim to carry out experiments to study the impact of hyperparameter choices. 
+ 
+
+\section*{Structure of the Thesis}
+We start by giving an overview of dimensionality reduction methods in Chapter 2 before discussion the t-SNE algorithm in detail in Chapter 3. 
+In Chapter 4, we present the current state of theoretical research on t-SNE, with a focus on clustering guarantees and behavior in the large-data limit. 
+Afterwards, we consider the practical aspects of t-SNE in Chapter 5, including techniques to accelerate the algorithm and hyperparameter optimization. 
+Finally, in Chapter 6 we run a range of experiments using different datasets and test various hyperparameter settings. 
+
+\section*{Contributions}
+List what I have done in the thesis in bullet points here. 
+
 Notes from \cite{vdMaa08}: 
 \begin{itemize}
     \item t-SNE is capable of capturing both local and global structure reasonably well 
@@ -23,4 +43,3 @@ Notes from \cite{vdMaa14}:
 
 Not sure if this fits into the introduction, but I quite like this explanation of t-SNE by \cite{KoBe19SingleCell}: t-SNE essentially lets points interact like physical particles governed by the two following laws: all points repell each other and each point is attracted to its nearest neighbor.
 
-Another interesting note from \cite{KoBe19SingleCell}: t-SNE is often perceived as having only one free parameter to tune, namely perplexity. But under the hood there are so many other optimization parameters (learning rate, number of iterations, EE factor etc.) which can have a large impact on the quality of the embedding! 

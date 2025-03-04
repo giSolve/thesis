@@ -3,8 +3,12 @@ import pandas as pd
 import flowkit as fk 
 from keras.datasets import mnist
 from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import LabelEncoder
 from pathlib import Path
 
+import gzip
+import pickle
 
 def load_percentage_of_dataset(percentage, X, y, seed=42):
     X_sample = X.sample(frac=percentage, random_state=seed).reset_index(drop=True)
@@ -20,6 +24,33 @@ def pca(data, dim=50):
     """reduce dimensionality of data to dim=50 (default) using PCA"""
     pca = PCA(n_components=dim)
     return pca.fit_transform(data)
+
+def load_mouse_retina(): 
+    with gzip.open("/Users/soli/Desktop/uni/thesis/code/data/macosko_2015.pkl.gz", "rb") as f:
+        data = pickle.load(f)
+
+    X = data["pca_50"]
+    y = data["CellType1"] 
+
+    label_encoder = LabelEncoder()
+    y_numeric = label_encoder.fit_transform(y)
+
+    # returns np array 
+    return X, y_numeric
+
+def load_iris_data(): 
+    dataset = load_iris()
+    features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+    target = 'species'
+
+    iris = pd.DataFrame(
+        dataset.data,
+        columns=features)
+
+    iris[target] = dataset.target
+
+    # returns dataframe 
+    return iris[features], iris[target]
 
 def load_mnist(): 
     # use both test and train data 
