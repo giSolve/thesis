@@ -2,6 +2,7 @@ import numpy as np
 import scipy
 from sklearn.neighbors import NearestNeighbors
 from scipy.spatial.distance import pdist
+
 def embedding_quality(X, Z, classes, knn=10, knn_classes=3, subsetsize=1000):
     # ensure data is in the form of a numpy array for this function 
     X = np.array(X) if not isinstance(X, np.ndarray) else X
