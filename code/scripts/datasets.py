@@ -35,8 +35,8 @@ def load_mouse_retina():
     label_encoder = LabelEncoder()
     y_numeric = label_encoder.fit_transform(y)
 
-    # returns np array 
-    return X, y_numeric
+    # returns dataframe 
+    return pd.DataFrame(X), pd.DataFrame(y_numeric) 
 
 def load_iris_data(): 
     dataset = load_iris()
@@ -109,4 +109,7 @@ def load_flow18():
     X = df_filtered.drop(columns=['class'])
     y = df_filtered['class']
 
-    return X, y
+    label_encoder = LabelEncoder()
+    y_numeric = label_encoder.fit_transform(y)
+
+    return pd.DataFrame(X), pd.DataFrame(y_numeric)
