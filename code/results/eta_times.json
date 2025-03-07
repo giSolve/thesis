@@ -1,0 +1,82 @@
+[
+    {
+        "learning_rate": 1,
+        "dataset_index": 0,
+        "time_taken_seconds": 3.0804500579833984
+    },
+    {
+        "learning_rate": 1,
+        "dataset_index": 1,
+        "time_taken_seconds": 1.7085962295532227
+    },
+    {
+        "learning_rate": 1,
+        "dataset_index": 2,
+        "time_taken_seconds": 2.5430030822753906
+    },
+    {
+        "learning_rate": 1,
+        "dataset_index": 3,
+        "time_taken_seconds": 2.6199891567230225
+    },
+    {
+        "learning_rate": 200,
+        "dataset_index": 0,
+        "time_taken_seconds": 2.692631959915161
+    },
+    {
+        "learning_rate": 200,
+        "dataset_index": 1,
+        "time_taken_seconds": 2.369847059249878
+    },
+    {
+        "learning_rate": 200,
+        "dataset_index": 2,
+        "time_taken_seconds": 1.5277838706970215
+    },
+    {
+        "learning_rate": 200,
+        "dataset_index": 3,
+        "time_taken_seconds": 1.432204008102417
+    },
+    {
+        "learning_rate": 800,
+        "dataset_index": 0,
+        "time_taken_seconds": 1.8659780025482178
+    },
+    {
+        "learning_rate": 800,
+        "dataset_index": 1,
+        "time_taken_seconds": 1.5714459419250488
+    },
+    {
+        "learning_rate": 800,
+        "dataset_index": 2,
+        "time_taken_seconds": 1.6467130184173584
+    },
+    {
+        "learning_rate": 800,
+        "dataset_index": 3,
+        "time_taken_seconds": 1.378113031387329
+    },
+    {
+        "learning_rate": "auto",
+        "dataset_index": 0,
+        "time_taken_seconds": 1.3945930004119873
+    },
+    {
+        "learning_rate": "auto",
+        "dataset_index": 1,
+        "time_taken_seconds": 1.1292638778686523
+    },
+    {
+        "learning_rate": "auto",
+        "dataset_index": 2,
+        "time_taken_seconds": 1.1051619052886963
+    },
+    {
+        "learning_rate": "auto",
+        "dataset_index": 3,
+        "time_taken_seconds": 1.2093567848205566
+    }
+]

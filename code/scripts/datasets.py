@@ -117,3 +117,14 @@ def load_flow18():
     y_numeric = label_encoder.fit_transform(y)
 
     return pd.DataFrame(X), pd.DataFrame(y_numeric)
+
+def load_all_datasets(): 
+    """This function loads: Iris, Mouse Retina, MNIST and flow18 datasets"""
+    all_datasets = [None] * 4
+
+    all_datasets[0] = load_iris_data()
+    all_datasets[1] = load_mouse_retina()
+    all_datasets[2] = load_mnist()
+    all_datasets[3] = load_flow18()
+
+    return all_datasets
