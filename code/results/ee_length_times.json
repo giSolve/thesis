@@ -2,81 +2,81 @@
     {
         "ee_length": 125,
         "dataset_index": 0,
-        "time_taken_seconds": 5.474375247955322
+        "time_taken_seconds": 4.120561122894287
     },
     {
         "ee_length": 125,
         "dataset_index": 1,
-        "time_taken_seconds": 27.217441082000732
+        "time_taken_seconds": 3.4007551670074463
     },
     {
         "ee_length": 125,
         "dataset_index": 2,
-        "time_taken_seconds": 25.206419944763184
+        "time_taken_seconds": 3.5701351165771484
     },
     {
         "ee_length": 125,
         "dataset_index": 3,
-        "time_taken_seconds": 30.96284008026123
+        "time_taken_seconds": 3.1192398071289062
     },
     {
         "ee_length": 250,
         "dataset_index": 0,
-        "time_taken_seconds": 2.345677137374878
+        "time_taken_seconds": 3.4963631629943848
     },
     {
         "ee_length": 250,
         "dataset_index": 1,
-        "time_taken_seconds": 22.211498260498047
+        "time_taken_seconds": 2.688933849334717
     },
     {
         "ee_length": 250,
         "dataset_index": 2,
-        "time_taken_seconds": 23.43144130706787
+        "time_taken_seconds": 2.875476837158203
     },
     {
         "ee_length": 250,
         "dataset_index": 3,
-        "time_taken_seconds": 18.37031102180481
+        "time_taken_seconds": 3.0228588581085205
     },
     {
         "ee_length": 500,
         "dataset_index": 0,
-        "time_taken_seconds": 1.7890548706054688
+        "time_taken_seconds": 2.4389748573303223
     },
     {
         "ee_length": 500,
         "dataset_index": 1,
-        "time_taken_seconds": 21.765899658203125
+        "time_taken_seconds": 2.843737840652466
     },
     {
         "ee_length": 500,
         "dataset_index": 2,
-        "time_taken_seconds": 18.91866421699524
+        "time_taken_seconds": 1.7133309841156006
     },
     {
         "ee_length": 500,
         "dataset_index": 3,
-        "time_taken_seconds": 21.97111415863037
+        "time_taken_seconds": 5.129076957702637
     },
     {
         "ee_length": 750,
         "dataset_index": 0,
-        "time_taken_seconds": 2.63824200630188
+        "time_taken_seconds": 9.804346799850464
     },
     {
         "ee_length": 750,
         "dataset_index": 1,
-        "time_taken_seconds": 21.21545720100403
+        "time_taken_seconds": 4.09614896774292
     },
     {
         "ee_length": 750,
         "dataset_index": 2,
-        "time_taken_seconds": 17.047858953475952
+        "time_taken_seconds": 0.7621819972991943
     },
     {
         "ee_length": 750,
         "dataset_index": 3,
-        "time_taken_seconds": 21.35230588912964
+        "time_taken_seconds": 4.280822038650513
     }
 ]
