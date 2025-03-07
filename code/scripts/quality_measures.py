@@ -62,3 +62,57 @@ def embedding_quality(X, Z, classes, knn=10, knn_classes=3, subsetsize=1000):
     #rho = scipy.stats.spearmanr(d1[:,None],d2[:,None]).correlation
     
     return (mnn, mnn_global, rho)
+
+def compute_quality_results(embedding_dict, datasets, knn=10, subsetsize=1000):
+    """
+    Computes embedding quality measures for each embedding and organizes results by iteration length.
+    
+    Parameters:
+        embedding_dict (dict): Dictionary with keys (T, dataset_index) mapping to 
+                               (embedding, labels, kld_values) as returned by run_tsne_with_callbacks_and_timing.
+        datasets (list): List of tuples (data, labels) that were used to compute the embeddings.
+        knn (int): Number of nearest neighbors for local quality measure.
+        subsetsize (int): Number of points to sample for computing the Spearman correlation.
+    
+    Returns:
+        quality_results (dict): Dictionary with iteration length as keys. Each value is a dictionary
+                                mapping dataset_index to a tuple (mnn, mnn_global, rho).
+                                Structure example:
+                                {
+                                  250: { 0: (mnn, mnn_global, rho),
+                                         1: (mnn, mnn_global, rho),
+                                         ... },
+                                  500: { ... },
+                                  ...
+                                }
+    """
+    quality_results = {}
+    
+    for (T, dataset_index), (embedding, _, _) in embedding_dict.items():
+        # Retrieve the original data and labels for this dataset.
+        data, labels = datasets[dataset_index]
+        # Ensure data is a numpy array.
+        if hasattr(data, "values"):
+            X = data.values.astype(float)
+        else:
+            X = np.array(data)
+        
+        # The embedding (Z) is already a numpy array, but we ensure it.
+        Z = np.array(embedding)
+        
+        # Determine the number of unique classes.
+        unique_classes = np.unique(labels)
+        n_classes = len(unique_classes)
+        # Set knn_classes to one-third of the number of classes, rounded to a whole number, with a minimum of 1.
+        knn_classes = max(1, int(round(n_classes / 3)))
+        
+        # Compute quality measures using your provided embedding_quality function.
+        quality = embedding_quality(X, Z, labels, knn=knn, knn_classes=knn_classes, subsetsize=subsetsize)
+        # quality is a tuple: (mnn, mnn_global, rho)
+        
+        # Organize results by iteration length.
+        if T not in quality_results:
+            quality_results[T] = {}
+        quality_results[T][dataset_index] = quality
+        
+    return quality_results

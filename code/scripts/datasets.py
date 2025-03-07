@@ -10,14 +10,18 @@ from pathlib import Path
 import gzip
 import pickle
 
+def load_n_samples(n_samples, X, y, seed=42):
+    if len(y) > n_samples: 
+        X_sample = X.sample(n_samples, random_state=seed).reset_index(drop=True)
+        y_sample = y.sample(n_samples, random_state=seed).reset_index(drop=True) 
+    else: 
+        X_sample = X
+        y_sample = y
+    return X_sample, y_sample
+
 def load_percentage_of_dataset(percentage, X, y, seed=42):
     X_sample = X.sample(frac=percentage, random_state=seed).reset_index(drop=True)
     y_sample = y.sample(frac=percentage, random_state=seed).reset_index(drop=True) 
-    return X_sample, y_sample
-
-def load_n_samples(n_samples, X, y, seed=42):
-    X_sample = X.sample(n_samples, random_state=seed).reset_index(drop=True)
-    y_sample = y.sample(n_samples, random_state=seed).reset_index(drop=True) 
     return X_sample, y_sample
 
 def pca(data, dim=50): 
@@ -83,27 +87,27 @@ def load_flow18():
     df_filtered = df_events[selected_columns]
 
     # Define class mapping for merging & renaming (in order to only display classes that are in plots in the paper)
-    class_mapping = {
-        1: "Lin-",
-        2: "NK CD56highCD16-",
-        3: "iNKT",
-        4: "CD4+ non-Treg",
-        5: "CD4+ Tregs",
-        6: "CD8+ T CD56+CD16+",
-        7: "Mono CD14+CD16-",
-        9: "Mono CD14varCD16+",
-        10: "CD8 T CD56-",
-        11: "NK CD16+CD56lo", 
-        14: "γδ T cells",
-        15: "Dead or B cells",
-        16: "Dead or B cells"
-    }
+    # class_mapping = {
+    #     1: "Lin-",
+    #     2: "NK CD56highCD16-",
+    #     3: "iNKT",
+    #     4: "CD4+ non-Treg",
+    #     5: "CD4+ Tregs",
+    #     6: "CD8+ T CD56+CD16+",
+    #     7: "Mono CD14+CD16-",
+    #     9: "Mono CD14varCD16+",
+    #     10: "CD8 T CD56-",
+    #     11: "NK CD16+CD56lo", 
+    #     14: "γδ T cells",
+    #     15: "Dead or B cells",
+    #     16: "Dead or B cells"
+    # } 
     
     # Apply mapping
-    df_filtered["class"] = df_filtered["class"].map(class_mapping)
+    # df_filtered["class"] = df_filtered["class"].map(class_mapping)
 
     # Leave out any rows where the class is NaN (i.e., ignored classes)
-    df_filtered = df_filtered.dropna(subset=[('class', '')])
+    # df_filtered = df_filtered.dropna(subset=[('class', '')])
 
     # Split into data (X) and labels (y)
     X = df_filtered.drop(columns=['class'])

@@ -19,3 +19,4 @@ def set_plot_style():
         "lines.linewidth": 1.5,   # Line thickness
         "lines.markersize": 5     # Marker size
     })
+

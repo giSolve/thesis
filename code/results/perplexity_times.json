@@ -1,0 +1,22 @@
+[
+    {
+        "perplexity": 1,
+        "dataset_index": 0,
+        "time_taken_seconds": 6.603186130523682
+    },
+    {
+        "perplexity": 5,
+        "dataset_index": 0,
+        "time_taken_seconds": 10.963857889175415
+    },
+    {
+        "perplexity": 10,
+        "dataset_index": 0,
+        "time_taken_seconds": 6.9157209396362305
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 0,
+        "time_taken_seconds": 7.581747055053711
+    }
+]

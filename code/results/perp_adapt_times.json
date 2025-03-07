@@ -1,0 +1,32 @@
+[
+    {
+        "perplexity": 30,
+        "dataset_index": 0,
+        "time_taken_seconds": 39.38252806663513
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 1,
+        "time_taken_seconds": 26.18665599822998
+    },
+    {
+        "perplexity": "N/1000",
+        "dataset_index": 0,
+        "time_taken_seconds": 25.838950872421265
+    },
+    {
+        "perplexity": "N/1000",
+        "dataset_index": 1,
+        "time_taken_seconds": 20.948652029037476
+    },
+    {
+        "perplexity": "N/100",
+        "dataset_index": 0,
+        "time_taken_seconds": 21.05504822731018
+    },
+    {
+        "perplexity": "N/100",
+        "dataset_index": 1,
+        "time_taken_seconds": 21.872416973114014
+    }
+]
