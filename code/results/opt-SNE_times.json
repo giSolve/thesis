@@ -1,0 +1,110 @@
+[
+    {
+        "dataset_index": 0,
+        "setting": "normal",
+        "seed": 1,
+        "time_taken_seconds": 6.939741134643555
+    },
+    {
+        "dataset_index": 0,
+        "setting": "opt",
+        "seed": 1,
+        "time_taken_seconds": 1.6964049339294434
+    },
+    {
+        "dataset_index": 0,
+        "setting": "normal",
+        "seed": 12,
+        "time_taken_seconds": 4.318655014038086
+    },
+    {
+        "dataset_index": 0,
+        "setting": "opt",
+        "seed": 12,
+        "time_taken_seconds": 0.8832058906555176
+    },
+    {
+        "dataset_index": 0,
+        "setting": "normal",
+        "seed": 42,
+        "time_taken_seconds": 2.6438558101654053
+    },
+    {
+        "dataset_index": 0,
+        "setting": "opt",
+        "seed": 42,
+        "time_taken_seconds": 0.8609027862548828
+    },
+    {
+        "dataset_index": 1,
+        "setting": "normal",
+        "seed": 1,
+        "time_taken_seconds": 2.307579278945923
+    },
+    {
+        "dataset_index": 1,
+        "setting": "opt",
+        "seed": 1,
+        "time_taken_seconds": 0.8104310035705566
+    },
+    {
+        "dataset_index": 1,
+        "setting": "normal",
+        "seed": 12,
+        "time_taken_seconds": 2.396040201187134
+    },
+    {
+        "dataset_index": 1,
+        "setting": "opt",
+        "seed": 12,
+        "time_taken_seconds": 0.8086049556732178
+    },
+    {
+        "dataset_index": 1,
+        "setting": "normal",
+        "seed": 42,
+        "time_taken_seconds": 2.676156997680664
+    },
+    {
+        "dataset_index": 1,
+        "setting": "opt",
+        "seed": 42,
+        "time_taken_seconds": 0.8390986919403076
+    },
+    {
+        "dataset_index": 2,
+        "setting": "normal",
+        "seed": 1,
+        "time_taken_seconds": 3.657515048980713
+    },
+    {
+        "dataset_index": 2,
+        "setting": "opt",
+        "seed": 1,
+        "time_taken_seconds": 0.7735071182250977
+    },
+    {
+        "dataset_index": 2,
+        "setting": "normal",
+        "seed": 12,
+        "time_taken_seconds": 2.7624940872192383
+    },
+    {
+        "dataset_index": 2,
+        "setting": "opt",
+        "seed": 12,
+        "time_taken_seconds": 0.901148796081543
+    },
+    {
+        "dataset_index": 2,
+        "setting": "normal",
+        "seed": 42,
+        "time_taken_seconds": 2.9739742279052734
+    },
+    {
+        "dataset_index": 2,
+        "setting": "opt",
+        "seed": 42,
+        "time_taken_seconds": 0.8182611465454102
+    }
+]
