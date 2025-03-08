@@ -3,108 +3,108 @@
         "dataset_index": 0,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 6.939741134643555
+        "time_taken_seconds": 16.17452383041382
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 1.6964049339294434
+        "time_taken_seconds": 4.61358380317688
     },
     {
         "dataset_index": 0,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 4.318655014038086
+        "time_taken_seconds": 13.981915712356567
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 0.8832058906555176
+        "time_taken_seconds": 4.32398796081543
     },
     {
         "dataset_index": 0,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 2.6438558101654053
+        "time_taken_seconds": 21.10424494743347
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 0.8609027862548828
+        "time_taken_seconds": 3.968277931213379
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 2.307579278945923
+        "time_taken_seconds": 12.958231925964355
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 0.8104310035705566
+        "time_taken_seconds": 3.445920944213867
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 2.396040201187134
+        "time_taken_seconds": 12.801797866821289
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 0.8086049556732178
+        "time_taken_seconds": 3.391899824142456
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 2.676156997680664
+        "time_taken_seconds": 30.957931756973267
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 0.8390986919403076
+        "time_taken_seconds": 12.188402891159058
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 3.657515048980713
+        "time_taken_seconds": 27.63727903366089
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 0.7735071182250977
+        "time_taken_seconds": 3.8875179290771484
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 2.7624940872192383
+        "time_taken_seconds": 18.361999034881592
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 0.901148796081543
+        "time_taken_seconds": 3.7423958778381348
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 2.9739742279052734
+        "time_taken_seconds": 15.074611186981201
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 0.8182611465454102
+        "time_taken_seconds": 3.2768349647521973
     }
 ]
