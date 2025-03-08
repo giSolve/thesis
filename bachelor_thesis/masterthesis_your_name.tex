@@ -11,7 +11,7 @@
 % english               englische Worte wie "Chapter" und "References".
 % twoside               Beidseitiges Dokument, wie in einem Buch.
 
-D
+
 %If you don't want this fancyheaders comment out lines 17 to 24
 % Fancyheader
 \usepackage{fancyhdr}                   % Wie der Name schon sagt, um fancy Header zu generieren.
@@ -44,11 +44,13 @@ D
 \usepackage{bbm}                        % Dicke 1.
 \usepackage[utf8]{inputenc}             % utf8 als Eingabeformat. should be loaded before biblatex
 \usepackage[backend=biber, style=alphabetic, giveninits=true]{biblatex}  % Gute Erweiterung zu bibtex, Wird für Referenzen benutzt.
-\bibliography{masterthesis_your_name_bibliography}   % Die verwendeten Referenzen (.bib-Datei)
+%\bibliography{masterthesis_your_name_bibliography}   % Die verwendeten Referenzen (.bib-Datei)
+\addbibresource{masterthesis_your_name_bibliography.bib}
 \usepackage[hypcap]{caption}            % Damit Hyperrefs bei der figure-Umgebung auf die Figure zeigt statt auf die Caption.
 \captionsetup{font=footnotesize} 
 \usepackage{hyperref}
 \usepackage{cleveref}
+
 \usepackage{datetime}                   % Um \today einzustellen.
 \newdateformat{mydate}{\THEDAY{}th \monthname{} \THEYEAR{}}
 \usepackage{diagbox}                    % Diagonale in Tabellen.
