@@ -1,15 +1,55 @@
 \chapter{Introduction}
 
-In our modern world, we are confronted with an ever-growing amount of data. Statista estimated the amount of data created, captured, copied and consumed worldwide in 2023 to be a staggering 123 zetabytes, up from two zetabytes in the year 2010 \cite{Statista}.
+In our modern world, we are confronted with an ever-growing amount of data. 
+Statista estimated the amount of data created, captured, copied and consumed worldwide in 2023 to be a staggering 123 zetabytes, up from two zetabytes in the year 2010 \cite{Statista}.
+As the amount of data grows, it also becomes much harder to analyze. 
+What makes data analysis even harder is when the dimensionality of the data grows. 
+This is increasingly the case in areas such as computer vision, where images are represented by hundreds if not thousands of pixels and natural language processing, where words are transformed into high-dimensional vectors, for example via word2vec \cite{word2vec}.
+With such high-dimensional data, it is impossible to just \enquote{quickly take a look at it}. 
+Traditional data visualization methods, such as boxplots or standard scatterplots are unable to visualize more than three dimensions effectively. 
+
+\textcolor{red}{A sentence I like from \cite{vdMaa14}: \enquote{Visual exploration is an essential component of data analysis, as it allows for the development of intuitions and hypotheses for the processes that generated the data.}} 
+
+To address this problem, new methods for visualizing high-dimensional data have been proposed. 
+The t-Stochastic Neighbour Embedding (t-SNE) algorithm was first developed in 2008 \cite{vdMaa08} and built on prior work on Stochastic Neighbour Embeddings \cite{Hinton02}. 
+It has gained a lot of popularity in bioinformatics (cite other biology papers), especially in  single-cell transcriptomics (cite Tasic, macosko, Cao). 
+It is also used in cancer research (cite cancer papers here). 
+But the use of t-SNE extends to very diverse areas, from finance (cite finance paper here) to computer security and natural language processing. 
+
+\textcolor{red}{maybe mention that t-SNE is not only used for visualization, but can for example also be used as preprocessing before applying a clustering algorithm}
+
+This widespread adoption of the algorithm can be explained by its effectiveness at what it sets out to do. Unlike other dimensionality algorithms, t-SNE was developed with the aim of 2D and 3D visualizations of data in mind. 
+By focusing on retaining local structures in the low-dimensional embedding, t-SNE often successfully reveals clusters present in the data. 
+Since t-SNE addresses the so-called crowding problem (see below), the embeddings it produces are often visually appealing.  
+
+On a high-level, t-SNE works as follows: from the given points, we calculate a probability distribution that measures pairwise similarities between the data points. 
+For the low-dimensional embedding, we start with some data points in 2D or 3D and also construct a distribution of pairwise similarities between these points. 
+The t-SNE algorithm then iteratively modifies the location of the low-dimensional datapoints such that the difference between these two distributions, as measured by the Kullback-Leibler divergence, is minimized. 
+A different way to understand the algorithm is through the lense of dynamical systems, as described by \cite{LinStei22}. 
+One can think of every datapoint as a physical particle which experiences two types of forces: an attractive force to its nearest neighbors in the high-dimensional space and a repulsive force towards all other particles \cite{KoBe19SingleCell}. 
+
+Although t-SNE often works well, there are also some drawbacks to the method. 
+Firstly, t-SNE requires the practitioner to make choices regarding the values of some hyperparameters. 
+While common libraries \cite{openTSNE, sklearn_api} come with standard parameter settings, it is not uncommon in practice to run the algorithm multiple times with different parameters. 
+In particular, the impact of the perplexity parameter, which determines the number of neighbors we consider when constructing the high-dimensional probability distribution, has been studied extensively (\textcolor{red}{include all perplexity citations here}). 
+
+As pointed out by \cite{KoBe19SingleCell}, the perplexity parameter is often perceived as being the only parameter that needs tuning. 
+But \enquote{under the hood [...] there are also
+various optimisation parameters (such as the learning rate, the
+number of iterations, early exaggeration factor, etc.)} \cite{KoBe19SingleCell}, which have been shown to also have a great impact on the quality of the embedding. 
+This is problematic, since it is impractical to tune every single parameter and different parameter choices can lead to very different results, making it hard to interpret the results. 
+Furthermore, the exact impact of each of these parameters on the embedding is not entirely clear, especially to practioners who are not experts in the field of dimensionality reduction. 
+
+
+Secondly, there is still a lack of understanding of the internal workings of the algorithm. 
+After t-SNE became popular, there also began to appear papers investigating it from a theoretical viewpoint. 
+For example, several clustering guarantees have been proposed and the behaviour of t-SNE as the number of datapoints goes to infinity has been studied (\textcolor{red}{add citation here}). 
+But difficulties formulating theorems that are applicable to real-world datasets persist, with papers making a number of assumptions that are sometimes disconnected from practice. 
 
 \section*{Objective of This Work}
-The goal of this thesis is to provide both a theoretical and a practical analysis of t-SNE. 
-We aim to investigate the theoretical properties of t-SNE and study how well they carry over to applications of t-SNE in real-world data. 
-We also study methods to accelerate the algorithm including automated stopping.
-
-As pointed out by \cite{KoBe19SingleCell}, t-SNE is sometimes perceived as having only one parameter to tune, the so-called perplexity. 
-But under the hood there are many other optimization parameters, such as the learning rate, the total number of iteration and the exaggeration factor and length, which can all have a large impact on the quality of the embedding. 
-We thus aim to carry out experiments to study the impact of hyperparameter choices. 
+The goal of this thesis is to provide an overview of the current state of research on both the theoretical and practical aspects of the t-SNE algorithm.  
+In particular, we aim to investigate how well the theoretical research on t-SNE carries over to practical applications with real world data. 
+We also want to explore the purely practical and algorithmic aspects, with a focus on exploring how t-SNE can be accelerated via automatic stopping \cite{belkina19} and running experiments on hyperparameters that have been not been as extensively studied yet. 
  
 
 \section*{Structure of the Thesis}
@@ -19,31 +59,18 @@ Afterwards, we consider the practical aspects of t-SNE in Chapter 5, including t
 Finally, in Chapter 6 we run a range of experiments using different datasets and test various hyperparameter settings. 
 
 \section*{Contributions}
-List what I have done in the thesis in bullet points here. 
-
-
-
-\section*{General Notes}
-Notes from \cite{vdMaa08}: 
 \begin{itemize}
-    \item t-SNE is capable of capturing both local and global structure reasonably well 
-\end{itemize}
-A sentence I like from \cite{vdMaa14}: \enquote{Visual exploration is an essential component of data analysis, as it allows for the development of intuitions and hypotheses for the processes that generated the data.}
-
-Maybe it would be good to say something about the importance of visualization data in general here. 
-
-Notes from \cite{LinStei22}:
-\begin{itemize}
-    \item traditional approaches to data analysis and visualization often fail in the high-dimen\-sio\-nal setting or it is impossible to visualize more than two or three dimensions (think boxplots, traditional scatterplots etc.)
-    \item goal of t-SNE: simplify identification of clusters 
-    \item t-SNE is used in the standard analysis pipeline for single-cell RNA sequencing data nowadays
+    \item We summarize the existing theoretical literature on t-SNE. 
+    \item We give an overview of the current guidelines for choosing parameters. 
+    \item We implement the automatic stopping strategy outlined in \cite{belkina19} on top of the state-of-the-art openTSNE library \cite{openTSNE}. 
+    \item We test the claims in \cite{murray2024largedatalimitsscaling} empirically for the first time. 
+    \item We perform a detailed hyperparameter study on datasets of different sizes. 
 \end{itemize}
 
-Notes from \cite{vdMaa14}:
-\begin{itemize}
-    \item In high-dimensional spaces, only small pairwise distances are reliable. This is why most visualization techniques for high-dimensional data only try to model these accurately. 
-    \item a high-level view of t-SNE: the algorithm minimizes a divergence betweeen a distribution that measures pairwise similarities of input objects and a distribution that measures pairwise similarities of the corresponding low-dimensional points in the embedding 
-\end{itemize}
+\section*{Acknowledgements}
+I would like to thank Prof. Dr. Garcke for suggesting this interesting topic and guiding me along the way. 
+I also want to thank Dr. Bohn for agreeing to be second advisor. I also want to thank the developers of the openTSNE library for having written such a nice library that made everything a lot easier. 
+Finally, I want to thank Jimena for proofreading this work. 
 
-Not sure if this fits into the introduction, but I quite like this explanation of t-SNE by \cite{KoBe19SingleCell}: t-SNE essentially lets points interact like physical particles governed by the two following laws: all points repell each other and each point is attracted to its nearest neighbor.
+
 

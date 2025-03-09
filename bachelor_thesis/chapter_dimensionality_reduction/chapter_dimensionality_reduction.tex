@@ -1,22 +1,49 @@
 \chapter{Dimensionality Reduction}\label{chapter:dimensionality-reduction}
+This chapter is supposed to provide more context for t-SNE as a nonlinear dimensionality reduction method. 
+\begin{itemize}
+    \item Many problems exist with high-dimensional data, see (\ref{section:curse}). This is a problem for instance in many ML algorithms, which may suffer from an increased computational cost and decreased performance due to the curse of dimensionality, when the input data has too high of a dimension. 
+    \item the goal of dimensionality reduction is to alleviate these issues by mapping high-dim data to a low-dim space whilst preserving as much meaningful structure as possible (don't use this as is)
+    \item beyond the realm of data visualization, dimensionality reduction methods are also used for preprocessing before any downstream applications / algorithms. For example, they can improve the performance of clustering algorithms (add reference)
+\end{itemize}
+
+\section{The Curse of Dimensionality}\label{section:curse}
+The curse of dimensionality, first decribed by \textcolor{red}{[citation here]}, is a broad term, encompassing several phenomena that appear in high dimensions and that make working with high-dimensional data difficult. 
+
+First of all, we should remember that we can never expect a low-dimensional embedding to fully preserve the structure of data with a higher intrinsic dimensionality. Take for example a tetrahedron in the three-dimensional space. It is then impossible to map the tetrahedron to the two-dimensional plane with all distances preserved. 
+
+Also, distances become less meaningful as the dimension increases. (\textcolor{red}{why? explain this more})
+
+Then there is the problem of data sparcity. Consider for instance the tessellation of hypercubes with a Cartesian grid. The number of points needed for this tessellation increases exponentially with the dimension \textcolor{red}{[citation here, book: nonlinear dimensionality reduction techniques]}. 
+
+Finally, and most importantly for t-SNE, there is the crowding problem. 
+This simply refers to the fact that there is not enough space to accomodate all neighbors in the lower dimension. 
+With an algorithm favoring preservation of local structure, this means that points that are only moderately far from each other have to be placed much further away in the low dimensional map (\textcolor{red}{TODO: maybe insert picture of example here?}). 
+This means we have small attractive forces between moderately distant neighbors. 
+But even this small number is enough to force all the points to be very close to each other and concentrate in the middle of the map - if we do not have repulsive forces that is. 
+Note that this crowding problem occurs with all local techniques, it is not specific to SNE \cite{vdMaa08}. 
+
+
+\begin{itemize}
+    \item different distribution of pairwise distances: volume of a sphere centered on datapoint $x_i$ scales as $r^m$, where $r$ is radius, $m$ is dimension (this is somehow related to the crowding problem) \cite{vdMaa08}
+    \item TODO: read up on \enquote{norm concentration} or the \enquote{concentration of measure}
+    \item TODO: maybe read WissRech Skript on this section and reference it 
+\end{itemize}
 
 \section{Linear and Nonlinear Methods}
+One generally distinguishes between linear and nonlinear dimensionality reduction techniques. Another, less clear, differentiation can also be made between techniques that focus on perserving local vs. global structure. 
+
+Some desirable characteristics of dimensionality reduction methods are: reproducibility (no randomness), easy out-of-sample extension, little parameter sensitivity, interpretability.  
+
 Notes from \cite{vdMaa08}: 
 \begin{itemize}
-    \item aim of dimensionality reduction: preserve as much of the significant structure of the high-dimensional data as possible in the low-dimensional map 
     \item there have been various proposals that differ in the type of structure they preserve 
     \item linear techniques: PCA and classical MDS focus on keeping low-dimensional representations of dissimilar datapoints far apart - PCA maximises variance 
     \item often though, high-dimensional data does not lie on a linear space but instead on or near a non-linear (low-dimensional) manifold. here, it is usually more important to keep the low-dimensional representations of very similar datapoints close together. this is something that cannot be done with a linar mapping. 
 \end{itemize}
 
-\section{Problems of High-Dimensional Data}
-\subsection{The Crowding Problem}
-Again, notes from \cite{vdMaa08}: 
-\begin{itemize}
-    \item consider a manifold with intrinsic dimensionality $10$ which is embedded in a very high-dimensional space 
-    \item then obviously, pairwise distances in a two-dimensional map cannot ever faithfully model distances between points on the ten-dimensional manifold, e.g. in 10 dim manifold, we can have 11 points that are mutually equidistant but this cannot be done in 2 dimensions 
-    \item different distribution of pairwise distances: volume of a sphere scales as $r^m$ 
-    \item the \textit{crowding problem}: the area of a two-dimensional map that is available to accomodate moderately distant datapoints will not be nearly large enough compared with the area available to accomodate nearby datapoints. \\
-    Thus, if our main focus is on modelling small distances accurately, moderately distant points have to be placed much to far apart in the two-dimensional map. 
-    \item in the case of SNE, this results in a lot of points crowding at the center of the map 
-\end{itemize}
+Maybe the most popular linear method is Principal Component Analysis (PCA). It assumes that the data primarily varies along a few directions. It projects the data onto the axes of most variance (and minimizing loss this way). Mathematically, given $X \in \mathbb{R}^{N \times d}$, PCA finds the eigenvectors of the covariance matrix and then orders them by corresponding eigenvalues. A new basis is formed by taking the top $k$ eigenvectors. 
+\textcolor{red}{TODO: properly introduce PCA, including algorithm}
+
+Advantages: linear complexity, very interpretably, parametric method makes embedding new points easy. 
+
+A nonlinear method worth mentioning is UMAP. It builds a graph-based representation of the data and optimizes a fuzzy topological structure. 

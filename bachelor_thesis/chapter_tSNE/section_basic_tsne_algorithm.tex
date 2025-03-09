@@ -92,6 +92,8 @@ This means that our loss function places a large cost on using far-apart points 
 On the other hand, there is only a small cost to model points that are actually far apart as nearby in the embedding. 
 This shows that we can expect a bigger focus on the preservation of local structure and is important to keep in mind when interpreting t-SNE embeddings, see \cite{Wa16Distill}. 
 
+Notes from \cite{vdMaa14}: In high-dimensional spaces, only small pairwise distances are reliable. This is why most visualization techniques for high-dimensional data only try to model these accurately.
+
 \section{Gradient Descent to Minimize Loss}
 Minimizing the cost function can be achieved using a standard gradient-descent type algorithm, with an updating equation of 
 \begin{equation}
