@@ -83,7 +83,37 @@ We will therefore not conduct any other experiments regarding initialization.
 \textcolor{red}{TODO: think about if I want to say something about spectral initialization}
 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
-something here 
+For the Gaussian mixture data, we use $b=0.03$ and for MNIST $b=0.07$. In both cases $\kappa=15$ is used. 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/rescaled/Gaussian_Mixture_standard_embedding_grid.png}
+        \caption{Using standard t-SNE. Data generated from mixture of five Gaussian distributions.}
+    \label{fig:Gaussian-standard}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/rescaled/Gaussian_Mixture_rescaled_embedding_grid.png}
+        \caption{Using rescaled t-SNE. Data generated from mixture of five Gaussian distributions.}
+    \label{fig:Gaussian-rescaled}
+\end{figure}
+
+In the real world, things are more complicated. 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/rescaled/MNIST_standard_embedding_grid.png}
+        \caption{Using standard t-SNE. Data sampled randomly from MNIST.}
+    \label{fig:MNIST-standard}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/rescaled/MNIST_rescaled_embedding_grid.png}
+        \caption{Using rescaled t-SNE. Data sampled randomly from MNIST.}
+    \label{fig:MNIST-rescaled}
+\end{figure}
 
 \section{Effect of Varying Perplexity Values}
 there were some figures here before I removed them. 
