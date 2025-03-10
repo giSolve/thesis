@@ -4,8 +4,7 @@
 We use the following datasets for our experiments (as well as synthetic data). 
 \begin{itemize}
     \item Iris dataset \cite{iris_dataset}: small dataset of a total of 150 points in three classes of 50 points each.
-    \item MNIST \cite{mnist_dataset}: this classic computer vision dataset contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). Each image has dimensionality $D=28 \times 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA. 
-    \item EMNIST letters \cite{emnist_dataset} not sure if I do want to use this 
+    \item MNIST \cite{mnist_dataset}: this classic computer vision dataset contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). Each image has dimensionality $D=28 \times 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA.  
     \item flow cytometry \cite{flow_dataset} really large!
     \item Macasko mouse retina \cite{Macosko_dataset} a common benchmark dataset for single-cell data
 \end{itemize}
@@ -81,6 +80,27 @@ But ultimately, it is well-established in the research that PCA should be used t
 We will therefore not conduct any other experiments regarding initialization. 
 
 \textcolor{red}{TODO: think about if I want to say something about spectral initialization}
+
+\section{Number of Iterations}
+We ran t-SNE with a different number of iterations on the 4 datasets above. Our expectation was that bigger datasets need more iterations. The EE length was kept at 25 percent of the total number of iterations. 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/n_iter/n_iter_embedding_grid_tab20b.png}
+        \caption{Embeddings of the four datasets.}
+    \label{fig:n_iter-grid}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{figures/n_iter/n_iter_4_quality_measures.png}
+        \caption{quality measures. say what they show here.}
+    \label{fig:n_iter-quality}
+\end{figure}
+
+We can observe that even 100 iterations is enough on the small Iris dataset. 
+With 100 iterations, the embedding took 0.55 seconds to run, whereas the standard number of 750 iterations took 2.42 seconds. 
+We also see that the largest dataset, Flow18, profits the most from the largest number of iterations, as expected. 
 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
 For the Gaussian mixture data, we use $b=0.03$ and for MNIST $b=0.07$. In both cases $\kappa=15$ is used. 

@@ -1,24 +1,30 @@
 %\section{Basic t-SNE Algorithm}
-This section closely follows \cite{Cai22} and \cite{vdMaa08} so far. 
+This section closely follows \cite{Cai22} and \cite{vdMaa08} so far. For a good explanation, see also \cite{vdMaa14}. 
 
+
+\section{Computing Similarities}
 Let $\{x_1, \dots , x_n \}$ with $x_i \in \mathbb{R}^d$ for all $1 \leq i \leq n$ be the a set of high-dimensional points we wish to visualize.
-We initialize a low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$ (Sometimes, a three-dimensional map is also considered. For the purpose of this thesis, we stick to two-dimensional maps). 
+We initialize the low-dimensional map $\{y_1, \dots , y_n\} \subset \mathbb{R}^2$. Sometimes, three-dimensional embeddings are considered. But for the purpose of this thesis we focus on embeddings into $\mathbb{R}^2$. 
 
-\section{Measuring High-Dimensional Similarities}
-
-Instead of using the raw Euclidean distances between the high-dimensional data points, t-SNE measures pairwise similarities via probabilities. 
-We define a joint probability distribution over all pairs of data points $\{(x_i, x_j)\}_{1 \leq i \neq j \leq n}$ via  
+Instead of using the raw Euclidean distances between the data points, which as pointed out in (\ref{section:curse}) are unreliable in high dimensions, t-SNE measures pairwise similarities via probabilities.
+Starting out with the high-dimensional affinities, we define a joint probability distribution over all pairs of data points $\{(x_i, x_j)\}_{1 \leq i \neq j \leq n}$ via  
 \begin{equation}
-    p_{j|i} =  \frac{\exp(-\norm{x_i - x_j}_2^2 / 2\sigma_i^2)}{\sum_{k \in \{1,2, \dots, n\} \backslash \{i\}} \exp({-\norm{x_i - x_k}_2^2 / 2 \sigma_i^2})}
+    p_{j|i} =  \frac{\exp(-\norm{x_i - x_j}^2 / 2\sigma_i^2)}{\sum_{k \in \{1,2, \dots, n\} \backslash \{i\}} \exp({-\norm{x_i - x_k}^2 / 2 \sigma_i^2})}
 \end{equation}
 which is then symmetrized to $p_{ij} = \frac{p_{i|j} + p_{j|i}}{2n}$. We set $p_{ii}=0$ for all $i$ since we are only interested in modelling pairwise similarities between points. In matrix form, we write $P = (p_{ij})_{1 \leq i, j \leq n}$. 
+
+\textcolor{red}{TODO: make this a definition, cf MA data thesis for a good style}
+
 Large $p_{ij}$ values indicate that the points $x_i$ and $x_j$ closely resemble each other. 
 Intuitively, one can think of $p_{j|i}$ as the probability that $x_i$ would choose $x_j$ as a neighbor if neighbors are chosen according to a Gaussian centered at $x_i$ with bandwidth $\sigma_i$. 
+\texcolor{red}{TODO: explain intuition better}
 
 The bandwidths $\sigma_i$ of the Gaussian kernel can be adapted based on a fixed number called perplexity using binary search. See more on this in the section on perplexity. 
 
+Note that while we use the Euclidean norm in this definition, any norm and even precomputed distances will work. 
+
 One might wonder why it is necessary to symmetrize the similarities. Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{ij}$ values for this datapoint end up being very small. 
-As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$. 
+As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$ \cite{vdMaa08}. 
 
 \section{Perplexity}
 Let us come back to the variance $\sigma_i$ of the Gaussian centered at each datapoint $x_i$. What is a good value to choose? 
@@ -39,14 +45,15 @@ where $H(P_i) = -\sum_{j} p_{ij} \log_2 p_{ij}$ denotes the Shannon entropy of $
 
 Then, t-SNE performs a binary search for the value of $\sigma_i$ that produces the user-specified perplexity. 
 
-One can think of perplexity as a smooth measure of the effective \textcolor{red}{\textbf{TO DO}: what does this actually mean?} number of neighbors being considered in the calculation of the $p_{ij}$. As such, larger perplexity values are computationally more expensive. 
-
-An important question is: which values are good perplexity values. Several suggestions have been made \textcolor{red}{\textbf{TO DO}: compile research on suggestions here}. 
+One can think of perplexity as a smooth measure of the effective \textcolor{red}{\textbf{TO DO}: what does this actually mean?} number of neighbors being considered in the calculation of the $p_{ij}$. 
+As such, it is important to keep in mind that larger perplexity values make the algorithm more computationally expensive. 
 
 \section{Measuring Low-Dimensional Similarities}
-In order to measure similarities between points in the low-dimensional embedding, a first approach would be to also use a Gaussian distribution to convert pairwise distances into probabilities, as above. This is the approach taken originally in SNE \cite{Hinton02}.
+In order to measure similarities between points in the low-dimensional embedding, a first approach would be to also use a Gaussian distribution to convert pairwise distances into probabilities, as above. 
+In fact, this is the approach taken originally in SNE \cite{Hinton02}.
 
-However, to address the crowding problem, we instead use the more heavy-tailed Student t-distribution with one degree of freedom (also called a Cauchy distribution). That way, moderate distances in the high-dimensional space will be modeled by much larger distances in the low-dimensional map (since we try to minimize the difference between $p_{ij}$ and $q_{ij}$, see details below). 
+However, to address the crowding problem outlined above \ref{section:curse}, we instead use the more heavy-tailed Student t-distribution with one degree of freedom (also called a Cauchy distribution). 
+That way, moderate distances in the high-dimensional space will be modeled by much larger distances in the low-dimensional map (since we try to minimize the difference between $p_{ij}$ and $q_{ij}$, see details below). 
 \textcolor{red}{\textbf{TO DO}: explain this better}
 
 
@@ -60,6 +67,7 @@ where we again define $q_{ii} = 0$ for all $1 \leq i \leq n$. We can collect all
 \begin{figure}[h]
     \begin{center}
         \includegraphics[width=0.9\linewidth]{figures/Gaussian_Cauchy.png}
+        \caption{The Student t-distribution with one degree of freedom has heavier tails than the Gaussian.}
     \end{center}
 \end{figure}
 
