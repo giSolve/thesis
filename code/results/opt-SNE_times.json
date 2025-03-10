@@ -3,108 +3,144 @@
         "dataset_index": 0,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 16.17452383041382
+        "time_taken_seconds": 24.83471441268921
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 4.61358380317688
+        "time_taken_seconds": 0.7009551525115967
     },
     {
         "dataset_index": 0,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 13.981915712356567
+        "time_taken_seconds": 32.004554986953735
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 4.32398796081543
+        "time_taken_seconds": 0.5299274921417236
     },
     {
         "dataset_index": 0,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 21.10424494743347
+        "time_taken_seconds": 32.179386615753174
     },
     {
         "dataset_index": 0,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 3.968277931213379
+        "time_taken_seconds": 0.766711950302124
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 12.958231925964355
+        "time_taken_seconds": 202.3118498325348
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 3.445920944213867
+        "time_taken_seconds": 60.39522886276245
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 12.801797866821289
+        "time_taken_seconds": 174.86823725700378
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 3.391899824142456
+        "time_taken_seconds": 39.54128885269165
     },
     {
         "dataset_index": 1,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 30.957931756973267
+        "time_taken_seconds": 176.6232852935791
     },
     {
         "dataset_index": 1,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 12.188402891159058
+        "time_taken_seconds": 43.3351092338562
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 1,
-        "time_taken_seconds": 27.63727903366089
+        "time_taken_seconds": 210.42602038383484
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 1,
-        "time_taken_seconds": 3.8875179290771484
+        "time_taken_seconds": 54.49872899055481
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 12,
-        "time_taken_seconds": 18.361999034881592
+        "time_taken_seconds": 202.64276838302612
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 12,
-        "time_taken_seconds": 3.7423958778381348
+        "time_taken_seconds": 54.79280710220337
     },
     {
         "dataset_index": 2,
         "setting": "normal",
         "seed": 42,
-        "time_taken_seconds": 15.074611186981201
+        "time_taken_seconds": 209.7808656692505
     },
     {
         "dataset_index": 2,
         "setting": "opt",
         "seed": 42,
-        "time_taken_seconds": 3.2768349647521973
+        "time_taken_seconds": 63.59822106361389
+    },
+    {
+        "dataset_index": 3,
+        "setting": "normal",
+        "seed": 1,
+        "time_taken_seconds": 1661.7281739711761
+    },
+    {
+        "dataset_index": 3,
+        "setting": "opt",
+        "seed": 1,
+        "time_taken_seconds": 913.327579498291
+    },
+    {
+        "dataset_index": 3,
+        "setting": "normal",
+        "seed": 12,
+        "time_taken_seconds": 1363.9402112960815
+    },
+    {
+        "dataset_index": 3,
+        "setting": "opt",
+        "seed": 12,
+        "time_taken_seconds": 703.8042914867401
+    },
+    {
+        "dataset_index": 3,
+        "setting": "normal",
+        "seed": 42,
+        "time_taken_seconds": 1428.5815722942352
+    },
+    {
+        "dataset_index": 3,
+        "setting": "opt",
+        "seed": 42,
+        "time_taken_seconds": 842.9601261615753
     }
 ]

@@ -2,81 +2,81 @@
     {
         "ee_factor": 1,
         "dataset_index": 0,
-        "time_taken_seconds": 6.253118991851807
+        "time_taken_seconds": 42.97528147697449
     },
     {
         "ee_factor": 1,
         "dataset_index": 1,
-        "time_taken_seconds": 26.27994203567505
+        "time_taken_seconds": 441.2467544078827
     },
     {
         "ee_factor": 1,
         "dataset_index": 2,
-        "time_taken_seconds": 48.91382074356079
+        "time_taken_seconds": 343.30119228363037
     },
     {
         "ee_factor": 1,
         "dataset_index": 3,
-        "time_taken_seconds": 37.689977169036865
+        "time_taken_seconds": 1872.520869731903
     },
     {
         "ee_factor": 4,
         "dataset_index": 0,
-        "time_taken_seconds": 4.802138090133667
+        "time_taken_seconds": 33.30957007408142
     },
     {
         "ee_factor": 4,
         "dataset_index": 1,
-        "time_taken_seconds": 24.898454904556274
+        "time_taken_seconds": 190.3635959625244
     },
     {
         "ee_factor": 4,
         "dataset_index": 2,
-        "time_taken_seconds": 70.38788890838623
+        "time_taken_seconds": 232.41338300704956
     },
     {
         "ee_factor": 4,
         "dataset_index": 3,
-        "time_taken_seconds": 46.22225093841553
+        "time_taken_seconds": 1691.015213727951
     },
     {
         "ee_factor": 12,
         "dataset_index": 0,
-        "time_taken_seconds": 2.2124009132385254
+        "time_taken_seconds": 31.933887720108032
     },
     {
         "ee_factor": 12,
         "dataset_index": 1,
-        "time_taken_seconds": 30.078017950057983
+        "time_taken_seconds": 218.10818672180176
     },
     {
         "ee_factor": 12,
         "dataset_index": 2,
-        "time_taken_seconds": 71.01105308532715
+        "time_taken_seconds": 252.5866575241089
     },
     {
         "ee_factor": 12,
         "dataset_index": 3,
-        "time_taken_seconds": 36.840577125549316
+        "time_taken_seconds": 1635.220967054367
     },
     {
         "ee_factor": "N/10",
         "dataset_index": 0,
-        "time_taken_seconds": 2.6991190910339355
+        "time_taken_seconds": 33.66467332839966
     },
     {
         "ee_factor": "N/10",
         "dataset_index": 1,
-        "time_taken_seconds": 17.370362997055054
+        "time_taken_seconds": 167.75765204429626
     },
     {
         "ee_factor": "N/10",
         "dataset_index": 2,
-        "time_taken_seconds": 16.312292098999023
+        "time_taken_seconds": 183.19470691680908
     },
     {
         "ee_factor": "N/10",
         "dataset_index": 3,
-        "time_taken_seconds": 21.374318838119507
+        "time_taken_seconds": 1509.6092665195465
     }
 ]
