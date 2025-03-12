@@ -1,0 +1,82 @@
+[
+    {
+        "perplexity": 20,
+        "dataset_index": 0,
+        "time_taken_seconds": 23.62423276901245
+    },
+    {
+        "perplexity": 20,
+        "dataset_index": 1,
+        "time_taken_seconds": 161.5264916419983
+    },
+    {
+        "perplexity": 20,
+        "dataset_index": 2,
+        "time_taken_seconds": 226.05938696861267
+    },
+    {
+        "perplexity": 20,
+        "dataset_index": 3,
+        "time_taken_seconds": 1350.067603111267
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 0,
+        "time_taken_seconds": 42.49152183532715
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 1,
+        "time_taken_seconds": 190.0196177959442
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 2,
+        "time_taken_seconds": 216.74672079086304
+    },
+    {
+        "perplexity": 30,
+        "dataset_index": 3,
+        "time_taken_seconds": 1447.4829020500183
+    },
+    {
+        "perplexity": 40,
+        "dataset_index": 0,
+        "time_taken_seconds": 45.08587980270386
+    },
+    {
+        "perplexity": 40,
+        "dataset_index": 1,
+        "time_taken_seconds": 188.27519607543945
+    },
+    {
+        "perplexity": 40,
+        "dataset_index": 2,
+        "time_taken_seconds": 250.7364308834076
+    },
+    {
+        "perplexity": 40,
+        "dataset_index": 3,
+        "time_taken_seconds": 2214.7460765838623
+    },
+    {
+        "perplexity": 50,
+        "dataset_index": 0,
+        "time_taken_seconds": 35.750224590301514
+    },
+    {
+        "perplexity": 50,
+        "dataset_index": 1,
+        "time_taken_seconds": 213.63767433166504
+    },
+    {
+        "perplexity": 50,
+        "dataset_index": 2,
+        "time_taken_seconds": 258.0923869609833
+    },
+    {
+        "perplexity": 50,
+        "dataset_index": 3,
+        "time_taken_seconds": 6827.280066013336
+    }
+]
