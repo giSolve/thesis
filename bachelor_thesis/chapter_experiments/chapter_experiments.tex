@@ -1,16 +1,26 @@
 \chapter{Experiments}\label{chapter:experiments}
 
 \section{Datasets}
-We use the following datasets for our experiments (as well as synthetic data). 
+We want to perform our experiments on a variety of different datasets, from typically used benchmark datasets, Macosko and MNIST, to very small (Iris) and very large datasets (Flow18). We use the following in our experiments: 
 \begin{itemize}
-    \item Iris dataset \cite{iris_dataset}: small dataset of a total of 150 points in three classes of 50 points each.
-    \item MNIST \cite{mnist_dataset}: this classic computer vision dataset contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). Each image has dimensionality $D=28 \times 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA.  
-    \item flow cytometry \cite{flow_dataset} really large!
-    \item Macasko mouse retina \cite{Macosko_dataset} a common benchmark dataset for single-cell data
+    \item \textbf{Iris} flower dataset \cite{iris_dataset}. This small dataset contains 50 samples from three different species of Iris flowers, thus 150 points in total. Datapoints are comprised of four features, namely the length and width of sepals and petals. 
+    \item \textbf{Macosko} mouse retina cells dataset\cite{Macosko_dataset}. This is common benchmark dataset for single-cell data. It contains a total of 44,808 datapoints. The features are given by the high-dimensional gene-expression profiles outlined in \cite{Macosko_dataset}. 
+    Here, we also apply PCA to reduce the dimensionality of the dataset to 50 before performing t-SNE. 
+    \item \textbf{MNIST} \cite{mnist_dataset}: A classic computer vision dataset, contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). 
+    Each image has dimensionality $D=28 \cdot 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA.  
+    \item \textbf{Flow18} cytometry dataset \cite{flow_dataset}. 
+    One millon datapoints, samples are human PBMC (peripheral blood mononuclear cells), so for example different types of T cells, white blood cells or B cells. 
+    The dataset consists of 16 (\textcolor{red}{only 15 if dead and lin- considered together}) different classes of cells. For each cell, 18 parameters are recorded of which we use 11 for our visualization, just as in \cite{belkina19}. 
+    \textcolor{red}{TODO: look up how many samples there are per class, also: maybe run experiments again with dead cells and Lin- cells in the same class}
 \end{itemize}
 
-\section{Experimentatal Setup}
-Unless otherwise specified, we always use the default openTSNE settings. 
+\section{Experimental Setup}
+We use openTSNE for our experiments. Unless otherwise specified, we always use the default openTSNE settings.
+
+\section{Quality Evaluation Metrics}
+Measuring the quality of t-SNE embeddings is challenging. 
+Of course, since the point of t-SNE is primarily visualization, we will look at the scatterplots the algorithm produces first and foremost. 
+
 
 \section{Dataset Cluster Assumptions}
 Here we investigate if assumptions made for clustering results in \cite{LinStei22} hold in practice, by looking at the simple Iris dataset. 
