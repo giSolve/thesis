@@ -6,6 +6,7 @@ We want to perform our experiments on a variety of different datasets, from typi
     \item \textbf{Iris} flower dataset \cite{iris_dataset}. This small dataset contains 50 samples from three different species of Iris flowers, thus 150 points in total. Datapoints are comprised of four features, namely the length and width of sepals and petals. 
     \item \textbf{Macosko} mouse retina cells dataset\cite{Macosko_dataset}. This is common benchmark dataset for single-cell data. It contains a total of 44,808 datapoints. The features are given by the high-dimensional gene-expression profiles outlined in \cite{Macosko_dataset}. 
     Here, we also apply PCA to reduce the dimensionality of the dataset to 50 before performing t-SNE. 
+    \comment{\cite{KoBe19SingleCell} say this has 39 classes but I thought we only looked at 12?}
     \item \textbf{MNIST} \cite{mnist_dataset}: A classic computer vision dataset, contains $N=70,000$ gray scale images of handwritten digits 0 throuh 9 (i.e. 10 classes). 
     Each image has dimensionality $D=28 \cdot 28 = 784$. Before applying t-SNE, we rescale the entries to values in the interval $[0,1]$ and reduce the dimensionality of data points to 50 using PCA.  
     \item \textbf{Flow18} cytometry dataset \cite{flow_dataset}. 
@@ -15,11 +16,26 @@ We want to perform our experiments on a variety of different datasets, from typi
 \end{itemize}
 
 \section{Experimental Setup}
-We use openTSNE for our experiments. Unless otherwise specified, we always use the default openTSNE settings.
+We use openTSNE \textcolor{red}{which version?} for our experiments. Unless otherwise specified, we always use the default openTSNE settings.
 
 \section{Quality Evaluation Metrics}
 Measuring the quality of t-SNE embeddings is challenging. 
 Of course, since the point of t-SNE is primarily visualization, we will look at the scatterplots the algorithm produces first and foremost. 
+
+However, we will also use several other quality evaluation metrics in order to get a broader understanding of the quality of our results. 
+\begin{itemize}
+    \item \textbf{KLD}: like \cite{belkina19}, we measure Kullback Leibler divergence throughout the algorithm and compare endpoint KLD values, the smaller the better. 
+    It should be noted that KLD is not a good measure when comparing t-SNE embeddings with different perplexity values since this directly affects KLD. 
+    The same is true to some extent for early exaggeration.  
+    \item \textbf{KNN}: for every data point, we measure the fraction of $k$-nearest neighbors in the high-di\-mension\-al space that are preserved as $k$-nearest neighbors in the low-di\-men\-sio\-nal embedding space, see \cite{KoBe19SingleCell}. 
+    We use the code from \comment{insert github of kobak et. al}. 
+    This measures local structure. 
+    We set $k=10$. 
+    \item \textbf{KNC}: this measures the percentage of $k$-nearest class means preserved in the low-dimensional embedding, averaged across all classes. (\comment{von jime: man schaut sich mittelpunkt von den klassen an und alle anderen naechsten mittelpunkte und dann schaut man wie viele davon perserved werden})
+    We use $k=3$ (\comment{check this, cite BA statistik}). 
+    This \enquote{quantifies perservation of the mesoscopic structure} \cite{KoBe19SingleCell}. 
+    \item \textbf{CPD}: We calculate the Spearman correlation between high and low-dimensional distances across 1000 randomly chosen pairs of distances. This is repeated 10 times, we take the averaged result, as suggested by \comment{cite BA}. This is a measure to quantify the global structure of our data. \comment{TODO: Insert formula fpr CPD}
+\end{itemize}
 
 
 \section{Dataset Cluster Assumptions}
