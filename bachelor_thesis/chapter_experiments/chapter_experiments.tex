@@ -128,6 +128,7 @@ We can observe that even 100 iterations is enough on the small Iris dataset.
 With 100 iterations, the embedding took 0.55 seconds to run, whereas the standard number of 750 iterations took 2.42 seconds. 
 We also see that the largest dataset, Flow18, profits the most from the largest number of iterations, as expected. 
 
+\newpage 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
 For the Gaussian mixture data, we use $b=0.03$ and for MNIST $b=0.07$. In both cases $\kappa=15$ is used. 
 
@@ -160,12 +161,116 @@ In the real world, things are more complicated.
         \caption{Using rescaled t-SNE. Data sampled randomly from MNIST.}
     \label{fig:MNIST-rescaled}
 \end{figure}
+\newpage 
+\section{Perplexity}
+We look at standard perplexity values as well as adaptive ones. 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/perp_fixed_embedding_grid_tab20b.png}
+        \caption{Standard values for perplexity on different datasets. \comment{put this in the appendix}}
+    \label{fig:perp_fixed_grid}
+\end{figure}
 
-\section{Effect of Varying Perplexity Values}
-there were some figures here before I removed them. 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/perp_fixed_3_quality_measures.png}
+        \caption{Quality of t-SNE embeddings with different perplexities.}
+    \label{fig:perp_fixed_quality}
+\end{figure}
+We see (\ref{fig:perp_fixed_grid}, \ref{fig:perp_fixed_quality}) that impact of perplexity on the embedding (when choosing values from the common range) is not huge. 
+If anything, we see that there is a slight trade-off between global and local structure. 
+The KNN values suggest that smaller perplexities lead to embeddings that preserve local structure slightly better. 
+On the other hand, larger perplexity values lead to a better preservation of global structure. 
+This makes sense when we think back to perplexity being a measure of the number of neighbors we consider when construction the high-dimensional affinities. 
 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/perp_adapt_embedding_grid_tab20b.png}
+        \caption{Adaptive perplexity values on MNIST and Macosko datasets.}
+    \label{fig:perp_adapt_grid}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/perp_adapt_3_quality_measures.png}
+        \caption{Quality of t-SNE embeddings with different (adaptive) perplexities.}
+    \label{fig:perp_adapt_quality}
+\end{figure}
+
+We basically observe the same thing with adaptive perplexity values. 
+The adaptive perplexity $N/100$ suggested by \cite{KoBe19SingleCell} visually leads to embeddings that do not lead to as good of a clustering (\ref{fig:perp_adapt_grid}). 
+They do however preserve local structure better (\ref{fig:perp_adapt_quality}). 
+\newpage 
+\section{Learning Rate}
+We consider the effect of different learning rates on the embedding. We can see that for $\eta=1$, this doesn't lead to good results (apart from the global structure). The best results are achieved with the \enquote{auto} setting across datasets. 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/eta_embedding_grid_tab20b.png}
+        \caption{Effect of different learning rates on the embedding.}
+    \label{fig:eta_grid}
+\end{figure} 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/eta_3_quality_measures.png}
+        \caption{Quality of t-SNE embeddings with different learning rates.}
+    \label{fig:eta_quality}
+\end{figure}
+As for the KL divergence plots, we see that squiggly lines occur when using too large learning rates on the small Iris datset (\ref{fig:eta_kld}). This phenomenon is commonly seen in machine learning - oscillation because the high learning rate makes us overshoot. 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/eta_kl_divergences_grid.png}
+        \caption{KLD of t-SNE embeddings with different learning rates.}
+    \label{fig:eta_kld}
+\end{figure}
+\newpage 
 \section{Early Exaggeration}
-what effect does it have? 
+We begin by examining the early exaggeration factor. 
 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/alpha_embedding_grid_tab20b.png}
+        \caption{t-SNE embeddings with different EE factors.}
+    \label{fig:alpha_grid}
+\end{figure}
+
+We can see in \ref{fig:alpha_grid} that EE factors 4 and 12 work best. For $\alpha=1$, some of the clusters aren't together in the Macosko dataset, for example the light green one. This is also the case for the MNIST dataset - the blue and brown clusters are separated in the $\alpha = N/10$ case. We conclude that values $\alpha=4$ to $\alpha=12$ work best. 
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/alpha_3_quality_measures.png}
+        \caption{Quality of t-SNE embeddings with different EE factors.}
+    \label{fig:alpha_quality}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/alpha_kl_divergences_grid.png}
+        \caption{KLD of t-SNE embeddings with different EE factors. \comment{do I actually want to include this? does it even make sense?}}
+    \label{fig:alpha_kld}
+\end{figure}
+
+\newpage 
 \section{opt-SNE Implementation}
-and comparison to default settings 
+\comment{TODO: add description of what I did / what settings were used exactly}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/opt-SNE_embedding_grid_tab20b.png}
+        \caption{t-SNE embeddings with and without automated stopping.}
+    \label{fig:opt-SNE_grid}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/opt-SNE_3_quality_measures.png}
+        \caption{Quality of t-SNE embeddings with and without automated stopping.}
+    \label{fig:opt-SNE_quality}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/opt-SNE_kl_divergences_plot.png}
+        \caption{KLD of t-SNE embeddings with and without automated stopping.}
+    \label{fig:opt-SNE_kld}
+\end{figure}
