@@ -250,6 +250,30 @@ We can see in \ref{fig:alpha_grid} that EE factors 4 and 12 work best. For $\alp
     \label{fig:alpha_kld}
 \end{figure}
 
+
+It is also interesting to look at the length of EE. We also try out different values for this. 
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/ee_length_embedding_grid_tab20b.png}
+        \caption{t-SNE embeddings with different EE lengths.}
+    \label{fig:EE_length_grid}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/ee_length_kl_divergences_grid.png}
+        \caption{t-SNE embeddings with different EE lengths - KLD.}
+    \label{fig:EE_length_kld}
+\end{figure}
+
+\begin{figure}[h]
+    \centering 
+        \includegraphics[width=\linewidth]{../code/figures/ee_length_3_quality_measures.png}
+        \caption{t-SNE embeddings with different EE lengths - quality measures}
+    \label{fig:EE_length_quality}
+\end{figure}
+
+
 \newpage 
 \section{opt-SNE Implementation}
 \comment{TODO: add description of what I did / what settings were used exactly}
