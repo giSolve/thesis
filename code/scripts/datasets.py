@@ -30,7 +30,7 @@ def pca(data, dim=50):
     return pca.fit_transform(data)
 
 def load_mouse_retina(): 
-    with gzip.open("/Users/soli/Desktop/uni/thesis/code/data/macosko_2015.pkl.gz", "rb") as f:
+    with gzip.open("/Users/jimen/Desktop/thesis/code/data/macosko_2015.pkl.gz", "rb") as f:
         data = pickle.load(f)
 
     X = data["pca_50"]
