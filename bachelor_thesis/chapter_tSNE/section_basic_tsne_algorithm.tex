@@ -23,13 +23,15 @@ The bandwidths $\sigma_i$ of the Gaussian kernel can be adapted based on a fixed
 
 Note that while we use the Euclidean norm in this definition, any norm and even precomputed distances will work. 
 
-One might wonder why it is necessary to symmetrize the similarities. Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{ij}$ values for this datapoint end up being very small. 
-As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$ \cite{vdMaa08}. 
+One might wonder why it is necessary to symmetrize the similarities. 
+Just taking the $p_{j|i}$ leads to problems for outlier datapoints: since all pairwise distances $\norm{x_i - x_j}^2$ are large for an outlier datapoint $x_i$, all $p_{j|i}$ values for this datapoint end up being very small. 
+As a result, the location of the low-dimensional map point $y_i$ does not contribute very much to the loss function. 
+With symmetrization, we ensure that $\sum_{j} p_{ij} > \frac{1}{2n}$ for all datapoints $x_i$ \cite{vdMaa08}. \comment{is this section insightful? if not, can I explain this better?} 
 
 \section{Perplexity}
 Let us come back to the variance $\sigma_i$ of the Gaussian centered at each datapoint $x_i$. What is a good value to choose? 
 If we fixed a single value $\sigma$ to be the same for every datapoint, this is likely not a good choice, because real-life data often does not have a constant density everywhere but instead has sparser and denser regions. 
-Given that we want to consider approximately the same number of nearest neighbors for each $x_i$, we opt to choose larger values of $\sigma_i$ for sparse regions and smaller bandwidths for dense regions. 
+Given that we want to consider approximately the same number of nearest neighbors for each $x_i$, we opt to choose larger values of $\sigma_i$ for sparse regions and smaller bandwidths for dense regions.
 
 \textcolor{red}{\textbf{TO DO}: find a better way to describe what perplexity actually does, the following is just taken directly from \cite{vdMaa08}}
 
@@ -42,11 +44,12 @@ The user can specify a specific so-called perplexity
 where $H(P_i) = -\sum_{j} p_{ij} \log_2 p_{ij}$ denotes the Shannon entropy of $P_i$. 
 
 \textcolor{red}{\textbf{TO DO}: do we use $p_{ij}$ or $p_{j|i}$ in the definition of perplexity?}
+\comment{entropy larger, we allow more surprise with how we choose neighbors (add some explanation here: higher perplexity values)}
 
 Then, t-SNE performs a binary search for the value of $\sigma_i$ that produces the user-specified perplexity. 
 
 One can think of perplexity as a smooth measure of the effective \textcolor{red}{\textbf{TO DO}: what does this actually mean?} number of neighbors being considered in the calculation of the $p_{ij}$. 
-As such, it is important to keep in mind that larger perplexity values make the algorithm more computationally expensive. 
+\comment{say the following later (in implementation section): As such, it is important to keep in mind that larger perplexity values make the algorithm more computationally expensive} 
 
 \section{Measuring Low-Dimensional Similarities}
 In order to measure similarities between points in the low-dimensional embedding, a first approach would be to also use a Gaussian distribution to convert pairwise distances into probabilities, as above. 
@@ -56,7 +59,7 @@ However, to address the crowding problem outlined above \ref{section:curse}, we 
 That way, moderate distances in the high-dimensional space will be modeled by much larger distances in the low-dimensional map (since we try to minimize the difference between $p_{ij}$ and $q_{ij}$, see details below). 
 \textcolor{red}{\textbf{TO DO}: explain this better}
 
-
+\comment{maybe define student t-distr.}
 We then also compute a similarity measure for points in the low-dimensional embedding as follows: 
 \begin{equation}
     q_{ij} = \frac{(1+ \norm{y_i - y_j}_2^2)^{-1}}{\sum_{k, l \in \{1,2, \dots, n\}, k \neq l} (1+\norm{y_k - y_l}_2^2)^{-1}}
@@ -72,11 +75,11 @@ where we again define $q_{ii} = 0$ for all $1 \leq i \leq n$. We can collect all
 \end{figure}
 
 \section{The Loss Function}
-The goal of the algorithm is now to get the similarities $P$ and $Q$ to be as close to each other as possible. 
-A common choice for measuring the distance between two distributions is the Kullback-Leibler divergence. 
+The goal of the algorithm is now to get the distributions $P$ and $Q$ to be as close to each other as possible. 
+A common choice for measuring the distance \comment{different word here?} between two distributions is the Kullback-Leibler divergence. 
 
 \begin{defi}[Kullback-Leibler Divergence]
-    The \emph{Kullback-Leibler divergence} between two probability distributions $P$ and $Q$ over the same probability space is defined as:
+    The \emph{Kullback-Leibler (KL) divergence} between two probability distributions $P$ and $Q$ over the same probability space is defined as:
     \[
     D_{\text{KL}}(P \parallel Q) = \sum_{x \in \mathcal{X}} P(x) \log\frac{P(x)}{Q(x)}
     \]
@@ -84,7 +87,7 @@ A common choice for measuring the distance between two distributions is the Kull
 \end{defi}
 
 The t-SNE algorithm now aims to find a low-dimensional representation $\mathcal{Y} = (y_1, \dots, y_n)$ that minimizes the KL-divergence between the similarity matrices $P$ and $Q$. 
-We thus define the following loss function: 
+We thus define the loss function 
 \begin{equation}
     C(\mathcal{Y}) = D_{\text{KL}}(P \parallel Q) = \sum_{i,j \in \{1,\dots,n\}, i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}
 \end{equation}

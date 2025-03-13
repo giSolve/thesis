@@ -1,19 +1,19 @@
 \chapter{Introduction}
 
 In our modern world, we are confronted with an ever-growing amount of data. 
-Statista estimated the amount of data created, captured, copied and consumed worldwide in 2023 to be a staggering 123 zetabytes, up from two zetabytes in the year 2010 \cite{Statista}.
+Statista estimated the amount of data created, captured, copied and consumed worldwide in 2023 to be a staggering 123 zetabytes (1 billion terabytes), up from two zetabytes in the year 2010 \cite{Statista}.
 As the amount of data grows, it also becomes much harder to analyze. 
 What makes data analysis even harder is when the dimensionality of the data grows. 
 This is increasingly the case in areas such as computer vision, where images are represented by hundreds if not thousands of pixels and natural language processing, where words are transformed into high-dimensional vectors, for example via word2vec \cite{word2vec}.
 With such high-dimensional data, it is impossible to just \enquote{quickly take a look at it}. 
 Traditional data visualization methods, such as boxplots or standard scatterplots are unable to visualize more than three dimensions effectively. 
 
-\textcolor{red}{A sentence I like from \cite{vdMaa14}: \enquote{Visual exploration is an essential component of data analysis, as it allows for the development of intuitions and hypotheses for the processes that generated the data.}} 
+\textcolor{red}{A sentence I like from \cite{vdMaa14}: \enquote{Visual exploration is an essential component of data analysis, as it allows for the development of intuitions and hypotheses for the processes that generated the data.}}
 
 To address this problem, new methods for visualizing high-dimensional data have been proposed. 
 The t-Stochastic Neighbour Embedding (t-SNE) algorithm was first developed in 2008 \cite{vdMaa08} and built on prior work on Stochastic Neighbour Embeddings \cite{Hinton02}. 
-It has gained a lot of popularity in bioinformatics (cite other biology papers), especially in  single-cell transcriptomics (cite Tasic, macosko, Cao). 
-It is also used in cancer research (cite cancer papers here). 
+It has gained a lot of popularity in bioinformatics \cite{BioInfo1, BioInfo2, BioInfo3}, especially in  single-cell transcriptomics \cite{Macosko_dataset, tasic18, cao19}. 
+It is also used in cancer research \cite{cancer1, cancer2, cancer3}.  
 But the use of t-SNE extends to very diverse areas, from finance (cite finance paper here) to computer security and natural language processing. 
 
 \textcolor{red}{maybe mention that t-SNE is not only used for visualization, but can for example also be used as preprocessing before applying a clustering algorithm}

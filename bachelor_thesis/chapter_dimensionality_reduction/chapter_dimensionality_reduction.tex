@@ -20,8 +20,6 @@ This simply refers to the fact that there is not enough space to accomodate all 
 With an algorithm favoring preservation of local structure, this means that points that are only moderately far from each other have to be placed much further away in the low dimensional map (\textcolor{red}{TODO: maybe insert picture of example here?}). 
 This means we have small attractive forces between moderately distant neighbors. 
 But even this small number is enough to force all the points to be very close to each other and concentrate in the middle of the map - if we do not have repulsive forces that is. 
-Note that this crowding problem occurs with all local techniques, it is not specific to SNE \cite{vdMaa08}. 
-
 
 \begin{itemize}
     \item different distribution of pairwise distances: volume of a sphere centered on datapoint $x_i$ scales as $r^m$, where $r$ is radius, $m$ is dimension (this is somehow related to the crowding problem) \cite{vdMaa08}
@@ -46,4 +44,4 @@ Maybe the most popular linear method is Principal Component Analysis (PCA). It a
 
 Advantages: linear complexity, very interpretably, parametric method makes embedding new points easy. 
 
-A nonlinear method worth mentioning is UMAP. It builds a graph-based representation of the data and optimizes a fuzzy topological structure. 
+A nonlinear method worth mentioning is UMAP. It builds a graph-based representation of the data and optimizes a fuzzy topological structure. Another very popular method is t-SNE, to which the rest of the thesis is devoted. 
