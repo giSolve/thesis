@@ -1,15 +1,15 @@
 \section{Accelerating t-SNE}
 
-The original t-SNE algorithm is not very fast. Its runtime is $\mathcal{O}(N^2)$, which quickly becomes infeasible for datasets with $100,000$ or more points \textcolor{red}{check the exact number}. In this section, we will give an overview of the two most popular methods proposed to speed up the algorithm. 
+The original t-SNE algorithm is not very fast. Its runtime is $\mathcal{O}(N^2)$, which quickly becomes infeasible for datasets with $100,000$ or more points \textcolor{red}{check the exact number} \comment{explain more why this runtime}. In this section, we will give an overview of the two most popular methods proposed to speed up the algorithm. 
 
-\subsection{Barnes-Hut t-SNE}
+\subsection*{Barnes-Hut t-SNE}
 This method uses tree-bases algorithms to speed up t-SNE and was proposed by van der Maaten in 2014 \cite{vdMaa14}. 
 
 \begin{itemize}
     \item the gradient of the t-SNE loss function (KLD) has a natural interpretation as an $N$-body system in which all of the $N$ points in the low-dimensional embedding exert forces on each other. We then need to compute the resultant force on each of the points
 \end{itemize}
 
-\title{Approximating Attractive Forces}
+%\title{Approximating Attractive Forces}
 Computing the attractive force is not too expensive computationally, if we approximate input similarities and use vantage-point trees. Recall that input similarities $p_{ij}$ are computed based on a Gaussian kernel. 
 Thus, $p_{ij}$ values corresponding to dissimilar input objects $x_i$ and $x_j$ are very small. 
 So, it makes sense to develop a sparse approximation for the $p_{ij}$. Instead of computing $N^2$ pairwise similarities, we focus on the $\lfloor 3 \kappa \rfloor$ nearest neighbors of each of the $n$ input objects only, where $\kappa$ denotes the perplexity. We denote the nearest neighbor set of $x_i$ by $\mathcal{N}_i$. 
@@ -23,13 +23,13 @@ The similarities are thus given by
 \end{equation}
 which are again symmetrized then. 
 
-We can find the nearest neighbor sets $\mathcal{N}_i$ in $\mathcal{O}(u n \log n)$ time by building a data structure called a vantage-point tree and performing nearest neighbor search with its help. For details, see \cite{vdMaa14}. 
+We can find the nearest neighbor sets $\mathcal{N}_i$ in $\mathcal{O}(u N \log N)$ time by building a data structure called a vantage-point tree and performing nearest neighbor search with its help. For details, see \cite{vdMaa14}. 
 
 \textcolor{red}{TODO: maybe say more about vantage-point trees here?}
 
-\title{Approximating Repulsive Forces}
-Naively computing the repulsive forces is not a good idea. It would be in $\mathcal{O}(n^2)$. 
-Using the Barnes-Hut algorithm however, this can be sped up to $\mathcal{O}(n \log n)$. 
+%\title{Approximating Repulsive Forces}
+Naively computing the repulsive forces is not a good idea. It would be in $\mathcal{O}(N^2)$. 
+Using the Barnes-Hut algorithm however, this can be sped up to $\mathcal{O}(N \log N)$. 
 The algorithm relies on the observation that the repulsive forces exerted between two small groups of points are very similar whenever these two groups are relatively far away from each other. 
 More precisely, if we consider points $y_i, y_j$ and $y_k$ with $\norm{y_i - y_j} \approx \norm{y_i - y_k} \gg \norm{y_j - y_k}$, then the contributions of $y_j$ and $y_k$ to $F_{\text{rep}, i}$ will be roughly equal. 
 
@@ -38,7 +38,7 @@ Once we have built a quadtree on the current embedding, we traverse it via depth
 
 \textcolor{red}{Maybe insert a picture of a Quadtree here? But I am not sure how much to write about Barnes-Hut really...}
 
-\subsection{Fast Interpolation-Based t-SNE}
+\subsection*{Fast Interpolation-Based t-SNE}
 As observed in \cite{KoBe19SingleCell}, the Barnes-Hut implementation of t-SNE, while faster than the originally proposed algorithm, still becomes provibitively slow for datasets with $n \gg 100,000$. 
 The FFT accelerated, fast interpolation-based version of t-SNE proposed by Linderman et. al. in 2019 \cite{Lin19} attempts to further speed up the computation of t-SNE embeddings with a special view towards applications in the analysis of single-cell RNA-seq data, which keeps growing and datasets often have north of 1 million datapoints. 
 
@@ -96,7 +96,7 @@ TLDR: Low-order polynomial interpolation mediates interactions through a fixed n
 
 \end{algorithm}
 
-\subsection{Comparing Barnes-Hut and FIt-SNE}
+\subsection*{Comparing Barnes-Hut and FIt-SNE}
 When comparing the two methods, we only see minor differences in the embedding. 
 However, the FIt-SNE version is many times faster than Barnes-Hut t-SNE, which is why we will be using FIt-SNE in all of our experiments going forward. 
 

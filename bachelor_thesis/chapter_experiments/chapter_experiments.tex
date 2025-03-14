@@ -35,7 +35,6 @@ However, we will also use several other quality evaluation metrics in order to g
     \item \textbf{CPD}: We calculate the Spearman correlation between high and low-dimensional distances across 1000 randomly chosen pairs of distances. This is repeated 10 times, we take the averaged result, as suggested by \comment{cite BA}. This is a measure to quantify the global structure of our data. \comment{TODO: Insert formula fpr CPD}
 \end{itemize}
 
-
 \section{Dataset Cluster Assumptions}
 Here we investigate if assumptions made for clustering results in \cite{LinStei22} hold in practice, by looking at the simple Iris dataset. 
 The reason that we look at Iris is that it is a very small dataset, which makes it feasible to look at all $N^2 = 150^2$ affinities $p_{ij}$ individually.  
@@ -106,11 +105,11 @@ We will therefore not conduct any other experiments regarding initialization.
 \textcolor{red}{TODO: think about if I want to say something about spectral initialization}
 
 \section{Number of Iterations}
-We ran t-SNE with a different number of iterations on the 4 datasets above. Our expectation was that bigger datasets need more iterations. The EE length was kept at 25 percent of the total number of iterations. 
+To test the hypothesis that bigger datasets profit from a longer t-SNE run \cite{belkina19}, we ran t-SNE with a different number of iterations on the 4 datasets above. The EE length was kept at 25 percent of the total number of iterations. 
 
 \begin{figure}[h]
     \centering 
-        \includegraphics[width=\linewidth]{figures/n_iter/n_iter_embedding_grid_tab20b.png}
+        \includegraphics[width=0.9\linewidth]{figures/n_iter/n_iter_embedding_grid_tab20b.png}
         \caption{Embeddings of the four datasets.}
     \label{fig:n_iter-grid}
 \end{figure}
@@ -128,18 +127,20 @@ We also see that the largest dataset, Flow18, profits the most from the largest 
 
 \newpage 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
+We test the hypothesis that the rescaled t-SNE proposed in \cite{murray2024largedatalimitsscaling} is consistent in the large data limits. 
+
 For the Gaussian mixture data, we use $b=0.03$ and for MNIST $b=0.07$. In both cases $\kappa=15$ is used. 
 
 \begin{figure}[h]
     \centering 
-        \includegraphics[width=\linewidth]{figures/rescaled/Gaussian_Mixture_standard_embedding_grid.png}
-        \caption{Using standard t-SNE. Data generated from mixture of five Gaussian distributions.}
+        \includegraphics[width=0.9\linewidth]{figures/rescaled/Gaussian_Mixture_standard_embedding_grid.png}
+        \caption{Using standard t-SNE. Data generated from mixture of five Gaussian distributions. \comment{maybe only include two of the rows here}}
     \label{fig:Gaussian-standard}
 \end{figure}
 
 \begin{figure}[h]
     \centering 
-        \includegraphics[width=\linewidth]{figures/rescaled/Gaussian_Mixture_rescaled_embedding_grid.png}
+        \includegraphics[width=0.9\linewidth]{figures/rescaled/Gaussian_Mixture_rescaled_embedding_grid.png}
         \caption{Using rescaled t-SNE. Data generated from mixture of five Gaussian distributions.}
     \label{fig:Gaussian-rescaled}
 \end{figure}
@@ -148,14 +149,14 @@ In the real world, things are more complicated.
 
 \begin{figure}[h]
     \centering 
-        \includegraphics[width=\linewidth]{figures/rescaled/MNIST_standard_embedding_grid.png}
+        \includegraphics[width=0.9\linewidth]{figures/rescaled/MNIST_standard_embedding_grid.png}
         \caption{Using standard t-SNE. Data sampled randomly from MNIST.}
     \label{fig:MNIST-standard}
 \end{figure}
 
 \begin{figure}[h]
     \centering 
-        \includegraphics[width=\linewidth]{figures/rescaled/MNIST_rescaled_embedding_grid.png}
+        \includegraphics[width=0.9\linewidth]{figures/rescaled/MNIST_rescaled_embedding_grid.png}
         \caption{Using rescaled t-SNE. Data sampled randomly from MNIST.}
     \label{fig:MNIST-rescaled}
 \end{figure}
