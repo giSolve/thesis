@@ -69,7 +69,7 @@ There are several problems with this result however.
 \section{Large Data Limits}
 Theoretical Literature on t-SNE has naturally not focused on what happens when we let the number of data points go to infinity. After all, real-world datasets have a finite number of points. It is however an interesting questions, that allows us to get deeper insight into the inner workings of t-SNE and is explored in \cite{murray2024largedatalimitsscaling}. 
 
-\subsection{Setup}
+\subsection*{Setup}
 For this section, instead of assuming a given dataset, we have a probability distribution $\mu \in \mathcal{P}(\Omega)$ on $\mathbb{R}^d$ with support on $\Omega$, a bounded and $C^2$ domain. 
 We further assume that $\mu$ has a bounded density function $\rho(x)$ with respect to the Lebesgue measure. 
 Our points $X_1, \dots, X_n$ are then drawn independently from $\mu$ and the $p_{ij}$ and $q_{ij}$ values are calculated as always. 
@@ -102,7 +102,7 @@ This means, we have the following optimization problem
 
 Again, we observe that there is a competition between minimizing the attractive term and minimizing the repulsive term. 
 
-\subsection{Motivation from Adaptive Kernel Density Estimation}
+\subsection*{Motivation from Adaptive Kernel Density Estimation}
 
 We can think of perplexity as ensuring an adaptive bandwidth. 
 The autors of \cite{murray2024largedatalimitsscaling} point out that this is similar to a standard approach used in adaptive kernel density estimation. 
@@ -112,7 +112,7 @@ There is one problem however: they point out that in order to maintain a constan
 But, as is known in the world of kernel density estimation, this scaling does not lead to consistency of the estimator defined above. 
 So instead, they allow perplexity to grow slowly with the number of samples $n$, at any rate $n^\alpha, \alpha > 0$. 
 
-\subsection{Results}
+\subsection*{Results}
 
 We now define an averaged version of the energies, where we replace the stochastic $\sigma_i$ with the deterministic $h_n \sigma_\kappa(x)$: 
 \begin{equation}

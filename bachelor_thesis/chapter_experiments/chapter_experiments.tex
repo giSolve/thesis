@@ -1,6 +1,8 @@
 \chapter{Experiments}\label{chapter:experiments}
 
-\section{Datasets}
+\section{Experimental Setup}
+We use the openTSNE library \textcolor{red}{which version?} for all of our experiments. Unless otherwise specified, we always use the default openTSNE settings \comment{describe them here}. 
+
 We want to perform our experiments on a variety of different datasets, from typically used benchmark datasets, Macosko and MNIST, to very small (Iris) and very large datasets (Flow18). We use the following in our experiments: 
 \begin{itemize}
     \item \textbf{Iris} flower dataset \cite{iris_dataset}. This small dataset contains 50 samples from three different species of Iris flowers, thus 150 points in total. Datapoints are comprised of four features, namely the length and width of sepals and petals. 
@@ -14,10 +16,6 @@ We want to perform our experiments on a variety of different datasets, from typi
     The dataset consists of 16 (\textcolor{red}{only 15 if dead and lin- considered together}) different classes of cells. For each cell, 18 parameters are recorded of which we use 11 for our visualization, just as in \cite{belkina19}. 
     \textcolor{red}{TODO: look up how many samples there are per class, also: maybe run experiments again with dead cells and Lin- cells in the same class}
 \end{itemize}
-
-\section{Experimental Setup}
-We use openTSNE \textcolor{red}{which version?} for our experiments. Unless otherwise specified, we always use the default openTSNE settings.
-
 \section{Quality Evaluation Metrics}
 Measuring the quality of t-SNE embeddings is challenging. 
 Of course, since the point of t-SNE is primarily visualization, we will look at the scatterplots the algorithm produces first and foremost. 
