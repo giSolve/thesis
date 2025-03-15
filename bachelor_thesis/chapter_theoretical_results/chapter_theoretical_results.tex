@@ -11,10 +11,12 @@ Early theoretical work has been focused on establishing clustering guarantees fo
 \textcolor{red}{To the best of my knowledge}, Shaham and Steinerberger started this line of investigation with their 2017 paper \enquote{Stochastic Neighbor Embedding Separates Well-Separated Clusters} \cite{shaham17}. 
 They proved a clustering result for the precursor algorithm SNE, but their result has been criticised since it is only nontrivial when the number of clusters is significantly larger than the number of points per clusters, which is an unrealistic assumption for most datasets t-SNE is commonly used on, see \cite{Arora18}.  
 Linderman and Steinerberger \cite{LinStei22} use a dynamical systems approach for understanding t-SNE. 
-They understand the embedding points as particles experiencing attractive and replusive forces and formulate a shrinkage result for the diameter of embedded clusters based on the EE exaggeration factor and gradient descent step size. \\
+They understand the embedding points as particles experiencing attractive and replusive forces and formulate a shrinkage result for the diameter of embedded clusters based on the EE exaggeration factor and gradient descent step size. 
+We will dedicate \Cref{sec:clustering} to explaining their result in detail. \\
 Building on the preprint of \cite{LinStei22}, \cite{Arora18} point out that Linderman's result does not rule out the possibility of multiple clusters merging into one. 
 \cite{Arora18} gives a first formal framework for the problem of data visualization and formulates an improved clustering guarantee for some definition of spherical and well-separated clusterable data. 
-However, both the clustering guarantees in \cite{Arora18} and \cite{LinStei22} have been criticised for making assumptions that do not hold in practice, see \cite{yang2021tsneoptimizedrevealclusters}. In our experiments section, we will therefore also investigate these assumptions ourselves. 
+However, both the clustering guarantees in \cite{Arora18} and \cite{LinStei22} have been criticised for making assumptions that do not hold in practice, see \cite{yang2021tsneoptimizedrevealclusters}. 
+In our experiments section, we will therefore also investigate these assumptions ourselves. 
 
 
 Studying t-SNE in terms of attraction-repulsion dynamics has proven to be one of the most fruitful directions for obtaining theoretical results on t-SNE. 
@@ -31,8 +33,9 @@ Practical implications of their work include:
 \end{itemize}
 More recently, the focus of theoretical research on t-SNE has shifted to the question of equilibrium distributions and convergence in the large data limit ($n \to \infty$). 
 \cite{murray2024largedatalimitsscaling} shows that standard t-SNE embeddings do not have a consistent limit as $n \to \infty$ and proposes a rescaled model with a consistent limit which mitigates the asymptotic decay of the attractive forces. 
+We will explain this approach in detail in \Cref{sec:large_data}. 
 
-\section{Clustering Guarantees}
+\section{Clustering Guarantees}\label{sec:clustering}
 In this section, we will present the result in \cite{LinStei22} and \textcolor{red}{TODO: maybe investigate whether the assumptions hold for real datasets}. 
 
 The following assumptions are made: 
@@ -66,62 +69,65 @@ There are several problems with this result however.
 
 \textcolor{red}{TODO: quickly mention \cite{Arora18} which has improved on this result a bit}
 
-\section{Large Data Limits}
-Theoretical Literature on t-SNE has naturally not focused on what happens when we let the number of data points go to infinity. After all, real-world datasets have a finite number of points. It is however an interesting questions, that allows us to get deeper insight into the inner workings of t-SNE and is explored in \cite{murray2024largedatalimitsscaling}. 
+\section{Large Data Limits}\label{sec:large_data}
+Theoretical Literature on t-SNE has naturally not focused on what happens when we let the number of data points go to infinity. After all, real-world datasets have a finite number of points. It is however an interesting question, that allows us to get deeper insight into the inner workings of t-SNE and is explored in \cite{murray2024largedatalimitsscaling}. 
+
+In this section, we follow \cite{murray2024largedatalimitsscaling}. 
 
 \subsection*{Setup}
-For this section, instead of assuming a given dataset, we have a probability distribution $\mu \in \mathcal{P}(\Omega)$ on $\mathbb{R}^d$ with support on $\Omega$, a bounded and $C^2$ domain. 
+For this section, instead of assuming a given dataset, we assume a probability distribution $\mu \in \mathcal{P}(\Omega)$ on $\mathbb{R}^d$ which is supported on a bounded and $C^2$ domain $\Omega$. 
 We further assume that $\mu$ has a bounded density function $\rho(x)$ with respect to the Lebesgue measure. 
-Our points $X_1, \dots, X_n$ are then drawn independently from $\mu$ and the $p_{ij}$ and $q_{ij}$ values are calculated as always. 
-If $n$ datapoints are drawn, we define the matrices $P_n = (p_{ij})_{i,j=1}^n$ and $Q_n = (q_{ij})_{i,j=1}^n$. 
+Our points $X_1, \dots, X_n$ are then drawn independently from $\mu$ and the $p_{ij}$ and $q_{ij}$ values are calculated as before. 
+In matrix form, we write $P_N = (p_{ij})_{i,j=1}^N$ and $Q_N = (q_{ij})_{i,j=1}^N$. 
 
-Since we want to study large data limits, we do not consider the KL-divergence between $P_n$ and $Q_n$ directly, but instead define a closely related functional 
+Since we want to study large data limits, we do not consider the KL-divergence between $P_n$ and $Q_n$ directly, but instead define a KL divergence like functional
 \begin{equation}
-    \text{KL}_n (T) = \sum_{i,j} p_{ij} \log \frac{q_{ij}}{q_{ij}(T)}
+    \text{KL}_N (T) = \sum_{i,j} p_{ij} \log \frac{p_{ij}}{q_{ij}(T)}
 \end{equation}
 where 
 \begin{equation}
     q_{ij}(T) \coloneq \frac{(1+ |T(X_i) - T(X_j)|^2)^{-1}}{\sum_{k \neq l} (1+ |T(X_k) - T(X_l)|^2)^{-1}}
 \end{equation}
-and $T: \mathbb{R}^d \to \mathbb{R}^m$. This is now technically not a KL-divergence anymore. 
+and $T: \mathbb{R}^d \to \mathbb{R}^2$. Note that this is a slight abuse of notation, since this is not a KL divergence anymore when considered as a function of $T$. \comment{explain this further, why?} This is only a slight reformulation of the original problem, where we would minimize the KL divergence over all possible $\mathcal{Y}$. Here we instead minimize the loss over all maps $T$.  
 
-Building on the view of t-SNE in terms of attraction-repulsion dynamics, \cite{murray2024largedatalimitsscaling} splits up the t-SNE objective function into an attractive term $A_n[T]$, a repulsive term $R_n[T]$ and a purely data-dependent term  $D_n$ (which plays no role during gradient descent). Defining 
+Building on the view of t-SNE in terms of attraction-repulsion dynamics, \cite{murray2024largedatalimitsscaling} split up the t-SNE objective function into an attractive term $A_N[T]$, a repulsive term $R_N[T]$ and a purely data-dependent term $D_N$, which plays no role during gradient descent. 
+
+These terms are defined via  
 \begin{equation}
-    A_n[T] \coloneq \frac{1}{n} \sum_{i=1}^n \frac{\sum_{j=1}^n \exp(-|X_i - X_j|^2/(2\sigma_i^2)) \log(1+ |T(X_i) - T(X_j)|^2)}{\sum_{j=1}^n \exp(-|X_i - X_j)^2 / (2\sigma_i^2)}
+    A_N[T] \coloneq \frac{1}{N} \sum_{i=1}^N \frac{\sum_{j=1}^N \exp(-|X_i - X_j|^2/(2\sigma_i^2)) \log(1+ |T(X_i) - T(X_j)|^2)}{\sum_{j=1}^N \exp(-|X_i - X_j|)^2 / (2\sigma_i^2)}
 \end{equation}
 and 
 \begin{equation}
-    R_n[T] \coloneq \log \left( \frac{1}{n^2} \sum_{i=1}^n \sum_{j=1}^n \frac{1}{1+ |T(X_i) - T(X_j)|^2} \right), 
+    R_N[T] \coloneq \log \left( \frac{1}{N^2} \sum_{i=1}^n \sum_{j=1}^N \frac{1}{1+ |T(X_i) - T(X_j)|^2} \right), 
 \end{equation}
-we can write $\text{KL}_n (T) = A_n[T] + R_n[T] + D_n$. 
+We can then write $\text{KL}_N (T) = A_N[T] + R_N[T] + D_N$. Note that our definition of attractive and repulsive terms makes sense, since the attractive term is minimized when $T\to 0$ and the repulsive term is minimized when $T \to \infty$.
 
-This means, we have the following optimization problem
+Thus, we obtain the following optimization problem
 \begin{equation}
-    {\arg \min}_{T: \mathbb{R}^d \to \mathbb{R}^m} \text{KL}_n (T) = {\arg \min}_{T: \mathbb{R}^d \to \mathbb{R}^m} A_n[T] + R_n[T].
+    \underset{T: \mathbb{R}^d \to \mathbb{R}^2}{\arg \min} \text{KL}_N (T) = \underset{T: \mathbb{R}^d \to \mathbb{R}^2}{\arg \min} A_N[T] + R_N[T].
 \end{equation}
 
-Again, we observe that there is a competition between minimizing the attractive term and minimizing the repulsive term. 
+Should we hold the perplexity parameter constant as $N \to \infty$?
+Theoretical analysis based on results in adaptive kernel density estimation shows that maintaining a fixed perplexity as the number of data points increases forces the bandwidths $\sigma_{i,N}$ to scale as $\mathcal{O}(N^{-1/d})$ \cite{murray2024largedatalimitsscaling}.
+Results from adaptive kernel estimation indicate that this is bad for consistency of the estimator \comment{explain this better!}, so one instead allows perplexity to grow slowly with the number of samples, at a rate of $N^\beta$ with $\beta > 0$. 
 
-\subsection*{Motivation from Adaptive Kernel Density Estimation}
-
-We can think of perplexity as ensuring an adaptive bandwidth. 
-The autors of \cite{murray2024largedatalimitsscaling} point out that this is similar to a standard approach used in adaptive kernel density estimation. 
-For a kernel $K: \mathbb{R}^d \to \mathbb{R}$, the quantity $\frac{1}{n h_n^d}\sum_{i=1}^n K(\frac{x-X_i}{h_n})$ is a pointwise consistent estimator of the density $\rho(x)$ as long as $\frac{h h_n^d}{\log(n)} \to \infty$. 
-
-There is one problem however: they point out that in order to maintain a constant perplexity, we have to let $\sigma_{i,n} = \mathcal{O}(n^{-1/d})$ with a high probability. 
-But, as is known in the world of kernel density estimation, this scaling does not lead to consistency of the estimator defined above. 
-So instead, they allow perplexity to grow slowly with the number of samples $n$, at any rate $n^\alpha, \alpha > 0$. 
-
-\subsection*{Results}
+\subsection*{Attractive Forces Dominate in the Large Data Limit}  
+From now on, we write the bandwidths $\sigma_{i,N} = h_N \sigma_i$, isolating the stochastic part in $\sigma_i$ and $h_N$ being deterministic. \comment{better explanation?}
+If we let perplexity grow at rate the rate above, we get the following limiting bandwidth. 
+\begin{thm}[\cite{murray2024largedatalimitsscaling}]
+    Let $h_N$ be a sequence for which $\frac{N h_N^d}{\log(N)} \to \infty$ and $h_N \to 0$. Let $\rho(x)$ be a uniformly continuous density that is bounded above and below. Then, if $\hat{\sigma}_N(x)$ is chosen so that $\text{Perp}_N(x|h_N \hat{\sigma}_N(x)) = \kappa N h_N^d$ \comment{introduce this notation!}, then for $\tilde{\Omega} \subset \subset \Omega$ we have almost surely
+    \[\lim_{n \to \infty} \norm{\hat{\sigma}_N(x) - \frac{1}{\sqrt{2 \pi e}} \left(\frac{\kappa}{\rho(x)}\right)^{1/d}}_{L^\infty(\tilde{\Omega})} = 0. 
+    \]
+\end{thm}
 
 We now define an averaged version of the energies, where we replace the stochastic $\sigma_i$ with the deterministic $h_n \sigma_\kappa(x)$: 
-\begin{equation}
+\begin{equation*}
     \tilde{A}_n[T] \coloneq  \int_{\Omega} \frac{\int_{\Omega} \exp(-|x - x'|^2/(2 h^2 \sigma_\kappa^2(x))) \log(1+ |T(x) - T(x')|^2) \rho(x')dx'}{\int_{\Omega} \exp(-|x - x'|^2/(2 h^2 \sigma_\kappa^2(x))) \rho(x')dx'} \rho(x)dx  
-\end{equation}
+\end{equation*}
 and 
-\begin{equation}
+\begin{equation*}
     \tilde{R}_n[T] \coloneq \log \left( \iint_{\Omega \times \Omega} \frac{1}{1+ |T(x) - T(x')|^2} \rho(x) \rho(x')dx dx' \right), 
-\end{equation}
+\end{equation*}
 
 \textcolor{red}{TODO: make the equations look nicer}
 
@@ -133,8 +139,9 @@ This first result states that the averaged t-SNE energy does not have a limiting
 For details of the proof, we refer to \cite{murray2024largedatalimitsscaling}. However, the main idea again is to consider how attraction repulsion dynamics change as the number of samples grow. 
 They prove that the attractive term will shrink to zero as $n \to \infty$, which means that for large sample sizes, the repulsive force dominates. This will then result in unbounded embeddings. 
 
-Note that this also shows that early exaggeration \enquote{is not merely heuristic but is, in fact, asymptotically consistent with the underlying behavior of the algorithm}.
+Note that this also shows that early exaggeration \enquote{is not merely heuristic but is, in fact, asymptotically consistent with the underlying behavior of the algorithm} \cite{murray2024largedatalimitsscaling}.
 
+\subsection*{A Rescaled, Consistent t-SNE}
 Taking the above theorem as motivation, \cite{murray2024largedatalimitsscaling} propose a new, rescaled version of t-SNE, where we do not only apply exaggeration in the early iterations of the algorithm, but instead multiply the entire attractive force by a sequence $1/h_n^2$, where we  require that $h_n \to 0$ and $\frac{n /h_n^d}{\log(n)} \to \infty$ as $n \to \infty$. 
 The rescaled model for $n$ samples thus minimizes the loss function 
 \begin{equation}
@@ -142,9 +149,9 @@ The rescaled model for $n$ samples thus minimizes the loss function
 \end{equation}
 
 This energy will the converge (for a fixed $T$) towards the limiting energy 
-\begin{equation}
+\begin{equation*}
     \mathcal{K}\mathcal{L} (T) \coloneq \frac{\kappa^{2/d}}{2 \pi e} \int_\Omega \sum_{i=1}^m |\nabla T_i(x)|^2 \rho^{1-2/d} (x) d x + \log\left( \iint_{\Omega \times \Omega} \frac{\rho(x)\rho(x')}{1+ |T(x)-T(x')|^2}  d x d x' \right), 
-\end{equation}
+\end{equation*}
 
 which behaves consistently as shown by the following theorem. 
 

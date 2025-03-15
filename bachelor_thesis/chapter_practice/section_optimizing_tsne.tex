@@ -1,6 +1,6 @@
-\section{Optimizing t-SNE Hyperparameters}
+%\section{Optimizing t-SNE Hyperparameters}
 
-\subsection{Automated Stopping of EE and t-SNE Run}
+\section{Automated Stopping}
 The original t-SNE algorithm was widely viewed as having a scaling problem. Not only due to its $\mathcal{O}(N^2)$ runtime, but also because the embeddings became meaningless for large datasets. 
 One simply would not be able to see anything other than lots of points on top of each other. 
 While the former problem was addressed with the development of Barnes-Hut t-SNE \cite{vdMaa14} and FIt-SNE \cite{Lin19}, the latter is addressed in \cite{belkina19}. 
@@ -13,7 +13,7 @@ In order to solve this problem, \cite{belkina19} propose an automated approach t
 They observed the change in KL divergence to plateau after a certain about of iterations. 
 So they track the relative rate of KL divergence change \begin{equation}\text{KLDRC}_N = \frac{\text{KLD}_{N-1} - \text{KLD}_N}{\text{KLD}_{N-1}}
 \end{equation} where $N$ is the current iteration number. 
-The idea then is to identify the local maximum of this KL divergence relative change and stop the RR phase at the next iteration. 
+The idea then is to identify the local maximum of this KL divergence relative change and stop the EE phase at the next iteration. 
 This can be done since we can calculate the KL divergence and its change at every iteration. 
 
 They suggest to stop the algorithm entirely once 
@@ -22,7 +22,7 @@ They suggest to stop the algorithm entirely once
 \end{equation}
 where $X=5000$ is suggested for cytometry data. 
 
-\subsection{Informative Initialization}
+\section{Informative Initialization}
 The standard t-SNE algorithm starts with an initization $y_i^{(0)}$ for $i=\{1, 2, \dots, n\}$ which are drawn independently from $\mathcal{N}(0, \delta^2 I)$ for some small $\delta > 0$, see \cite{vdMaa08} and \cite{vdMaa14}. 
 
 However, recent work \cite{kobak21} has shown that informative initialization leads to embeddings that better preserve large-scale structures within the data. 
@@ -41,7 +41,7 @@ One may wonder about bias resulting from injecting artificial structure into the
 One could for example imagine a small isolated cluster that might not appear isolated in the first two principal components, because it simply doesn't have enough cells to contribute much to the explained variance. 
 
 
-\subsection{Current State of Literature of Parameter Choices}
+\section{Choosing Hyperparameters}
 Here, I want to collect guidelines for choosing t-SNE parameters. It could be interesting to look at this from the perspective of a practitioner, using t-SNE libraries like openTSNE or the scikit-learn implementation and investigate if the default choices lead to good results. 
 
 

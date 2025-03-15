@@ -23,7 +23,7 @@ The similarities are thus given by
 \end{equation}
 which are again symmetrized then. 
 
-We can find the nearest neighbor sets $\mathcal{N}_i$ in $\mathcal{O}(u N \log N)$ time by building a data structure called a vantage-point tree and performing nearest neighbor search with its help. For details, see \cite{vdMaa14}. 
+We can find the nearest neighbor sets $\mathcal{N}_i$ in $\mathcal{O}(\kappa N \log N)$ time by building a data structure called a vantage-point tree and performing nearest neighbor search with its help. For details, see \cite{vdMaa14}. 
 
 \textcolor{red}{TODO: maybe say more about vantage-point trees here?}
 
@@ -39,7 +39,7 @@ Once we have built a quadtree on the current embedding, we traverse it via depth
 \textcolor{red}{Maybe insert a picture of a Quadtree here? But I am not sure how much to write about Barnes-Hut really...}
 
 \subsection*{Fast Interpolation-Based t-SNE}
-As observed in \cite{KoBe19SingleCell}, the Barnes-Hut implementation of t-SNE, while faster than the originally proposed algorithm, still becomes provibitively slow for datasets with $n \gg 100,000$. 
+As observed in \cite{KoBe19SingleCell}, the Barnes-Hut implementation of t-SNE, while faster than the originally proposed algorithm, still becomes prohibitively slow for datasets with $n \gg 100,000$. 
 The FFT accelerated, fast interpolation-based version of t-SNE proposed by Linderman et. al. in 2019 \cite{Lin19} attempts to further speed up the computation of t-SNE embeddings with a special view towards applications in the analysis of single-cell RNA-seq data, which keeps growing and datasets often have north of 1 million datapoints. 
 
 Rough notes from \cite{Lin19}: 

@@ -129,6 +129,8 @@ We also see that the largest dataset, Flow18, profits the most from the largest 
 \section{An Implementation of Rescaled t-SNE for Large Data Limits}
 We test the hypothesis that the rescaled t-SNE proposed in \cite{murray2024largedatalimitsscaling} is consistent in the large data limits. 
 
+\comment{to do: explain how exactly we sample gaussian mixture data, what are the b's and so on}
+
 For the Gaussian mixture data, we use $b=0.03$ and for MNIST $b=0.07$. In both cases $\kappa=15$ is used. 
 
 \begin{figure}[h]
@@ -176,11 +178,11 @@ We look at standard perplexity values as well as adaptive ones.
         \caption{Quality of t-SNE embeddings with different perplexities.}
     \label{fig:perp_fixed_quality}
 \end{figure}
-We see (\ref{fig:perp_fixed_grid}, \ref{fig:perp_fixed_quality}) that impact of perplexity on the embedding (when choosing values from the common range) is not huge. 
+We see \Cref{fig:perp_fixed_grid}, \Cref{fig:perp_fixed_quality} that impact of perplexity on the embedding (when choosing values from the common range) is not huge. 
 If anything, we see that there is a slight trade-off between global and local structure. 
 The KNN values suggest that smaller perplexities lead to embeddings that preserve local structure slightly better. 
 On the other hand, larger perplexity values lead to a better preservation of global structure. 
-This makes sense when we think back to perplexity being a measure of the number of neighbors we consider when construction the high-dimensional affinities. 
+This makes sense when we think back to perplexity being a measure of the number of neighbors we consider when constructing the high-dimensional affinities. 
 
 \begin{figure}[h]
     \centering 
@@ -197,8 +199,8 @@ This makes sense when we think back to perplexity being a measure of the number 
 \end{figure}
 
 We basically observe the same thing with adaptive perplexity values. 
-The adaptive perplexity $N/100$ suggested by \cite{KoBe19SingleCell} visually leads to embeddings that do not lead to as good of a clustering (\ref{fig:perp_adapt_grid}). 
-They do however preserve local structure better (\ref{fig:perp_adapt_quality}). 
+The adaptive perplexity $N/100$ suggested by \cite{KoBe19SingleCell} visually leads to embeddings that do not lead to as good of a clustering \Cref{fig:perp_adapt_grid}. 
+They do however preserve global structure better \Cref{fig:perp_adapt_quality}. 
 \newpage 
 \section{Learning Rate}
 We consider the effect of different learning rates on the embedding. We can see that for $\eta=1$, this doesn't lead to good results (apart from the global structure). The best results are achieved with the \enquote{auto} setting across datasets. 
@@ -215,7 +217,7 @@ We consider the effect of different learning rates on the embedding. We can see 
         \caption{Quality of t-SNE embeddings with different learning rates.}
     \label{fig:eta_quality}
 \end{figure}
-As for the KL divergence plots, we see that squiggly lines occur when using too large learning rates on the small Iris datset (\ref{fig:eta_kld}). This phenomenon is commonly seen in machine learning - oscillation because the high learning rate makes us overshoot. 
+As for the KL divergence plots, we see that squiggly lines occur when using too large learning rates on the small Iris datset \Cref{fig:eta_kld}. This phenomenon is commonly seen in machine learning - oscillation because the high learning rate makes us overshoot. 
 \begin{figure}[h]
     \centering 
         \includegraphics[width=\linewidth]{../code/figures/eta_kl_divergences_grid.png}
@@ -233,7 +235,7 @@ We begin by examining the early exaggeration factor.
     \label{fig:alpha_grid}
 \end{figure}
 
-We can see in \ref{fig:alpha_grid} that EE factors 4 and 12 work best. For $\alpha=1$, some of the clusters aren't together in the Macosko dataset, for example the light green one. This is also the case for the MNIST dataset - the blue and brown clusters are separated in the $\alpha = N/10$ case. We conclude that values $\alpha=4$ to $\alpha=12$ work best. 
+We can see in \Cref{fig:alpha_grid} that EE factors 4 and 12 work best. For $\alpha=1$, some of the clusters aren't together in the Macosko dataset, for example the light green one. This is also the case for the MNIST dataset - the blue and brown clusters are separated in the $\alpha = N/10$ case. We conclude that values $\alpha=4$ to $\alpha=12$ work best. 
 
 \begin{figure}[h]
     \centering 
